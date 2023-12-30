@@ -28,6 +28,6 @@ int Flappy::getY() {
 void Flappy::update() {
     this->animation.update();
 }
-BoundingBox Flappy::getBoundingBox() {
+CollisionBox Flappy::getCollisionBox() {
     return this->_bbox;
 }

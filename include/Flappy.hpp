@@ -1,10 +1,9 @@
 #ifndef FLAPPY_H_
 #define FLAPPY_H_
 
-    #include "BoundingBox.hpp"
+    #include "CollisionBox.hpp"
 
     #include "bn_sprite_ptr.h"
-    #include "bn_vector.h"
     #include "bn_sprite_tiles_ptr.h"
     #include "bn_sprite_items_flappy.h"
     #include "bn_sprite_animate_actions.h"
@@ -20,7 +19,7 @@
             int getX();
             int getY();
             void update();
-            BoundingBox getBoundingBox();
+            CollisionBox getCollisionBox();
         private:
             int x;
             int y;
@@ -28,7 +27,7 @@
             int subY;
             bn::sprite_ptr flappy_sprite = bn::sprite_items::flappy.create_sprite(0, 0);
             bn::sprite_animate_action<4> animation = bn::create_sprite_animate_action_forever(this->flappy_sprite, 6, bn::sprite_items::flappy.tiles_item(), 0, 1, 2, 1);
-            bBox _bbox;
+            CollisionBox _bbox;
     };
 
 #endif

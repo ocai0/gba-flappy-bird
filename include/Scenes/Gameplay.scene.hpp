@@ -2,11 +2,13 @@
 #define GAMEPLAY_SCENE_H_
     
     #include "bn_core.h"
+    #include "bn_vector.h"
     #include "bn_keypad.h"
 
     #include "SceneEnum.hpp"
     #include "SceneStatus.hpp"
     #include "Flappy.hpp"
+    #include "PipeWall.hpp"
     
     typedef struct {
         int deltaX;
@@ -14,14 +16,18 @@
         int gravity;
         int direction; // 1 means down, -1 means up
         int VERTICAL_JUMP_SPEED;
-        int SUB_PIXEL_ZONE;
         int MAX_FALL_SPEED;
     } FlappyData;
 
     class Gameplay {
         SceneEnum* _currentScene;
         Flappy flappy;
+        int pipeSpeed;
+        int MAX_PIPE_SPEED;
         FlappyData flappyData;
+        int SUB_PIXEL_ZONE;
+        bn::vector<bn::optional<PipeWall>, 4> pipes;
+        // PipeWall pipe2;
         void load();
         void update();
         void leave();
