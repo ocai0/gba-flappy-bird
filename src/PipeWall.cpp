@@ -1,7 +1,6 @@
 #include "PipeWall.hpp"
-#include "bn_log.h"
 
-PipeWall::PipeWall(int _x, int _y, int _color, int _gapSize) : PIPE_WIDTH(16), PIPE_HEIGHT(16), PIPE_WIDTH_HALF(8), PIPE_HEIGHT_HALF(8) {
+PipeWall::PipeWall(int _x, int _y, int _gapSize, int _color) : PIPE_WIDTH(32), PIPE_HEIGHT(32), PIPE_WIDTH_HALF(16), PIPE_HEIGHT_HALF(16) {
     this->gapSize = _gapSize;
     this->color = _color;
     this->createPipes();

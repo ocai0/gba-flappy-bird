@@ -14,6 +14,7 @@
         int deltaX;
         int deltaY;
         int gravity;
+        int rotationDelta;
         int direction; // 1 means down, -1 means up
         int VERTICAL_JUMP_SPEED;
         int MAX_FALL_SPEED;

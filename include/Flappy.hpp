@@ -13,16 +13,19 @@
     class Flappy {
         public:
             Flappy(int, int);
+            void setXY(int, int);
             void setX(int);
             void setY(int);
-            void setXY(int, int);
+            void setRotation(int);
             int getX();
             int getY();
+            int getRotation();
             void update();
             CollisionBox getCollisionBox();
         private:
             int x;
             int y;
+            int rotation;
             int subX;
             int subY;
             bn::sprite_ptr flappy_sprite = bn::sprite_items::flappy.create_sprite(0, 0);

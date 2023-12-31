@@ -1,5 +1,4 @@
 #include "Flappy.hpp"
-#include "bn_log.h"
 
 Flappy::Flappy(int _x, int _y) {
     this->setXY(_x, _y);
@@ -12,6 +11,17 @@ void Flappy::setX(int _x) {
 void Flappy::setY(int _y) {
     this->y = _y;
     this->flappy_sprite.set_y(this->y);
+}
+void Flappy::setRotation(int _angle) {
+    this->rotation = _angle;
+    
+    if(this->rotation > 360) this->rotation = 360;
+    if(this->rotation < 0) this->rotation = 0;
+
+    this->flappy_sprite.set_rotation_angle(this->rotation);
+}
+int Flappy::getRotation() {
+    return this->rotation;
 }
 void Flappy::setXY(int _x, int _y) {
     this->x = _x;
