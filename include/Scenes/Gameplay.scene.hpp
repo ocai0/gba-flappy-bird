@@ -3,6 +3,7 @@
     
     #include "bn_core.h"
     #include "bn_vector.h"
+    #include "bn_random.h"
     #include "bn_keypad.h"
 
     #include "SceneEnum.hpp"
@@ -28,7 +29,7 @@
         FlappyData flappyData;
         int SUB_PIXEL_ZONE;
         bn::vector<bn::optional<PipeWall>, 4> pipes;
-        // PipeWall pipe2;
+        bn::random random;
         void load();
         void update();
         void leave();

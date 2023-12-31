@@ -10,13 +10,13 @@
         volatile int y;
         int gapSize;
         int color;
-        int PIPE_WIDTH;
-        int PIPE_HEIGHT;
-        int PIPE_WIDTH_HALF;
-        int PIPE_HEIGHT_HALF;
         bn::optional<bn::sprite_ptr> top_pipe;
         bn::optional<bn::sprite_ptr> bottom_pipe;
         public:
+            static const int PIPE_WIDTH = 32;
+            static const int PIPE_HEIGHT = 32;
+            static const int PIPE_WIDTH_HALF = 16;
+            static const int PIPE_HEIGHT_HALF = 16;
             PipeWall(int x, int y, int color, int gapSize);
             void setX(int);
             void setY(int);

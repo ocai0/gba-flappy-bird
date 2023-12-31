@@ -1,6 +1,6 @@
 #include "PipeWall.hpp"
 
-PipeWall::PipeWall(int _x, int _y, int _gapSize, int _color) : PIPE_WIDTH(32), PIPE_HEIGHT(32), PIPE_WIDTH_HALF(16), PIPE_HEIGHT_HALF(16) {
+PipeWall::PipeWall(int _x, int _y, int _gapSize, int _color) {
     this->gapSize = _gapSize;
     this->color = _color;
     this->createPipes();

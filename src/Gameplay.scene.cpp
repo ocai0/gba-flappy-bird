@@ -1,5 +1,9 @@
 #include "Scenes/Gameplay.scene.hpp"
 #define COLOR_WHITE 1
+#define PIPE_INITIAL_POSITION 144
+#define SCREEN_WIDTH_HALF 120
+#define SCREEN_HEIGHT_HALF 80
+#define GAP_BTW_PIPES 40
 
 int max(int a, int b) {
     return (a > b) * a + (b > a) * b;
@@ -11,8 +15,9 @@ int min(int a, int b) {
 
 Gameplay::Gameplay(SceneEnum* _mainController) : _currentScene(_mainController), flappy(0, 0) {
     this->status = ALIVE;
-    this->pipes.push_back(PipeWall(0, 0, 1, COLOR_WHITE));
-    this->pipes.push_back(PipeWall(32, 0, 2, COLOR_WHITE));
+    for(int index=0; index < this->pipes.max_size(); index++) {
+        this->pipes.push_back(PipeWall(PIPE_INITIAL_POSITION + (GAP_BTW_PIPES + PipeWall::PIPE_WIDTH) * index, this->random.get_int(-SCREEN_HEIGHT_HALF + 16, SCREEN_HEIGHT_HALF - 56), this->random.get_int(28, 38), COLOR_WHITE));
+    }
 }
 
 void Gameplay::manage() {
@@ -55,8 +60,12 @@ void Gameplay::update() {
     }
 
     for(int index = 0; index < this->pipes.size(); index++) {
-        bn::optional<PipeWall>* pipe = &this->pipes.at(index);
-        pipe->get()->setX(pipe->get()->getX() - (this->pipeSpeed >> this->SUB_PIXEL_ZONE));
+        this->random.update();
+        PipeWall* pipe = (&this->pipes.at(index))->get();
+        pipe->setX(pipe->getX() - (this->pipeSpeed >> this->SUB_PIXEL_ZONE));
+        if(pipe->getX() < -SCREEN_WIDTH_HALF - PipeWall::PIPE_WIDTH) {
+            pipe->setX(PIPE_INITIAL_POSITION);
+        }
     }
 
 
