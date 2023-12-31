@@ -59,10 +59,22 @@ void Gameplay::update() {
         this->flappyData.deltaY = max(this->flappyData.deltaY, 0);
     }
 
+
     for(int index = 0; index < this->pipes.size(); index++) {
         this->random.update();
         PipeWall* pipe = (&this->pipes.at(index))->get();
-        pipe->setX(pipe->getX() - (this->pipeSpeed >> this->SUB_PIXEL_ZONE));
+
+        int pipe_deltaX = pipe->getX() - (this->pipeSpeed >> this->SUB_PIXEL_ZONE);
+        int flappy_nextY = this->flappy.getY() + (this->flappyData.deltaY >> this->SUB_PIXEL_ZONE);
+
+        if(this->flappy.getX() - 5 > pipe_deltaX && this->flappy.getX() + this->flappy.getWidth() + 5 < pipe_deltaX + PipeWall::PIPE_WIDTH) {
+            if(flappy_nextY < pipe->getY() || flappy_nextY > pipe->getY() + pipe->getGapSize()) {
+                this->flappyData.deltaY = 0;
+            }
+        }
+        
+        pipe->setX(pipe_deltaX);
+
         if(pipe->getX() < -SCREEN_WIDTH_HALF - PipeWall::PIPE_WIDTH) {
             pipe->setX(PIPE_INITIAL_POSITION);
         }

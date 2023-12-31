@@ -35,3 +35,6 @@ int PipeWall::getX() {
 int PipeWall::getY() {
     return this->y;
 }
+int PipeWall::getGapSize() {
+    return this->gapSize;
+}

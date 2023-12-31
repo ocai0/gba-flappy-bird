@@ -22,6 +22,7 @@
             void setY(int);
             void createPipes();
             int getX();
+            int getGapSize();
             int getY();
     };
 

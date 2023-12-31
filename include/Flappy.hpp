@@ -21,6 +21,8 @@
             int getY();
             int getRotation();
             void update();
+            int getWidth();
+            int getHeight();
             CollisionBox getCollisionBox();
         private:
             int x;
@@ -28,6 +30,8 @@
             int rotation;
             int subX;
             int subY;
+            const int WIDTH = 10;
+            const int HEIGHT = 10;
             bn::sprite_ptr flappy_sprite = bn::sprite_items::flappy.create_sprite(0, 0);
             bn::sprite_animate_action<4> animation = bn::create_sprite_animate_action_forever(this->flappy_sprite, 6, bn::sprite_items::flappy.tiles_item(), 0, 1, 2, 1);
             CollisionBox _bbox;

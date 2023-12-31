@@ -41,3 +41,10 @@ void Flappy::update() {
 CollisionBox Flappy::getCollisionBox() {
     return this->_bbox;
 }
+
+int Flappy::getWidth() {
+    return this->WIDTH;
+}
+int Flappy::getHeight() {
+    return this->HEIGHT;
+}
