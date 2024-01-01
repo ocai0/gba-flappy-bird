@@ -14,10 +14,10 @@ int min(int a, int b) {
     return (a < b) * a + (b < a) * b;
 }
 
-Gameplay::Gameplay(SceneEnum* _mainController) : _currentScene(_mainController), flappy(0, 0) {
+Gameplay::Gameplay(SceneEnum* _mainController) : _currentScene(_mainController), flappy(0, 0), score(0, -64) {
     this->status = ALIVE;
     for(int index=0; index < this->pipes.max_size(); index++) {
-        this->pipes.push_back(PipeWall(PIPE_INITIAL_POSITION + (GAP_BTW_PIPES + PipeWall::PIPE_WIDTH) * index, this->random.get_int(-SCREEN_HEIGHT_HALF + 16, SCREEN_HEIGHT_HALF - 56), this->random.get_int(28, 38), COLOR_WHITE));
+        this->pipes.push_back(PipeWall(PIPE_INITIAL_POSITION + (GAP_BTW_PIPES + PipeWall::PIPE_WIDTH) * index, this->random.get_int(-SCREEN_HEIGHT_HALF + 16, SCREEN_HEIGHT_HALF - 56), this->random.get_int(28, 38) + 20, COLOR_WHITE));
     }
 }
 
@@ -30,7 +30,7 @@ void Gameplay::manage() {
 void Gameplay::load() {
     this->flappyData.deltaY = 0;
     this->pipeSpeed = 0;
-    this->score = 0;
+    this->score.setValue(0);
     this->MAX_PIPE_SPEED = 16;
     this->flappyData.gravity = 2;
     this->flappyData.direction = -1;
@@ -83,9 +83,8 @@ void Gameplay::update() {
 
             //check if scored a point after pass the middle of them
             if(this->flappy.isAlive() && (pipe->getScoredFlag() == false) && (flappy_nextX + 2) > pipe_deltaX + PipeWall::PIPE_WIDTH_HALF) {
-                this->score++;
+                this->score.setValue(this->score.getValue() + 1);
                 pipe->setScoredFlag(true);
-                BN_LOG("Score: ", this->score);
             }
             else {
 

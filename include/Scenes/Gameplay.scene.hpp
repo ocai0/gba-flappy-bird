@@ -10,7 +10,9 @@
     #include "SceneStatus.hpp"
     #include "Flappy.hpp"
     #include "PipeWall.hpp"
+    #include "Score.hpp"
     #include "bn_sprite_items_debug.h"
+
     typedef struct {
         bn::optional<bn::sprite_ptr> top_left;
         bn::optional<bn::sprite_ptr> top_right;
@@ -33,7 +35,7 @@
         Flappy flappy;
         int pipeSpeed;
         int MAX_PIPE_SPEED;
-        int score;
+        Score score;
         FlappyData flappyData;
         int SUB_PIXEL_ZONE;
         bn::vector<bn::optional<PipeWall>, 4> pipes;
