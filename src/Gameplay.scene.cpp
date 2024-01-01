@@ -40,6 +40,8 @@ void Gameplay::load() {
 
 void Gameplay::update() {
 
+    this->flappyData.deltaX = 1 * (bn::keypad::right_held() - bn::keypad::left_held());
+
     this->pipeSpeed += 16;
     if(this->pipeSpeed > this->MAX_PIPE_SPEED) this->pipeSpeed = 0;
 
@@ -63,13 +65,14 @@ void Gameplay::update() {
     for(int index = 0; index < this->pipes.size(); index++) {
         this->random.update();
         PipeWall* pipe = (&this->pipes.at(index))->get();
-
         int pipe_deltaX = pipe->getX() - (this->pipeSpeed >> this->SUB_PIXEL_ZONE);
+        int flappy_nextX = this->flappy.getX() + (this->flappyData.deltaX);
         int flappy_nextY = this->flappy.getY() + (this->flappyData.deltaY >> this->SUB_PIXEL_ZONE);
 
-        if(this->flappy.getX() - 5 > pipe_deltaX && this->flappy.getX() + this->flappy.getWidth() + 5 < pipe_deltaX + PipeWall::PIPE_WIDTH) {
-            if(flappy_nextY < pipe->getY() || flappy_nextY > pipe->getY() + pipe->getGapSize()) {
+        if( flappy_nextX + 2 > pipe_deltaX && flappy_nextX - 1 < pipe_deltaX + PipeWall::PIPE_WIDTH ) {
+            if(flappy_nextY - 4 < pipe->getY() || flappy_nextY > pipe->getY() - 6 + pipe->getGapSize()) {
                 this->flappyData.deltaY = 0;
+                this->flappyData.deltaX = 0;
             }
         }
         
@@ -81,6 +84,7 @@ void Gameplay::update() {
     }
 
 
+    this->flappy.setX(this->flappy.getX() + this->flappyData.deltaX);
     this->flappy.setY(this->flappy.getY() + (this->flappyData.deltaY >> this->SUB_PIXEL_ZONE));
     this->flappy.update();
     bn::core::update();
