@@ -10,6 +10,13 @@
     #include "SceneStatus.hpp"
     #include "Flappy.hpp"
     #include "PipeWall.hpp"
+    #include "bn_sprite_items_debug.h"
+    typedef struct {
+        bn::optional<bn::sprite_ptr> top_left;
+        bn::optional<bn::sprite_ptr> top_right;
+        bn::optional<bn::sprite_ptr> bottom_left;
+        bn::optional<bn::sprite_ptr> bottom_right;
+    } DebugPoint;
     
     typedef struct {
         int deltaX;
@@ -36,7 +43,9 @@
         void paused();
         public:
             SceneStatus status;
+            DebugPoint debugPoint;
             Gameplay(SceneEnum*);
+            void updateDebugPoints(int, int, int, int);
             void manage();
     };
 

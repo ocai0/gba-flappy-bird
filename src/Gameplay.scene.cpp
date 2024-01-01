@@ -36,6 +36,11 @@ void Gameplay::load() {
     this->SUB_PIXEL_ZONE = 4; // the subpixel area is the 4 rightmost bits of the variable coords (X and Y)
     this->flappyData.VERTICAL_JUMP_SPEED = (6 * (2 * this->SUB_PIXEL_ZONE)) * -1;
     this->flappy.setRotation(90);
+
+    // this->debugPoint.top_left = bn::sprite_items::debug.create_sprite(0, 0);
+    // this->debugPoint.top_right = bn::sprite_items::debug.create_sprite(0, 0);
+    // this->debugPoint.bottom_left = bn::sprite_items::debug.create_sprite(0, 0);
+    // this->debugPoint.bottom_right = bn::sprite_items::debug.create_sprite(0, 0);
 }
 
 void Gameplay::update() {
@@ -61,13 +66,12 @@ void Gameplay::update() {
         this->flappyData.deltaY = max(this->flappyData.deltaY, 0);
     }
 
+    int flappy_nextX = this->flappy.getX() + (this->flappyData.deltaX);
+    int flappy_nextY = this->flappy.getY() + (this->flappyData.deltaY >> this->SUB_PIXEL_ZONE);
 
     for(int index = 0; index < this->pipes.size(); index++) {
-        this->random.update();
         PipeWall* pipe = (&this->pipes.at(index))->get();
         int pipe_deltaX = pipe->getX() - (this->pipeSpeed >> this->SUB_PIXEL_ZONE);
-        int flappy_nextX = this->flappy.getX() + (this->flappyData.deltaX);
-        int flappy_nextY = this->flappy.getY() + (this->flappyData.deltaY >> this->SUB_PIXEL_ZONE);
 
         if( flappy_nextX + 2 > pipe_deltaX && flappy_nextX - 1 < pipe_deltaX + PipeWall::PIPE_WIDTH ) {
             if(flappy_nextY - 4 < pipe->getY() || flappy_nextY > pipe->getY() - 6 + pipe->getGapSize()) {
@@ -79,11 +83,11 @@ void Gameplay::update() {
         pipe->setX(pipe_deltaX);
 
         if(pipe->getX() < -SCREEN_WIDTH_HALF - PipeWall::PIPE_WIDTH) {
+            this->random.update();
             pipe->setX(PIPE_INITIAL_POSITION);
         }
     }
-
-
+    
     this->flappy.setX(this->flappy.getX() + this->flappyData.deltaX);
     this->flappy.setY(this->flappy.getY() + (this->flappyData.deltaY >> this->SUB_PIXEL_ZONE));
     this->flappy.update();
@@ -93,3 +97,17 @@ void Gameplay::update() {
 void Gameplay::leave() {}
 
 void Gameplay::paused() {}
+
+void Gameplay::updateDebugPoints(int x_start, int x_end, int y_start, int y_end) {
+    this->debugPoint.top_left.get()->set_x(x_start - 4);
+    this->debugPoint.top_left.get()->set_y(y_start + 4);
+
+    this->debugPoint.top_right.get()->set_x(x_end + 4);
+    this->debugPoint.top_right.get()->set_y(y_start + 4);
+
+    this->debugPoint.bottom_left.get()->set_x(x_start - 4);
+    this->debugPoint.bottom_left.get()->set_y(y_end - 4);
+
+    this->debugPoint.bottom_right.get()->set_x(x_end + 4);
+    this->debugPoint.bottom_right.get()->set_y(y_end - 4);
+}
