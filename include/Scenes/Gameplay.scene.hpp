@@ -33,6 +33,7 @@
         Flappy flappy;
         int pipeSpeed;
         int MAX_PIPE_SPEED;
+        int score;
         FlappyData flappyData;
         int SUB_PIXEL_ZONE;
         bn::vector<bn::optional<PipeWall>, 4> pipes;

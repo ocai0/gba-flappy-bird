@@ -23,11 +23,14 @@
             void update();
             int getWidth();
             int getHeight();
+            bool isAlive();
+            void setAliveFlag(bool);
             CollisionBox getCollisionBox();
         private:
             int x;
             int y;
             int rotation;
+            bool alive;
             int subX;
             int subY;
             const int WIDTH = 10;

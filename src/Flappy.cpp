@@ -2,6 +2,7 @@
 
 Flappy::Flappy(int _x, int _y) {
     this->setXY(_x, _y);
+    this->setAliveFlag(true);
 }
 
 void Flappy::setX(int _x) {
@@ -47,4 +48,11 @@ int Flappy::getWidth() {
 }
 int Flappy::getHeight() {
     return this->HEIGHT;
+}
+
+bool Flappy::isAlive() {
+    return this->alive ;
+}
+void Flappy::setAliveFlag(bool _alive) {
+    this->alive = _alive;
 }

@@ -6,6 +6,7 @@ PipeWall::PipeWall(int _x, int _y, int _gapSize, int _color) {
     this->createPipes();
     this->setX(_x);
     this->setY(_y);
+    this->setScoredFlag(false);
     this->top_pipe->set_vertical_flip(true);
     this->top_pipe->set_horizontal_flip(true);
 }
@@ -37,4 +38,10 @@ int PipeWall::getY() {
 }
 int PipeWall::getGapSize() {
     return this->gapSize;
+}
+void PipeWall::setScoredFlag(bool _scored) {
+    this->scored = _scored;
+}
+bool PipeWall::getScoredFlag() {
+    return this->scored;
 }

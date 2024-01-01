@@ -10,6 +10,7 @@
         volatile int y;
         int gapSize;
         int color;
+        bool scored;
         bn::optional<bn::sprite_ptr> top_pipe;
         bn::optional<bn::sprite_ptr> bottom_pipe;
         public:
@@ -24,6 +25,8 @@
             int getX();
             int getGapSize();
             int getY();
+            void setScoredFlag(bool);
+            bool getScoredFlag();
     };
 
 #endif

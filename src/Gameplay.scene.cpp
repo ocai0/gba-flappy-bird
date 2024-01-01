@@ -1,4 +1,5 @@
 #include "Scenes/Gameplay.scene.hpp"
+#include "bn_log.h"
 #define COLOR_WHITE 1
 #define PIPE_INITIAL_POSITION 144
 #define SCREEN_WIDTH_HALF 120
@@ -29,6 +30,7 @@ void Gameplay::manage() {
 void Gameplay::load() {
     this->flappyData.deltaY = 0;
     this->pipeSpeed = 0;
+    this->score = 0;
     this->MAX_PIPE_SPEED = 16;
     this->flappyData.gravity = 2;
     this->flappyData.direction = -1;
@@ -74,9 +76,19 @@ void Gameplay::update() {
         int pipe_deltaX = pipe->getX() - (this->pipeSpeed >> this->SUB_PIXEL_ZONE);
 
         if( flappy_nextX + 2 > pipe_deltaX && flappy_nextX - 1 < pipe_deltaX + PipeWall::PIPE_WIDTH ) {
+            //check if is colliding with any of the pipes
             if(flappy_nextY - 4 < pipe->getY() || flappy_nextY > pipe->getY() - 6 + pipe->getGapSize()) {
-                this->flappyData.deltaY = 0;
-                this->flappyData.deltaX = 0;
+                this->flappy.setAliveFlag(false);
+            }
+
+            //check if scored a point after pass the middle of them
+            if(this->flappy.isAlive() && (pipe->getScoredFlag() == false) && (flappy_nextX + 2) > pipe_deltaX + PipeWall::PIPE_WIDTH_HALF) {
+                this->score++;
+                pipe->setScoredFlag(true);
+                BN_LOG("Score: ", this->score);
+            }
+            else {
+
             }
         }
         
@@ -85,6 +97,7 @@ void Gameplay::update() {
         if(pipe->getX() < -SCREEN_WIDTH_HALF - PipeWall::PIPE_WIDTH) {
             this->random.update();
             pipe->setX(PIPE_INITIAL_POSITION);
+            pipe->setScoredFlag(false);
         }
     }
     
