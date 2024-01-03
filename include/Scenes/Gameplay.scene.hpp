@@ -44,6 +44,8 @@
         void update();
         void leave();
         void paused();
+        void setup();
+        void showGameOverScreen();
         public:
             SceneStatus status;
             DebugPoint debugPoint;

@@ -13,11 +13,9 @@ PipeWall::PipeWall(int _x, int _y, int _gapSize, int _color) {
 
 void PipeWall::createPipes() {
     this->top_pipe = bn::sprite_items::pipe.create_sprite(0, 0);
-    this->top_pipe.value().set_bg_priority(1);
     this->top_pipe.value().set_visible(true);
 
     this->bottom_pipe = bn::sprite_items::pipe.create_sprite(0, 0);
-    this->top_pipe.value().set_bg_priority(1);
     this->bottom_pipe.value().set_visible(true);
 }
 void PipeWall::setX(int _x) {
