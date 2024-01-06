@@ -42,9 +42,9 @@ Gameplay::Gameplay() : flappy(0, 0), score(0, -64) {
 }
 
 void Gameplay::manage() {
-    this->load();
-    while(true) this->update();
-    this->leave();
+    // this->load();
+    // while(true) this->update();
+    // this->leave();
 }
 
 void Gameplay::load() {
@@ -64,62 +64,64 @@ void Gameplay::load() {
 }
 
 bn::optional<SceneType> Gameplay::update() {
-    BN_LOG("Gameplay update");
-    this->flappyData.deltaX = 1 * (bn::keypad::right_held() - bn::keypad::left_held());
+    while(1) {
+        BN_LOG("Gameplay update");
+        this->flappyData.deltaX = 1 * (bn::keypad::right_held() - bn::keypad::left_held());
 
-    this->pipeSpeed += 16;
-    if(this->pipeSpeed > this->MAX_PIPE_SPEED) this->pipeSpeed = 0;
+        this->pipeSpeed += 16;
+        if(this->pipeSpeed > this->MAX_PIPE_SPEED) this->pipeSpeed = 0;
 
-    if(this->flappyData.deltaY < 0) this->flappy.setRotation(this->flappy.getRotation() - 1);
-    else this->flappy.setRotation(this->flappy.getRotation() - 5);
+        if(this->flappyData.deltaY < 0) this->flappy.setRotation(this->flappy.getRotation() - 1);
+        else this->flappy.setRotation(this->flappy.getRotation() - 5);
 
-    this->flappyData.deltaY += this->flappyData.gravity;
-    if(this->flappyData.deltaY > this->flappyData.MAX_FALL_SPEED) this->flappyData.deltaY = this->flappyData.MAX_FALL_SPEED;
+        this->flappyData.deltaY += this->flappyData.gravity;
+        if(this->flappyData.deltaY > this->flappyData.MAX_FALL_SPEED) this->flappyData.deltaY = this->flappyData.MAX_FALL_SPEED;
 
-    if(bn::keypad::a_pressed()) {
-        if(this->flappy.getRotation() + 120 > 180) this->flappy.setRotation(180);
-        else this->flappy.setRotation(this->flappy.getRotation() + 120);
+        if(bn::keypad::a_pressed()) {
+            if(this->flappy.getRotation() + 120 > 180) this->flappy.setRotation(180);
+            else this->flappy.setRotation(this->flappy.getRotation() + 120);
 
-        this->flappyData.deltaY = this->flappyData.VERTICAL_JUMP_SPEED;
-    }
-    if(this->flappyData.deltaY < 0 && bn::keypad::a_released()) {
-        this->flappyData.deltaY = max(this->flappyData.deltaY, 0);
-    }
+            this->flappyData.deltaY = this->flappyData.VERTICAL_JUMP_SPEED;
+        }
+        if(this->flappyData.deltaY < 0 && bn::keypad::a_released()) {
+            this->flappyData.deltaY = max(this->flappyData.deltaY, 0);
+        }
 
-    int flappy_nextX = this->flappy.getX() + (this->flappyData.deltaX);
-    int flappy_nextY = this->flappy.getY() + (this->flappyData.deltaY >> this->SUB_PIXEL_ZONE);
+        int flappy_nextX = this->flappy.getX() + (this->flappyData.deltaX);
+        int flappy_nextY = this->flappy.getY() + (this->flappyData.deltaY >> this->SUB_PIXEL_ZONE);
 
-    for(int index = 0; index < this->pipes.size(); index++) {
-        PipeWall* pipe = (&this->pipes.at(index))->get();
-        int pipe_deltaX = pipe->getX() - (this->pipeSpeed >> this->SUB_PIXEL_ZONE);
+        for(int index = 0; index < this->pipes.size(); index++) {
+            PipeWall* pipe = (&this->pipes.at(index))->get();
+            int pipe_deltaX = pipe->getX() - (this->pipeSpeed >> this->SUB_PIXEL_ZONE);
 
-        if( flappy_nextX + 2 > pipe_deltaX && flappy_nextX - 1 < pipe_deltaX + PipeWall::PIPE_WIDTH ) {
-            //check if is colliding with any of the pipes
-            if(flappy_nextY - 4 < pipe->getY() || flappy_nextY > pipe->getY() - 6 + pipe->getGapSize()) {
-                this->flappy.setAliveFlag(false);
+            if( flappy_nextX + 2 > pipe_deltaX && flappy_nextX - 1 < pipe_deltaX + PipeWall::PIPE_WIDTH ) {
+                //check if is colliding with any of the pipes
+                if(flappy_nextY - 4 < pipe->getY() || flappy_nextY > pipe->getY() - 6 + pipe->getGapSize()) {
+                    this->flappy.setAliveFlag(false);
+                }
+
+                //check if scored a point after pass the middle of them
+                if(this->flappy.isAlive() && (pipe->getScoredFlag() == false) && (flappy_nextX + 2) > pipe_deltaX + PipeWall::PIPE_WIDTH_HALF) {
+                    this->score.setValue(this->score.getValue() + 1);
+                    pipe->setScoredFlag(true);
+                }
             }
+            
+            pipe->setX(pipe_deltaX);
 
-            //check if scored a point after pass the middle of them
-            if(this->flappy.isAlive() && (pipe->getScoredFlag() == false) && (flappy_nextX + 2) > pipe_deltaX + PipeWall::PIPE_WIDTH_HALF) {
-                this->score.setValue(this->score.getValue() + 1);
-                pipe->setScoredFlag(true);
+            if(pipe->getX() < -SCREEN_WIDTH_HALF - PipeWall::PIPE_WIDTH) {
+                this->random.update();
+                pipe->setX(PIPE_INITIAL_POSITION);
+                pipe->setScoredFlag(false);
             }
         }
         
-        pipe->setX(pipe_deltaX);
-
-        if(pipe->getX() < -SCREEN_WIDTH_HALF - PipeWall::PIPE_WIDTH) {
-            this->random.update();
-            pipe->setX(PIPE_INITIAL_POSITION);
-            pipe->setScoredFlag(false);
-        }
+        this->flappy.setX(this->flappy.getX() + this->flappyData.deltaX);
+        this->flappy.setY(this->flappy.getY() + (this->flappyData.deltaY >> this->SUB_PIXEL_ZONE));
+        this->flappy.update();
+        this->score.setValue(this->score.getValue()); // keep the score above all other sprites
+        bn::core::update();
     }
-    
-    this->flappy.setX(this->flappy.getX() + this->flappyData.deltaX);
-    this->flappy.setY(this->flappy.getY() + (this->flappyData.deltaY >> this->SUB_PIXEL_ZONE));
-    this->flappy.update();
-    this->score.setValue(this->score.getValue()); // keep the score above all other sprites
-    bn::core::update();
 }
 
 void Gameplay::leave() {

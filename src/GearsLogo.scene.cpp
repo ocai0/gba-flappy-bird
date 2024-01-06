@@ -8,5 +8,5 @@ GearsLogo::GearsLogo() {
 }
 
 bn::optional<SceneType> GearsLogo::update() {
-
+    return SceneType::GAMEPLAY;
 }

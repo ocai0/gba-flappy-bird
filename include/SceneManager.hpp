@@ -5,7 +5,7 @@
     #include "Base/Scene.hpp"
     #include "Base/SceneType.enum.hpp"
 
-    // #include "Scenes/Gameplay.scene.hpp"
+    #include "Scenes/Gameplay.scene.hpp"
     #include "Scenes/GearsLogo.scene.hpp"
 
     class SceneManager {

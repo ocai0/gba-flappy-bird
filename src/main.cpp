@@ -3,9 +3,12 @@
 #include "SceneManager.hpp"
 
 int main() {
-
+    bn::core::init();
     SceneManager sceneManager(SceneType::GEARS_LOGO);
     sceneManager.loadScene();
-    sceneManager.update();
+    while(true) {
+        sceneManager.update();
+        bn::core::update();
+    }
     BN_LOG("End main()");
 }

@@ -18,9 +18,9 @@ void SceneManager::loadScene() {
             }
         case SceneType::GAMEPLAY: 
             {
-                // BN_LOG("SceneType::GAMEPLAY before");
-                // currentScene.reset(new Scenes::Gameplay);
-                // BN_LOG("SceneType::GAMEPLAY after");
+                BN_LOG("SceneType::GAMEPLAY before");
+                currentScene.reset(new Scenes::Gameplay);
+                BN_LOG("SceneType::GAMEPLAY after");
                 break;
             }
     }
