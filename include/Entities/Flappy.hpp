@@ -1,7 +1,7 @@
 #ifndef FLAPPY_H_
 #define FLAPPY_H_
 
-    #include "CollisionBox.hpp"
+    #include "Base/CollisionBox.hpp"
 
     #include "bn_sprite_ptr.h"
     #include "bn_sprite_tiles_ptr.h"

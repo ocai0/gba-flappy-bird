@@ -1,9 +1,11 @@
 #include "Scenes/GearsLogo.scene.hpp"
 
-GearsLogo::GearsLogo(SceneEnum* mainController) : _currentScene(mainController) {}
+using namespace Scenes;
+
+GearsLogo::GearsLogo() {}
 
 void GearsLogo::load() {}
 
-void GearsLogo::update() {}
+bn::optional<SceneType> GearsLogo::update() {}
 
 void GearsLogo::leave() {}

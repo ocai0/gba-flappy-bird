@@ -1,17 +1,21 @@
 #ifndef GEARS_LOGO_SCENE_H_
 #define GEARS_LOGO_SCENE_H_
 
-    #include "SceneEnum.hpp"
-    #include "SceneStatus.hpp"
+    #include "bn_optional.h"
     
-    class GearsLogo {
-        SceneEnum* _currentScene;
-        public:
-            SceneStatus status;
-            GearsLogo(SceneEnum*);
-            void load();
-            void update();
-            void leave();
-    };
+    #include "Base/Scene.hpp"
+    #include "Base/SceneType.enum.hpp"
+    
+    namespace Scenes {
+
+        class GearsLogo : public Scene {
+            public:
+                GearsLogo();
+                void load();
+                bn::optional<SceneType> update();
+                void leave();
+        };
+
+    }
 
 #endif

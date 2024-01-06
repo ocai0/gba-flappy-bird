@@ -1,4 +1,4 @@
-#include "Score.hpp"
+#include "Entities/Score.hpp"
 
 Score::Score(int _x, int _y) : text_generator(big_score_font) {
     this->text_generator.set_center_alignment();

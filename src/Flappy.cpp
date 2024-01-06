@@ -1,4 +1,4 @@
-#include "Flappy.hpp"
+#include "Entities/Flappy.hpp"
 
 Flappy::Flappy(int _x, int _y) {
     this->setXY(_x, _y);

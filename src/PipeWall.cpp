@@ -1,4 +1,4 @@
-#include "PipeWall.hpp"
+#include "Entities/PipeWall.hpp"
 
 PipeWall::PipeWall(int _x, int _y, int _gapSize, int _color) {
     this->gapSize = _gapSize;

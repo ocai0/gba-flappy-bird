@@ -6,11 +6,11 @@
     #include "bn_random.h"
     #include "bn_keypad.h"
 
-    #include "SceneEnum.hpp"
-    #include "SceneStatus.hpp"
-    #include "Flappy.hpp"
-    #include "PipeWall.hpp"
-    #include "Score.hpp"
+    #include "Base/Scene.hpp"
+
+    #include "Entities/Flappy.hpp"
+    #include "Entities/PipeWall.hpp"
+    #include "Entities/Score.hpp"
     #include "bn_sprite_items_debug.h"
 
     typedef struct {
@@ -30,28 +30,28 @@
         int MAX_FALL_SPEED;
     } FlappyData;
 
-    class Gameplay {
-        SceneEnum* _currentScene;
-        Flappy flappy;
-        int pipeSpeed;
-        int MAX_PIPE_SPEED;
-        Score score;
-        FlappyData flappyData;
-        int SUB_PIXEL_ZONE;
-        bn::vector<bn::optional<PipeWall>, 4> pipes;
-        bn::random random;
-        void load();
-        void update();
-        void leave();
-        void paused();
-        void setup();
-        void showGameOverScreen();
-        public:
-            SceneStatus status;
-            DebugPoint debugPoint;
-            Gameplay(SceneEnum*);
-            void updateDebugPoints(int, int, int, int);
-            void manage();
-    };
+    namespace Scenes {
 
+        class Gameplay : public Scene {
+            Flappy flappy;
+            int pipeSpeed;
+            int MAX_PIPE_SPEED;
+            Score score;
+            FlappyData flappyData;
+            int SUB_PIXEL_ZONE;
+            bn::vector<bn::optional<PipeWall>, 4> pipes;
+            bn::random random;
+            void load();
+            bn::optional<SceneType> update();
+            void leave();
+            void paused();
+            void setup();
+            void showGameOverScreen();
+            public:
+                DebugPoint debugPoint;
+                Gameplay();
+                void updateDebugPoints(int, int, int, int);
+                void manage();
+        };
+    }
 #endif

@@ -5,7 +5,7 @@
     #include "bn_sprite_ptr.h"
     #include "bn_string.h"
 
-    #include "big_score_font.hpp"
+    #include "Fonts/Score.font.hpp"
 
     class Score {
         int value = 0;

@@ -6,6 +6,8 @@
 #define SCREEN_HEIGHT_HALF 80
 #define GAP_BTW_PIPES 40
 
+using namespace Scenes;
+
 int max(int a, int b) {
     return (a > b) * a + (b > a) * b;
 }
@@ -14,9 +16,9 @@ int min(int a, int b) {
     return (a < b) * a + (b < a) * b;
 }
 
+
 void Gameplay::setup() {
     this->score.setValue(0);
-    this->status = ALIVE;
     this->flappyData.deltaY = 0;
     this->flappy.setRotation(90);
     this->flappy.setX(0);
@@ -32,20 +34,21 @@ void Gameplay::setup() {
     }
 }
 
-Gameplay::Gameplay(SceneEnum* _mainController) : _currentScene(_mainController), flappy(0, 0), score(0, -64) {
-    this->status = ALIVE;
+Gameplay::Gameplay() : flappy(0, 0), score(0, -64) {
     for(int index=0; index < this->pipes.max_size(); index++) {
         this->pipes.push_back(PipeWall(PIPE_INITIAL_POSITION + (GAP_BTW_PIPES + PipeWall::PIPE_WIDTH) * index, this->random.get_int(-SCREEN_HEIGHT_HALF + 16, SCREEN_HEIGHT_HALF - 56), this->random.get_int(28, 38) + 20, COLOR_WHITE));
     }
+    BN_LOG("Gameplay construct");
 }
 
 void Gameplay::manage() {
     this->load();
-    while(this->status == ALIVE) this->update();
+    while(true) this->update();
     this->leave();
 }
 
 void Gameplay::load() {
+    BN_LOG("Gameplay load");
     this->score.setValue(0);
     this->MAX_PIPE_SPEED = 16;
     this->flappyData.gravity = 2;
@@ -60,8 +63,8 @@ void Gameplay::load() {
     // this->debugPoint.bottom_right = bn::sprite_items::debug.create_sprite(0, 0);
 }
 
-void Gameplay::update() {
-
+bn::optional<SceneType> Gameplay::update() {
+    BN_LOG("Gameplay update");
     this->flappyData.deltaX = 1 * (bn::keypad::right_held() - bn::keypad::left_held());
 
     this->pipeSpeed += 16;
@@ -94,7 +97,6 @@ void Gameplay::update() {
             //check if is colliding with any of the pipes
             if(flappy_nextY - 4 < pipe->getY() || flappy_nextY > pipe->getY() - 6 + pipe->getGapSize()) {
                 this->flappy.setAliveFlag(false);
-                this->status = LEAVING;
             }
 
             //check if scored a point after pass the middle of them
