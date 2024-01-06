@@ -35,10 +35,10 @@ void Gameplay::setup() {
 }
 
 Gameplay::Gameplay() : flappy(0, 0), score(0, -64) {
+    BN_LOG("Gameplay construct");
     for(int index=0; index < this->pipes.max_size(); index++) {
         this->pipes.push_back(PipeWall(PIPE_INITIAL_POSITION + (GAP_BTW_PIPES + PipeWall::PIPE_WIDTH) * index, this->random.get_int(-SCREEN_HEIGHT_HALF + 16, SCREEN_HEIGHT_HALF - 56), this->random.get_int(28, 38) + 20, COLOR_WHITE));
     }
-    BN_LOG("Gameplay construct");
 }
 
 void Gameplay::manage() {

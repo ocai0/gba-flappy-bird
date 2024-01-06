@@ -1,11 +1,12 @@
 #include "Scenes/GearsLogo.scene.hpp"
+#include "bn_log.h"
 
 using namespace Scenes;
 
-GearsLogo::GearsLogo() {}
+GearsLogo::GearsLogo() {
+    BN_LOG("GearsLogo::GearsLogo");
+}
 
-void GearsLogo::load() {}
+bn::optional<SceneType> GearsLogo::update() {
 
-bn::optional<SceneType> GearsLogo::update() {}
-
-void GearsLogo::leave() {}
+}

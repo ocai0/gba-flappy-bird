@@ -4,43 +4,8 @@
 
 int main() {
 
-    SceneManager sceneManager(SceneType::GAMEPLAY);
-
-    while(true) {
-        BN_LOG("while true do main");
-        sceneManager.update();
-        bn::core::update();
-    }
+    SceneManager sceneManager(SceneType::GEARS_LOGO);
+    sceneManager.loadScene();
+    sceneManager.update();
+    BN_LOG("End main()");
 }
-
-// int main() {
-//     bn::core::init();
-
-//     SceneEnum currentScene = GAMEPLAY;
-
-//     while(true) {
-
-//         switch(currentScene) {
-//             case GEARS_LOGO:
-//                 {
-//                     GearsLogo logo(&currentScene);
-//                     logo.update();
-//                     break;
-//                 }
-//             case MAIN_MENU:
-//                 {
-//                     MainMenu mainMenu(&currentScene);
-//                     mainMenu.manage();
-//                     break;
-//                 }
-//             case GAMEPLAY:
-//                 {
-//                     Gameplay gameplay(&currentScene);
-//                     gameplay.manage();
-//                     break;
-//                 }
-//         }
-        
-//         bn::core::update();
-//     }
-// }

@@ -11,9 +11,7 @@
         class GearsLogo : public Scene {
             public:
                 GearsLogo();
-                void load();
                 bn::optional<SceneType> update();
-                void leave();
         };
 
     }

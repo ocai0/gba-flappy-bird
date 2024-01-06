@@ -1,33 +1,54 @@
 #include "SceneManager.hpp"
 #include "bn_log.h"
 
-
 SceneManager::SceneManager(SceneType _nextScene): nextScene(_nextScene) {
-    this->loadScene();
+    BN_LOG("SceneManager::SceneManager");
 }
 
 void SceneManager::loadScene() {
-    switch(*this->nextScene) {
-        // BN_LOG(int(*this->nextScene));
-        case SceneType::GEARS_LOGO: 
-        default:
+    // BN_LOG(int(*this->nextScene));
+    BN_LOG("SceneManager::LoadScene");
+    switch(*nextScene) {
+        case SceneType::GEARS_LOGO:
             {
-                this->currentScene.reset(new Scenes::GearsLogo());
+                BN_LOG("SceneType::GEARS_LOGO before"); 
+                currentScene.reset(new Scenes::GearsLogo());
+                BN_LOG("SceneType::GEARS_LOGO after");
                 break;
             }
         case SceneType::GAMEPLAY: 
             {
-                this->currentScene.reset(new Scenes::Gameplay());
-                BN_LOG("scenemanager");
+                // BN_LOG("SceneType::GAMEPLAY before");
+                // currentScene.reset(new Scenes::Gameplay);
+                // BN_LOG("SceneType::GAMEPLAY after");
                 break;
             }
     }
-    this->update();
-    bn::core::update();
 }
 
 void SceneManager::update() {
-    BN_LOG("ala");
-    this->nextScene = this->currentScene->update();
-    this->loadScene();
+    int waitFrames = 30;
+
+    while(1) {
+            
+        
+        if(currentScene) {
+            nextScene = currentScene->update();
+        }
+
+        if(nextScene) {
+            if(currentScene) {
+                currentScene.reset();
+                waitFrames = 30;
+            }
+            bn::core::update();
+            --waitFrames;
+
+            if(!waitFrames) {
+                this->loadScene();
+
+            }
+
+        }
+    }
 }
