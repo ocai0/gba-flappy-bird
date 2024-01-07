@@ -3,10 +3,8 @@
 
 using namespace Scenes;
 
-GearsLogo::GearsLogo() : flappy(0, 0, 10, 10, 0, 0), pipe(0, -20, 30, 1), _box(0, 0, 16, 16) {
+GearsLogo::GearsLogo() : flappy(0, 0, 10, 10, 0, 0), pipe(0, -20, 30, 1) {
     this->flappy.setRotation(90);
-    this->flappy.setVisible(false);
-    this->pipe.setVisible(false);
 }
 
 bn::optional<SceneType> GearsLogo::update() {
