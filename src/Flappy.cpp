@@ -1,6 +1,7 @@
 #include "Entities/Flappy.hpp"
+#include "bn_log.h"
 
-Flappy::Flappy(int _x, int _y, int _width, int _height, int _offsetX, int _offsetY): width(_width), height(_height), offsetX(_offsetX), offsetY(_offsetY) {
+Flappy::Flappy(int _x, int _y, int _width, int _height, int _offsetX, int _offsetY): width(_width), height(_height), offsetX(_offsetX), offsetY(_offsetY), debugBox(_x, _y, _width, _height) {
     this->setX(_x);
     this->setY(_y);
     this->setAliveFlag(true);
@@ -10,28 +11,22 @@ int Flappy::getX() {
     return this->x;
 }
 void Flappy::setX(int _x) {
-    this->x = _x;
-    this->flappy_sprite.set_x(this->x);
+    this->delta.x = _x;
 }
 
 int Flappy::getY() {
     return this->y;
 }
 void Flappy::setY(int _y) {
-    this->y = _y;
-    this->flappy_sprite.set_y(this->y);
+    this->delta.y = _y;
 }
 
 int Flappy::getRotation() {
     return this->rotation;
 }
 void Flappy::setRotation(int _angle) {
-    this->rotation = _angle;
-    
-    if(this->rotation > 360) this->rotation = 360;
-    if(this->rotation < 0) this->rotation = 0;
-
-    this->flappy_sprite.set_rotation_angle(this->rotation);
+    this->delta.rotation = clamp(_angle, 0, 360);
+    BN_LOG("this->delta.rotation: ", this->delta.rotation);
 }
 
 int Flappy::getWidth() {
@@ -56,10 +51,10 @@ void Flappy::setAliveFlag(bool _alive) {
 }
 
 bool Flappy::isColliding() {
-    return this->collided;
+    return this->colliding;
 }
-void Flappy::setCollisionFlag(bool _collided) {
-    this->collided = _collided;
+void Flappy::setCollidingFlag(bool _colliding) {
+    this->colliding = _colliding;
 }
 
 
@@ -75,16 +70,26 @@ void Flappy::setSkin(Skin _skinType) {
     }
 }
 void Flappy::update() {
-    this->setX(this->getX() + this->delta.x);
-    this->setY(this->getY() + this->delta.y);
-    this->setRotation(this->delta.rotation);
+    this->x = this->delta.x;
+    this->y = this->delta.y;
+    this->rotation = this->delta.rotation;
 
+    this->flappy_sprite.set_x(this->x);
+    this->flappy_sprite.set_y(this->y);
+    this->flappy_sprite.set_rotation_angle(this->delta.rotation);
+
+    this->debugBox.setX(this->x);
+    this->debugBox.setY(this->y);
+    this->debugBox.update();
     this->animation.update();
 }
-
 void Flappy::calculateValues() {
     // handleVerticalMovement
     // HandleHorizontalMovement
 }
-
 void Flappy::playDeathAnimation() {}
+
+void Flappy::setVisible(bool visible) {
+    this->flappy_sprite.set_visible(visible);
+    this->debugBox.setVisible(visible);
+}

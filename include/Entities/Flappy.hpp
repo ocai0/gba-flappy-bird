@@ -5,21 +5,25 @@
     #include "bn_sprite_tiles_ptr.h"
     #include "bn_sprite_items_flappy.h"
     #include "bn_sprite_animate_actions.h"
+    #include "Math.hpp"
+    #include "Entities/DebugBox.hpp"
+
 
     enum class Skin { YELLOW, BLUE, RED };
     
     // values that are added to the final one and setting directly have visual impacts
-    enum Delta {
-        bn::fixed x;
-        bn::fixed y;
+    typedef struct {
+        int x;
+        int y;
         int rotation;
-    };
+    } Delta;
 
     class Flappy {
         int x;
         int y;
         int rotation;
         bool alive;
+        bool colliding;
         int offsetX; //offset to put the x coord to the top left of the sprite
         int offsetY; //offset to put the y coord to the top left of the sprite
         int width;
@@ -27,6 +31,7 @@
         bn::sprite_ptr flappy_sprite = bn::sprite_items::flappy.create_sprite(0, 0);
         bn::sprite_animate_action<4> animation = bn::create_sprite_animate_action_forever(this->flappy_sprite, 6, bn::sprite_items::flappy.tiles_item(), 0, 1, 2, 1);
         Delta delta;
+        DebugBox debugBox;
         
         public:
             Flappy(int, int, int, int, int, int);
@@ -49,7 +54,13 @@
             bool isAlive();
             void setAliveFlag(bool);
 
+            bool isColliding();
+            void setCollidingFlag(bool);
+
             void setSkin(Skin);
+            void setVisible(bool);
+            void calculateValues();
+            void playDeathAnimation();
             void update();
     };
 

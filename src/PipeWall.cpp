@@ -1,6 +1,7 @@
 #include "Entities/PipeWall.hpp"
 
-PipeWall::PipeWall(int _x, int _y, int _gapSize, int _color) {
+
+PipeWall::PipeWall(int _x, int _y, int _gapSize, int _color): debugBox(_x, _y, 32, _gapSize) {
     this->gapSize = _gapSize;
     this->color = _color;
     this->createPipes();
@@ -22,11 +23,15 @@ void PipeWall::setX(int _x) {
     this->x = _x;
     this->top_pipe->set_x(this->x + this->PIPE_WIDTH_HALF);
     this->bottom_pipe->set_x(this->x + this->PIPE_WIDTH_HALF);
+    this->debugBox.setX(_x);
+    this->debugBox.update();
 }
 void PipeWall::setY(int _y) {
     this->y = _y;
     this->top_pipe->set_y(this->y - this->PIPE_HEIGHT_HALF);
     this->bottom_pipe->set_y(this->y + this->PIPE_HEIGHT_HALF + this->gapSize);
+    this->debugBox.setX(_y);
+    this->debugBox.update();
 }
 int PipeWall::getX() {
     return this->x;
@@ -42,4 +47,9 @@ void PipeWall::setScoredFlag(bool _scored) {
 }
 bool PipeWall::getScoredFlag() {
     return this->scored;
+}
+void PipeWall::setVisible(bool visible) {
+    this->top_pipe->set_visible(visible);
+    this->bottom_pipe->set_visible(visible);
+    this->debugBox.setVisible(visible);
 }

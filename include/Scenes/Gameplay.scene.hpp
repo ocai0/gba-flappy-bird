@@ -12,7 +12,6 @@
     #include "Entities/Flappy.hpp"
     #include "Entities/PipeWall.hpp"
     #include "Entities/Score.hpp"
-    #include "bn_sprite_items_debug.h"
     
     typedef struct {
         int deltaX;

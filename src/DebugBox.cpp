@@ -1,5 +1,5 @@
 #include "Entities/DebugBox.hpp"
-constexpr int SPRITE_SIZE_HALF = 4;
+constexpr int SPRITE_SIZE_HALF = 4; // because the sprite are rendered at the middle of the image
 
 DebugBox::DebugBox(int _x, int _y, int _width, int _height): x(_x), y(_y), width(_width), height(_height) {
     this->top_left = bn::sprite_items::debug.create_sprite(0, 0);
