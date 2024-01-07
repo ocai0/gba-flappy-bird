@@ -8,47 +8,7 @@
 
 using namespace Scenes;
 
-int max(int a, int b) {
-    return (a > b) * a + (b > a) * b;
-}
-
-int min(int a, int b) {
-    return (a < b) * a + (b < a) * b;
-}
-
-
-void Gameplay::setup() {
-    this->score.setValue(0);
-    this->flappyData.deltaY = 0;
-    this->flappy.setRotation(90);
-    this->flappy.setX(0);
-    this->flappy.setY(0);
-    this->pipeSpeed = 0;
-    this->score.setValue(0);
-
-    for(int index=0; index < this->pipes.max_size(); index++) {
-        PipeWall* pipe = (&this->pipes.at(index))->get();
-        this->random.update();
-        pipe->setX(PIPE_INITIAL_POSITION + (GAP_BTW_PIPES + PipeWall::PIPE_WIDTH) * index);
-        pipe->setY(this->random.get_int(-SCREEN_HEIGHT_HALF + 16, SCREEN_HEIGHT_HALF - 56));
-    }
-}
-
-Gameplay::Gameplay() : flappy(0, 0), score(0, -64) {
-    BN_LOG("Gameplay construct");
-    for(int index=0; index < this->pipes.max_size(); index++) {
-        this->pipes.push_back(PipeWall(PIPE_INITIAL_POSITION + (GAP_BTW_PIPES + PipeWall::PIPE_WIDTH) * index, this->random.get_int(-SCREEN_HEIGHT_HALF + 16, SCREEN_HEIGHT_HALF - 56), this->random.get_int(28, 38) + 20, COLOR_WHITE));
-    }
-}
-
-void Gameplay::manage() {
-    // this->load();
-    // while(true) this->update();
-    // this->leave();
-}
-
-void Gameplay::load() {
-    BN_LOG("Gameplay load");
+Gameplay::Gameplay() : flappy(0, 0, 10, 10, 4, 4), score(0, -64) {
     this->score.setValue(0);
     this->MAX_PIPE_SPEED = 16;
     this->flappyData.gravity = 2;
@@ -57,15 +17,17 @@ void Gameplay::load() {
     this->SUB_PIXEL_ZONE = 4; // the subpixel area is the 4 rightmost bits of the variable coords (X and Y)
     this->flappyData.VERTICAL_JUMP_SPEED = (6 * (2 * this->SUB_PIXEL_ZONE)) * -1;
 
-    // this->debugPoint.top_left = bn::sprite_items::debug.create_sprite(0, 0);
-    // this->debugPoint.top_right = bn::sprite_items::debug.create_sprite(0, 0);
-    // this->debugPoint.bottom_left = bn::sprite_items::debug.create_sprite(0, 0);
-    // this->debugPoint.bottom_right = bn::sprite_items::debug.create_sprite(0, 0);
+    for(int index=0; index < this->pipes.max_size(); index++) {
+        this->pipes.push_back(PipeWall(PIPE_INITIAL_POSITION + (GAP_BTW_PIPES + PipeWall::PIPE_WIDTH) * index, this->random.get_int(-SCREEN_HEIGHT_HALF + 16, SCREEN_HEIGHT_HALF - 56), this->random.get_int(28, 38) + 20, COLOR_WHITE));
+    }
 }
 
 bn::optional<SceneType> Gameplay::update() {
     while(1) {
-        BN_LOG("Gameplay update");
+        if(!this->flappy.isAlive()) {
+            this->showGameOverScreen();
+            return SceneType::GAMEPLAY;
+        }
         this->flappyData.deltaX = 1 * (bn::keypad::right_held() - bn::keypad::left_held());
 
         this->pipeSpeed += 16;
@@ -124,26 +86,6 @@ bn::optional<SceneType> Gameplay::update() {
     }
 }
 
-void Gameplay::leave() {
-    this->showGameOverScreen();
-}
-
-void Gameplay::paused() {}
-
-void Gameplay::updateDebugPoints(int x_start, int x_end, int y_start, int y_end) {
-    this->debugPoint.top_left.get()->set_x(x_start - 4);
-    this->debugPoint.top_left.get()->set_y(y_start + 4);
-
-    this->debugPoint.top_right.get()->set_x(x_end + 4);
-    this->debugPoint.top_right.get()->set_y(y_start + 4);
-
-    this->debugPoint.bottom_left.get()->set_x(x_start - 4);
-    this->debugPoint.bottom_left.get()->set_y(y_end - 4);
-
-    this->debugPoint.bottom_right.get()->set_x(x_end + 4);
-    this->debugPoint.bottom_right.get()->set_y(y_end - 4);
-}
-
 void Gameplay::showGameOverScreen() {
     int _internal_tick = 0;
     this->flappyData.deltaX = -8;
@@ -167,5 +109,22 @@ void Gameplay::showGameOverScreen() {
         else this->flappy.setRotation(this->flappy.getRotation() - 5);
         bn::core::update();
     }
-    this->setup();
+    this->reset();
+}
+
+void Gameplay::reset() {
+    this->score.setValue(0);
+    this->flappyData.deltaY = 0;
+    this->flappy.setRotation(90);
+    this->flappy.setX(0);
+    this->flappy.setY(0);
+    this->pipeSpeed = 0;
+    this->score.setValue(0);
+
+    for(int index=0; index < this->pipes.max_size(); index++) {
+        PipeWall* pipe = (&this->pipes.at(index))->get();
+        this->random.update();
+        pipe->setX(PIPE_INITIAL_POSITION + (GAP_BTW_PIPES + PipeWall::PIPE_WIDTH) * index);
+        pipe->setY(this->random.get_int(-SCREEN_HEIGHT_HALF + 16, SCREEN_HEIGHT_HALF - 56));
+    }
 }

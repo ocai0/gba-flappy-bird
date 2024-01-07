@@ -7,18 +7,12 @@
     #include "bn_keypad.h"
 
     #include "Base/Scene.hpp"
+    #include "Math.hpp"
 
     #include "Entities/Flappy.hpp"
     #include "Entities/PipeWall.hpp"
     #include "Entities/Score.hpp"
     #include "bn_sprite_items_debug.h"
-
-    typedef struct {
-        bn::optional<bn::sprite_ptr> top_left;
-        bn::optional<bn::sprite_ptr> top_right;
-        bn::optional<bn::sprite_ptr> bottom_left;
-        bn::optional<bn::sprite_ptr> bottom_right;
-    } DebugPoint;
     
     typedef struct {
         int deltaX;
@@ -41,17 +35,11 @@
             int SUB_PIXEL_ZONE;
             bn::vector<bn::optional<PipeWall>, 4> pipes;
             bn::random random;
-            void load();
-            bn::optional<SceneType> update();
-            void leave();
-            void paused();
-            void setup();
             void showGameOverScreen();
+            void reset();
             public:
-                DebugPoint debugPoint;
                 Gameplay();
-                void updateDebugPoints(int, int, int, int);
-                void manage();
+                bn::optional<SceneType> update();
         };
     }
 #endif
