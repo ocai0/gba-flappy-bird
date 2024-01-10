@@ -21,8 +21,8 @@ void PipeWall::createPipes() {
 }
 void PipeWall::setX(int _x) {
     this->x = _x;
-    this->top_pipe->set_x(this->x + this->PIPE_WIDTH_HALF);
-    this->bottom_pipe->set_x(this->x + this->PIPE_WIDTH_HALF);
+    this->top_pipe->set_x(this->x + PipeWall::PIPE_WIDTH_HALF);
+    this->bottom_pipe->set_x(this->x + PipeWall::PIPE_WIDTH_HALF);
     this->debugBox.setX(_x);
     this->debugBox.update();
 }

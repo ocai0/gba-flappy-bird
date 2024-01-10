@@ -16,10 +16,10 @@
         bn::optional<bn::sprite_ptr> bottom_pipe;
         DebugBox debugBox;
         public:
-            static const int PIPE_WIDTH = 0;
-            static const int PIPE_HEIGHT = 0;
-            static const int PIPE_WIDTH_HALF = 0;
-            static const int PIPE_HEIGHT_HALF = 0;
+            static const int PIPE_WIDTH = 32;
+            static const int PIPE_HEIGHT = 32;
+            static const int PIPE_WIDTH_HALF = 16;
+            static const int PIPE_HEIGHT_HALF = 16;
             PipeWall(int x, int y, int color, int gapSize);
             void setX(int);
             void setY(int);

@@ -3,7 +3,7 @@
 
 using namespace Scenes;
 
-GearsLogo::GearsLogo() : flappy(0, 0, 10, 10, 0, 0), pipe(0, -20, 30, 1) {
+GearsLogo::GearsLogo() : flappy(0, 0, 12, 10, 2, 2), pipe(0, 0, 8, 1) {
     this->flappy.setRotation(90);
 }
 
@@ -16,14 +16,11 @@ bn::optional<SceneType> GearsLogo::update() {
 
         this->flappy.update();
         
-        this->flappy.setCollidingFlag(false);
-        bool collides = this->flappy.getX() < this->pipe.getX() + 32 &&
+        bool collides = this->flappy.getX() < this->pipe.getX() + PipeWall::PIPE_WIDTH &&
                         this->flappy.getX() + this->flappy.getWidth() > this->pipe.getX() &&
-                        this->flappy.getY() < this->flappy.getY() + this->pipe.getGapSize() &&
+                        this->flappy.getY() < this->pipe.getY() + this->pipe.getGapSize() &&
                         this->flappy.getY() + this->flappy.getHeight() > this->pipe.getY();
-        if(collides) {
-            this->flappy.setCollidingFlag(true);
-        }
+        this->flappy.setCollidingFlag(collides);
         // if( this->flappy.getX() > this->pipe.getX() && this->flappy.getX() < this->pipe.getX() + PipeWall::PIPE_WIDTH ) {
         //         if(this->flappy.getY() < this->pipe.getY() || this->flappy.getY() > this->pipe.getY() + this->pipe.getGapSize()) {
         //             this->flappy.setCollidingFlag(true);

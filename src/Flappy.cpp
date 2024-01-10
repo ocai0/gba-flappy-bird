@@ -1,6 +1,8 @@
 #include "Entities/Flappy.hpp"
 #include "bn_log.h"
 
+// The Flappy sprite renders at the middle of the hitbox area, and the offset values moves its final position
+
 Flappy::Flappy(int _x, int _y, int _width, int _height, int _offsetX, int _offsetY): width(_width), height(_height), offsetX(_offsetX), offsetY(_offsetY), debugBox(_x, _y, _width, _height) {
     this->setX(_x);
     this->setY(_y);
@@ -74,8 +76,11 @@ void Flappy::update() {
     this->y = this->delta.y;
     this->rotation = this->delta.rotation;
 
-    this->flappy_sprite.set_x(this->x);
-    this->flappy_sprite.set_y(this->y);
+    int width_half = (this->width >> 2);
+    int height_half = (this->height >> 2);
+
+    this->flappy_sprite.set_x(this->x + width_half + this->offsetX);
+    this->flappy_sprite.set_y(this->y + height_half + this->offsetY);
     this->flappy_sprite.set_rotation_angle(this->delta.rotation);
 
     this->debugBox.setX(this->x);
