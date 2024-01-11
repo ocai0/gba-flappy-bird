@@ -4,6 +4,7 @@
     #include "bn_core.h"
     #include "bn_vector.h"
     #include "bn_random.h"
+    #include "bn_display.h"
     #include "bn_keypad.h"
 
     #include "Base/Scene.hpp"
@@ -32,7 +33,7 @@
             Score score;
             FlappyData flappyData;
             int SUB_PIXEL_ZONE;
-            bn::vector<bn::optional<PipeWall>, 4> pipes;
+            bn::vector<bn::optional<PipeWall>, 5> pipes;
             bn::random random;
             void showGameOverScreen();
             void reset();

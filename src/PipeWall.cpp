@@ -10,27 +10,36 @@ PipeWall::PipeWall(int _x, int _y, int _gapSize, int _color): debugBox(_x, _y, 3
     this->setScoredFlag(false);
     this->top_pipe->set_vertical_flip(true);
     this->top_pipe->set_horizontal_flip(true);
+    this->top_pipe_body->set_horizontal_flip(true);
 }
 
 void PipeWall::createPipes() {
     this->top_pipe = bn::sprite_items::pipe.create_sprite(0, 0);
     this->top_pipe.value().set_visible(true);
+    this->top_pipe_body = bn::sprite_items::pipe_body.create_sprite(0, -PipeWall::PIPE_HEIGHT);
+    this->top_pipe_body.value().set_visible(true);
 
     this->bottom_pipe = bn::sprite_items::pipe.create_sprite(0, 0);
     this->bottom_pipe.value().set_visible(true);
+    this->bottom_pipe_body = bn::sprite_items::pipe_body.create_sprite(0, PipeWall::PIPE_HEIGHT);
+    this->bottom_pipe_body.value().set_visible(true);
 }
 void PipeWall::setX(int _x) {
     this->x = _x;
     this->top_pipe->set_x(this->x + PipeWall::PIPE_WIDTH_HALF);
+    this->top_pipe_body->set_x(this->x + PipeWall::PIPE_WIDTH_HALF);
     this->bottom_pipe->set_x(this->x + PipeWall::PIPE_WIDTH_HALF);
+    this->bottom_pipe_body->set_x(this->x + PipeWall::PIPE_WIDTH_HALF);
     this->debugBox.setX(_x);
     this->debugBox.update();
 }
 void PipeWall::setY(int _y) {
     this->y = _y;
     this->top_pipe->set_y(this->y - this->PIPE_HEIGHT_HALF);
+    this->top_pipe_body->set_y(this->y - this->PIPE_HEIGHT_HALF - this->PIPE_HEIGHT);
     this->bottom_pipe->set_y(this->y + this->PIPE_HEIGHT_HALF + this->gapSize);
-    this->debugBox.setX(_y);
+    this->bottom_pipe_body->set_y(this->y + this->PIPE_HEIGHT_HALF + this->gapSize + this->PIPE_HEIGHT);
+    this->debugBox.setY(_y);
     this->debugBox.update();
 }
 int PipeWall::getX() {
