@@ -51,6 +51,9 @@ int PipeWall::getY() {
 int PipeWall::getGapSize() {
     return this->gapSize;
 }
+void PipeWall::setGapSize(int _gapSize) {
+    this->gapSize = _gapSize;
+}
 void PipeWall::setScoredFlag(bool _scored) {
     this->scored = _scored;
 }

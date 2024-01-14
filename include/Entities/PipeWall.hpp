@@ -29,6 +29,7 @@
             void createPipes();
             int getX();
             int getGapSize();
+            void setGapSize(int);
             int getY();
             void setScoredFlag(bool);
             bool getScoredFlag();
