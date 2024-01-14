@@ -1,7 +1,7 @@
 #include "Entities/PipeWall.hpp"
 
 
-PipeWall::PipeWall(int _x, int _y, int _gapSize, int _color): debugBox(_x, _y, 32, _gapSize) {
+PipeWall::PipeWall(bn::fixed _x, bn::fixed _y, int _gapSize, int _color): debugBox(_x, _y, 32, _gapSize) {
     this->gapSize = _gapSize;
     this->color = _color;
     this->createPipes();
@@ -24,7 +24,7 @@ void PipeWall::createPipes() {
     this->bottom_pipe_body = bn::sprite_items::pipe_body.create_sprite(0, PipeWall::PIPE_HEIGHT);
     this->bottom_pipe_body.value().set_visible(true);
 }
-void PipeWall::setX(int _x) {
+void PipeWall::setX(bn::fixed _x) {
     this->x = _x;
     this->top_pipe->set_x(this->x + PipeWall::PIPE_WIDTH_HALF);
     this->top_pipe_body->set_x(this->x + PipeWall::PIPE_WIDTH_HALF);
@@ -33,7 +33,7 @@ void PipeWall::setX(int _x) {
     this->debugBox.setX(_x);
     this->debugBox.update();
 }
-void PipeWall::setY(int _y) {
+void PipeWall::setY(bn::fixed _y) {
     this->y = _y;
     this->top_pipe->set_y(this->y - this->PIPE_HEIGHT_HALF);
     this->top_pipe_body->set_y(this->y - this->PIPE_HEIGHT_HALF - this->PIPE_HEIGHT);
@@ -42,10 +42,10 @@ void PipeWall::setY(int _y) {
     this->debugBox.setY(_y);
     this->debugBox.update();
 }
-int PipeWall::getX() {
+bn::fixed PipeWall::getX() {
     return this->x;
 }
-int PipeWall::getY() {
+bn::fixed PipeWall::getY() {
     return this->y;
 }
 int PipeWall::getGapSize() {

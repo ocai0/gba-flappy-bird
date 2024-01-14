@@ -1,7 +1,7 @@
 #include "Entities/DebugBox.hpp"
 constexpr int SPRITE_SIZE_HALF = 4; // because the sprite are rendered at the middle of the image
 
-DebugBox::DebugBox(int _x, int _y, int _width, int _height): x(_x), y(_y), width(_width), height(_height) {
+DebugBox::DebugBox(bn::fixed _x, bn::fixed _y, int _width, int _height): x(_x), y(_y), width(_width), height(_height) {
     this->top_left = bn::sprite_items::debug.create_sprite(0, 0);
     this->top_right = bn::sprite_items::debug.create_sprite(0, 0);
     this->bottom_left = bn::sprite_items::debug.create_sprite(0, 0);
@@ -19,10 +19,10 @@ DebugBox::DebugBox(int _x, int _y, int _width, int _height): x(_x), y(_y), width
 
     this->update();
 }
-void DebugBox::setX(int _x) {
+void DebugBox::setX(bn::fixed _x) {
     this->x = _x;
 }
-void DebugBox::setY(int _y) {
+void DebugBox::setY(bn::fixed _y) {
     this->y = _y;
 }
 void DebugBox::update() {

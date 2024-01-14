@@ -5,22 +5,22 @@
     #include "bn_sprite_tiles_ptr.h"
     #include "bn_sprite_items_flappy.h"
     #include "bn_sprite_animate_actions.h"
-    #include "Math.hpp"
     #include "Entities/DebugBox.hpp"
+    #include "Math.hpp"
 
 
     enum class Skin { YELLOW, BLUE, RED };
     
     // values that are added to the final one and setting directly have visual impacts
     typedef struct {
-        int x;
-        int y;
+        bn::fixed x;
+        bn::fixed y;
         int rotation;
     } Delta;
 
     class Flappy {
-        int x;
-        int y;
+        bn::fixed x;
+        bn::fixed y;
         int rotation;
         bool alive;
         bool colliding;
@@ -34,13 +34,13 @@
         DebugBox debugBox;
         
         public:
-            Flappy(int, int, int, int, int, int);
+            Flappy(bn::fixed, bn::fixed, int, int, int, int);
 
-            int getX();
-            void setX(int);
+            bn::fixed getX();
+            void setX(bn::fixed);
 
-            int getY();
-            void setY(int);
+            bn::fixed getY();
+            void setY(bn::fixed);
             
             int getRotation();
             void setRotation(int);
@@ -59,7 +59,6 @@
 
             void setSkin(Skin);
             void setVisible(bool);
-            void calculateValues();
             void playDeathAnimation();
             void update();
     };

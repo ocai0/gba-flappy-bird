@@ -1,8 +1,10 @@
 #ifndef MATH_H_
 #define MATH_H_
+    
+    #include "bn_fixed.h"
 
-    int max(int, int);
-    int min(int, int);
-    int clamp(int, int, int);  
+    bn::fixed max(bn::fixed, bn::fixed);
+    bn::fixed min(bn::fixed, bn::fixed);
+    bn::fixed clamp(bn::fixed, bn::fixed, bn::fixed);  
 
 #endif

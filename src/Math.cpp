@@ -1,11 +1,13 @@
-int max(int a, int b) {
+#include "Math.hpp"
+
+bn::fixed max(bn::fixed a, bn::fixed b) {
     return (a > b) * a + (b > a) * b;
 }
 
-int min(int a, int b) {
+bn::fixed min(bn::fixed a, bn::fixed b) {
     return (a < b) * a + (b < a) * b;
 }
 
-int clamp(int _value, int _min, int _max) {
+bn::fixed clamp(bn::fixed _value, bn::fixed _min, bn::fixed _max) {
     return max(_min, min(_value, _max));
 }

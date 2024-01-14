@@ -8,8 +8,8 @@
     #include "Entities/DebugBox.hpp"
 
     class PipeWall {
-        volatile int x;
-        volatile int y;
+        bn::fixed x;
+        bn::fixed y;
         int gapSize;
         int color;
         bool scored;
@@ -23,14 +23,14 @@
             static const int PIPE_HEIGHT = 64;
             static const int PIPE_WIDTH_HALF = 16;
             static const int PIPE_HEIGHT_HALF = 32;
-            PipeWall(int x, int y, int color, int gapSize);
-            void setX(int);
-            void setY(int);
+            PipeWall(bn::fixed x, bn::fixed y, int color, int gapSize);
             void createPipes();
-            int getX();
+            bn::fixed getX();
+            void setX(bn::fixed);
+            bn::fixed getY();
+            void setY(bn::fixed);
             int getGapSize();
             void setGapSize(int);
-            int getY();
             void setScoredFlag(bool);
             bool getScoredFlag();
             void setVisible(bool);

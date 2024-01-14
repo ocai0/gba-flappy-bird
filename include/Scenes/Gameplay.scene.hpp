@@ -15,24 +15,23 @@
     #include "Entities/Score.hpp"
     
     typedef struct {
-        int deltaX;
-        int deltaY;
-        int gravity;
+        bn::fixed deltaX;
+        bn::fixed deltaY;
+        bn::fixed gravity;
+        bn::fixed MAX_GRAVITY;
         int rotationDelta;
         int direction; // 1 means down, -1 means up
-        int VERTICAL_JUMP_SPEED;
-        int MAX_FALL_SPEED;
+        bn::fixed VERTICAL_JUMP_SPEED;
     } FlappyData;
 
     namespace Scenes {
 
         class Gameplay : public Scene {
             Flappy flappy;
-            int pipeSpeed;
-            int MAX_PIPE_SPEED;
+            bn::fixed pipeSpeed;
+            bn::fixed MAX_PIPE_SPEED;
             Score score;
             FlappyData flappyData;
-            int SUB_PIXEL_ZONE;
             bn::vector<bn::optional<PipeWall>, 5> pipes;
             bn::random random;
             void showGameOverScreen();

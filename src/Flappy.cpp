@@ -3,23 +3,23 @@
 
 // The Flappy sprite renders at the middle of the hitbox area, and the offset values moves its final position
 
-Flappy::Flappy(int _x, int _y, int _width, int _height, int _offsetX, int _offsetY): width(_width), height(_height), offsetX(_offsetX), offsetY(_offsetY), debugBox(_x, _y, _width, _height) {
+Flappy::Flappy(bn::fixed _x, bn::fixed _y, int _width, int _height, int _offsetX, int _offsetY): width(_width), height(_height), offsetX(_offsetX), offsetY(_offsetY), debugBox(_x, _y, _width, _height) {
     this->setX(_x);
     this->setY(_y);
     this->setAliveFlag(true);
 }
 
-int Flappy::getX() {
+bn::fixed Flappy::getX() {
     return this->x;
 }
-void Flappy::setX(int _x) {
+void Flappy::setX(bn::fixed _x) {
     this->delta.x = _x;
 }
 
-int Flappy::getY() {
+bn::fixed Flappy::getY() {
     return this->y;
 }
-void Flappy::setY(int _y) {
+void Flappy::setY(bn::fixed _y) {
     this->delta.y = _y;
 }
 
@@ -27,8 +27,7 @@ int Flappy::getRotation() {
     return this->rotation;
 }
 void Flappy::setRotation(int _angle) {
-    this->delta.rotation = clamp(_angle, 0, 360);
-    BN_LOG("this->delta.rotation: ", this->delta.rotation);
+    this->delta.rotation = clamp(_angle, 0, 360).integer();
 }
 
 int Flappy::getWidth() {
@@ -46,7 +45,7 @@ void Flappy::setHeight(int _height) {
 }
 
 bool Flappy::isAlive() {
-    return this->alive ;
+    return this->alive;
 }
 void Flappy::setAliveFlag(bool _alive) {
     this->alive = _alive;
@@ -87,10 +86,6 @@ void Flappy::update() {
     this->debugBox.setY(this->y);
     this->debugBox.update();
     this->animation.update();
-}
-void Flappy::calculateValues() {
-    // handleVerticalMovement
-    // HandleHorizontalMovement
 }
 void Flappy::playDeathAnimation() {}
 

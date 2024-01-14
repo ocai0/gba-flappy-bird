@@ -11,14 +11,14 @@
         bn::optional<bn::sprite_ptr> bottom_left;
         bn::optional<bn::sprite_ptr> bottom_right;
         bool isVisible;
-        int x;
-        int y;
+        bn::fixed x;
+        bn::fixed y;
         int width;
         int height;
         public:
-            DebugBox(int, int, int, int);
-            void setX(int);
-            void setY(int);
+            DebugBox(bn::fixed, bn::fixed, int, int);
+            void setX(bn::fixed);
+            void setY(bn::fixed);
             void update();
             void setVisible(bool);
     };
