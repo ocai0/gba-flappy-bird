@@ -1,5 +1,4 @@
 #include "Entities/Flappy.hpp"
-#include "bn_log.h"
 
 // The Flappy sprite renders at the middle of the hitbox area, and the offset values moves its final position
 
@@ -7,6 +6,7 @@ Flappy::Flappy(bn::fixed _x, bn::fixed _y, int _width, int _height, int _offsetX
     this->setX(_x);
     this->setY(_y);
     this->setAliveFlag(true);
+    this->showDebugBox(false);
 }
 
 bn::fixed Flappy::getX() {
@@ -89,7 +89,10 @@ void Flappy::update() {
 }
 void Flappy::playDeathAnimation() {}
 
-void Flappy::setVisible(bool visible) {
-    this->flappy_sprite.set_visible(visible);
-    this->debugBox.setVisible(visible);
+void Flappy::showSprite(bool _show) {
+    this->flappy_sprite.set_visible(_show);
+}
+
+void Flappy::showDebugBox(bool _show) {
+    this->debugBox.setVisible(_show);
 }

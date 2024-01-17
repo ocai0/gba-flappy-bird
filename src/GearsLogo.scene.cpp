@@ -3,7 +3,7 @@
 
 using namespace Scenes;
 
-GearsLogo::GearsLogo() : flappy(0, 0, 12, 10, 2, 2), pipe(0, 0, 8, 1) {
+GearsLogo::GearsLogo() : flappy(0, 0, 12, 10, 2, 2), pipe(0, 0, 26, 8, 1) {
     this->flappy.setRotation(90);
 }
 
@@ -16,7 +16,7 @@ bn::optional<SceneType> GearsLogo::update() {
 
         this->flappy.update();
         
-        bool collides = this->flappy.getX() < this->pipe.getX() + PipeWall::PIPE_WIDTH &&
+        bool collides = this->flappy.getX() < this->pipe.getX() + this->pipe.getWidth() &&
                         this->flappy.getX() + this->flappy.getWidth() > this->pipe.getX() &&
                         this->flappy.getY() < this->pipe.getY() + this->pipe.getGapSize() &&
                         this->flappy.getY() + this->flappy.getHeight() > this->pipe.getY();

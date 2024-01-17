@@ -10,6 +10,8 @@
     class PipeWall {
         bn::fixed x;
         bn::fixed y;
+        int width;
+        int offsetX;
         int gapSize;
         int color;
         bool scored;
@@ -19,21 +21,20 @@
         bn::optional<bn::sprite_ptr> bottom_pipe_body;
         DebugBox debugBox;
         public:
-            static const int PIPE_WIDTH = 32;
-            static const int PIPE_HEIGHT = 64;
-            static const int PIPE_WIDTH_HALF = 16;
-            static const int PIPE_HEIGHT_HALF = 32;
-            PipeWall(bn::fixed x, bn::fixed y, int color, int gapSize);
+            PipeWall(bn::fixed x, bn::fixed y, int width, int gapSize, int color);
+            PipeWall(bn::fixed x, bn::fixed y, int width, int gapSize, int color, int offsetX);
             void createPipes();
             bn::fixed getX();
             void setX(bn::fixed);
             bn::fixed getY();
             void setY(bn::fixed);
+            int getWidth();
             int getGapSize();
             void setGapSize(int);
             void setScoredFlag(bool);
             bool getScoredFlag();
-            void setVisible(bool);
+            void showSprite(bool);
+            void showDebugBox(bool);
     };
 
 #endif

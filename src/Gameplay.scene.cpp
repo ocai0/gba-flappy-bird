@@ -7,12 +7,16 @@ constexpr int SCREEN_HEIGHT = bn::display::height();
 constexpr int SCREEN_HEIGHT_HALF = SCREEN_HEIGHT >> 1;
 constexpr int GAP_BTW_PIPES = 40;
 constexpr bn::fixed PIPE_INITIAL_POSITION(SCREEN_WIDTH_HALF + GAP_BTW_PIPES);
+constexpr int PIPE_WALL_WIDTH = 26;
+constexpr int PIPE_WALL_WIDTH_HALF = PIPE_WALL_WIDTH >> 1;
+
 
 using namespace Scenes;
 
 //misc functions
 int generateGapSize(bn::random* random) {
-    return random->get_int(38, 42);
+    return 46;
+    return random->get_int(46, 54);
 }
 
 // main functions
@@ -23,10 +27,18 @@ Gameplay::Gameplay() : flappy(0, 0, 10, 10, 4, 2), score(0, -64) {
     this->flappyData.gravity = .15;
     this->flappyData.MAX_GRAVITY = 2.6;
     this->flappyData.VERTICAL_JUMP_SPEED = -3;
-    this->pipeSpeed = .6;
+    this->pipeSpeed = .7;
+
+    this->flappy.showDebugBox(true);
 
     for(int index=0; index < this->pipes.max_size(); index++) {
-        this->pipes.push_back(PipeWall(PIPE_INITIAL_POSITION + (GAP_BTW_PIPES + PipeWall::PIPE_WIDTH) * index, this->random.get_int(-SCREEN_HEIGHT_HALF + 16, SCREEN_HEIGHT_HALF - 56), generateGapSize(&this->random), COLOR_WHITE));
+        this->pipes.push_back(PipeWall(
+            PIPE_INITIAL_POSITION + (GAP_BTW_PIPES + PIPE_WALL_WIDTH) * index, 
+            this->random.get_int(-SCREEN_HEIGHT_HALF + 16, SCREEN_HEIGHT_HALF - 56), 
+            PIPE_WALL_WIDTH,
+            generateGapSize(&this->random), COLOR_WHITE, 
+            -3));
+        this->pipes.at(index)->showDebugBox(true);
     }
 }
 
@@ -40,8 +52,6 @@ bn::optional<SceneType> Gameplay::update() {
 
         if(this->flappyData.deltaY < 0) this->flappy.setRotation(this->flappy.getRotation() - 1);
         else this->flappy.setRotation(this->flappy.getRotation() - 5);
-
-        BN_LOG(this->flappyData.gravity);
 
         // Apply gravity 
         this->flappyData.deltaY += this->flappyData.gravity;
@@ -64,14 +74,14 @@ bn::optional<SceneType> Gameplay::update() {
             PipeWall* pipe = (&this->pipes.at(index))->get();
             bn::fixed pipe_deltaX(pipe->getX() - this->pipeSpeed);
 
-            if( flappy_nextX + 2 > pipe_deltaX && flappy_nextX - 1 < pipe_deltaX + PipeWall::PIPE_WIDTH ) {
+            if( flappy_nextX + this->flappy.getWidth() > pipe_deltaX && flappy_nextX < pipe_deltaX + PIPE_WALL_WIDTH ) {
                 //check if is colliding with any of the pipes
-                if(flappy_nextY - 4 < pipe->getY() || flappy_nextY > pipe->getY() - 6 + pipe->getGapSize()) {
+                if(flappy_nextY < pipe->getY() || flappy_nextY > pipe->getY() + pipe->getGapSize()) {
                     this->flappy.setAliveFlag(false);
                 }
 
                 //check if scored a point after pass the middle of them
-                if(this->flappy.isAlive() && (pipe->getScoredFlag() == false) && (flappy_nextX + 2) > pipe_deltaX + PipeWall::PIPE_WIDTH_HALF) {
+                if(this->flappy.isAlive() && (pipe->getScoredFlag() == false) && (flappy_nextX + 2) > pipe_deltaX + PIPE_WALL_WIDTH_HALF) {
                     this->score.setValue(this->score.getValue() + 1);
                     pipe->setScoredFlag(true);
                 }
@@ -79,9 +89,9 @@ bn::optional<SceneType> Gameplay::update() {
             
             pipe->setX(pipe_deltaX);
 
-            if(pipe->getX() < -SCREEN_WIDTH_HALF - PipeWall::PIPE_WIDTH) {
+            if(pipe->getX() < -SCREEN_WIDTH_HALF - PIPE_WALL_WIDTH) {
                 this->random.update();
-                pipe->setX(pipe->getX() + (GAP_BTW_PIPES + PipeWall::PIPE_WIDTH) * (this->pipes.size()));
+                pipe->setX(pipe->getX() + (GAP_BTW_PIPES + PIPE_WALL_WIDTH) * (this->pipes.size()));
                 pipe->setY(this->random.get_int(-SCREEN_HEIGHT_HALF + 16, SCREEN_HEIGHT_HALF - 56));
                 pipe->setGapSize(generateGapSize(&this->random));
                 pipe->setScoredFlag(false);
@@ -132,7 +142,7 @@ void Gameplay::reset() {
     for(int index=0; index < this->pipes.max_size(); index++) {
         PipeWall* pipe = (&this->pipes.at(index))->get();
         this->random.update();
-        pipe->setX(PIPE_INITIAL_POSITION + (GAP_BTW_PIPES + PipeWall::PIPE_WIDTH) * index);
+        pipe->setX(PIPE_INITIAL_POSITION + (GAP_BTW_PIPES + PIPE_WALL_WIDTH) * index);
         pipe->setY(this->random.get_int(-SCREEN_HEIGHT_HALF + 16, SCREEN_HEIGHT_HALF - 56));
     }
 }
