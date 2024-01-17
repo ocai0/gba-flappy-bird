@@ -20,7 +20,7 @@ int generateGapSize(bn::random* random) {
 }
 
 // main functions
-Gameplay::Gameplay() : flappy(0, 0, 10, 10, 4, 2), score(0, -64) {
+Gameplay::Gameplay() : flappy(0, 0, 8, 8, 2, 2), score(0, -64) {
     this->score.setValue(0);
     this->MAX_PIPE_SPEED = 2;
     this->flappyData.direction = -1;
@@ -76,7 +76,7 @@ bn::optional<SceneType> Gameplay::update() {
 
             if( flappy_nextX + this->flappy.getWidth() > pipe_deltaX && flappy_nextX < pipe_deltaX + PIPE_WALL_WIDTH ) {
                 //check if is colliding with any of the pipes
-                if(flappy_nextY < pipe->getY() || flappy_nextY > pipe->getY() + pipe->getGapSize()) {
+                if(flappy_nextY < pipe->getY() || flappy_nextY + this->flappy.getHeight() > pipe->getY() + pipe->getGapSize()) {
                     this->flappy.setAliveFlag(false);
                 }
 
