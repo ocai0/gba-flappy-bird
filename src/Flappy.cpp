@@ -5,6 +5,7 @@
 Flappy::Flappy(bn::fixed _x, bn::fixed _y, int _width, int _height, int _offsetX, int _offsetY): width(_width), height(_height), offsetX(_offsetX), offsetY(_offsetY), debugBox(_x, _y, _width, _height) {
     this->setX(_x);
     this->setY(_y);
+    this->flappy_sprite.set_z_order(-1);
     this->setAliveFlag(true);
     this->showDebugBox(false);
 }

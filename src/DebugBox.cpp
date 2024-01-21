@@ -7,10 +7,10 @@ DebugBox::DebugBox(bn::fixed _x, bn::fixed _y, int _width, int _height): x(_x), 
     this->bottom_left = bn::sprite_items::debug.create_sprite(0, 0);
     this->bottom_right = bn::sprite_items::debug.create_sprite(0, 0);
 
-    this->top_left.get()->set_z_order(-1);
-    this->top_right.get()->set_z_order(-1);
-    this->bottom_left.get()->set_z_order(-1);
-    this->bottom_right.get()->set_z_order(-1);
+    this->top_left.get()->set_z_order(-2);
+    this->top_right.get()->set_z_order(-2);
+    this->bottom_left.get()->set_z_order(-2);
+    this->bottom_right.get()->set_z_order(-2);
 
     this->top_right.get()->set_horizontal_flip(true);
     this->bottom_left.get()->set_vertical_flip(true);
