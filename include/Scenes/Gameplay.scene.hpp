@@ -13,6 +13,7 @@
     #include "Entities/Flappy.hpp"
     #include "Entities/PipeWall.hpp"
     #include "Entities/Score.hpp"
+    #include "Entities/Background.hpp"
     
     constexpr int COLOR_WHITE = 1;
     constexpr int SCREEN_WIDTH = bn::display::width();
@@ -42,7 +43,9 @@
 
         class Gameplay : public Scene {
             Flappy flappy;
+            Background background;
             int currentSubScene;
+            bn::fixed backgroundSpeed;
             bn::fixed pipeSpeed;
             bn::fixed MAX_PIPE_SPEED;
             Score score;

@@ -20,6 +20,10 @@ void Gameplay::reset() {
     this->currentSubScene = GAME;
     this->score.setValue(0);
 
+    this->random.update();
+    if(this->random.get_fixed(1) > .6) this->background.setBackground(DAY);
+    else this->background.setBackground(NIGHT);
+
     for(int index=0; index < this->pipes.max_size(); index++) {
         PipeWall* pipe = (&this->pipes.at(index))->get();
         this->random.update();
@@ -30,13 +34,18 @@ void Gameplay::reset() {
 }
 
 // main functions
-Gameplay::Gameplay() : flappy(-4, 0, 8, 8, 2, 2), score(0, -64) {
+Gameplay::Gameplay() : flappy(-4, 0, 8, 8, 2, 2), score(0, -64), background() {
     this->MAX_PIPE_SPEED = 2;
     this->flappyData.direction = -1;
     this->flappyData.gravity = .15;
     this->flappyData.MAX_GRAVITY = 2.6;
     this->flappyData.VERTICAL_JUMP_SPEED = -3;
     this->pipeSpeed = .7;
+    this->backgroundSpeed = .1;
+
+    this->random.update();
+    if(this->random.get_int(1, 2) == 1) this->background.setBackground(DAY);
+    else this->background.setBackground(NIGHT);
 
     // this->flappy.showDebugBox(true);
 
@@ -87,7 +96,6 @@ void Gameplay::getReadyScene() {
     int sign_y = 1;
     bn::fixed FLAPPY_VELOCITY(.1);
     while(true) {
-
         if(bn::keypad::a_pressed()) {
             this->currentSubScene = GAME;
             return;
@@ -98,8 +106,10 @@ void Gameplay::getReadyScene() {
         if(this->flappy.getY() > 4) sign_y = -1;
         if(this->flappy.getY() < -4) sign_y = 1;
 
+        this->background.setX(this->background.getX() - this->backgroundSpeed);
         this->flappy.setY(this->flappyData.deltaY);
-        BN_LOG(this->flappyData.deltaY);
+
+        this->background.update();
         this->flappy.update();
         bn::core::update();
     }
@@ -164,14 +174,19 @@ void Gameplay::gameScene() {
             this->currentSubScene = PAUSED;
             return;
         }
+
+        this->background.setX(this->background.getX() - this->backgroundSpeed);
         
         this->flappy.setX(this->flappy.getX() + this->flappyData.deltaX);
         this->flappy.setY(this->flappy.getY() + this->flappyData.deltaY);
+
+        this->background.update();
         this->flappy.update();
         this->score.update();
         bn::core::update();
         return;
 }
+
 void Gameplay::pausedScene() {}
 void Gameplay::gameOverScene() {
     int _internal_tick = 0;
