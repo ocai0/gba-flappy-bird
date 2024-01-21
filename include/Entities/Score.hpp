@@ -23,6 +23,7 @@
             int getValue();
             int getX();
             int getY();
+            void update();
 
     };
 

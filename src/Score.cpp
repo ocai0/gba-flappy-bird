@@ -2,22 +2,21 @@
 
 Score::Score(int _x, int _y) : text_generator(big_score_font) {
     this->text_generator.set_center_alignment();
-    this->setValue(value);
+    this->setValue(0);
     this->setX(_x);
     this->setY(_y);
+    this->update();
 }
 
 Score::Score(int _x, int _y, int _score) : text_generator(big_score_font) {
-    this->setValue(value);
+    this->setValue(_score);
     this->setX(_x);
     this->setY(_y);
 }
 
 void Score::setValue(int _newScore) {
     this->value = _newScore;
-    this->text_sprites.clear();
     this->text = bn::to_string<4>(this->value);
-    this->text_generator.generate(this->x, this->y, text, this->text_sprites);
 }
 
 int Score::getValue() {
@@ -38,4 +37,8 @@ void Score::setY(int _y) {
 
 int Score::getY() {
     return this->y;
+}
+void Score::update() {
+    this->text_sprites.clear();
+    this->text_generator.generate(this->x, this->y, this->text, this->text_sprites);
 }
