@@ -17,6 +17,10 @@ PipeWall::PipeWall(bn::fixed _x, bn::fixed _y, int _width, int _gapSize, int _co
     this->top_pipe->set_vertical_flip(true);
     this->top_pipe->set_horizontal_flip(true);
     this->top_pipe_body->set_horizontal_flip(true);
+    this->top_pipe->set_bg_priority(2);
+    this->top_pipe_body->set_bg_priority(2);
+    this->bottom_pipe->set_bg_priority(2);
+    this->bottom_pipe_body->set_bg_priority(2);
     this->showDebugBox(false);
 }
 
@@ -32,6 +36,10 @@ PipeWall::PipeWall(bn::fixed _x, bn::fixed _y, int _width, int _gapSize, int _co
     this->top_pipe->set_vertical_flip(true);
     this->top_pipe->set_horizontal_flip(true);
     this->top_pipe_body->set_horizontal_flip(true);
+    this->top_pipe->set_bg_priority(2);
+    this->top_pipe_body->set_bg_priority(2);
+    this->bottom_pipe->set_bg_priority(2);
+    this->bottom_pipe_body->set_bg_priority(2);
     this->showDebugBox(false);
 }
 

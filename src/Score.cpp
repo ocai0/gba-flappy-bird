@@ -3,6 +3,7 @@
 Score::Score(int _x, int _y) : text_generator(big_score_font) {
     this->text_generator.set_center_alignment();
     this->setValue(0);
+    this->text_generator.set_bg_priority(1);
     this->setX(_x);
     this->setY(_y);
     this->update();
@@ -10,6 +11,7 @@ Score::Score(int _x, int _y) : text_generator(big_score_font) {
 
 Score::Score(int _x, int _y, int _score) : text_generator(big_score_font) {
     this->setValue(_score);
+    this->text_generator.set_bg_priority(1);
     this->setX(_x);
     this->setY(_y);
 }

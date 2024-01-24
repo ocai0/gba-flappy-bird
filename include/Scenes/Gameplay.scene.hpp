@@ -14,6 +14,7 @@
     #include "Entities/PipeWall.hpp"
     #include "Entities/Score.hpp"
     #include "Entities/Background.hpp"
+    #include "Entities/Floor.hpp"
     
     constexpr int COLOR_WHITE = 1;
     constexpr int SCREEN_WIDTH = bn::display::width();
@@ -24,8 +25,9 @@
     constexpr bn::fixed PIPE_INITIAL_POSITION(SCREEN_WIDTH_HALF + GAP_BTW_PIPES);
     constexpr int PIPE_WALL_WIDTH = 26;
     constexpr int PIPE_WALL_WIDTH_HALF = PIPE_WALL_WIDTH >> 1;
+    constexpr int FLOOR_Y = 48;
 
-
+    enum DeathCause { PIPE, FLOOR };
 
     typedef struct {
         bn::fixed deltaX;
@@ -33,6 +35,7 @@
         bn::fixed gravity;
         bn::fixed MAX_GRAVITY;
         int rotationDelta;
+        DeathCause deathCause;
         int direction; // 1 means down, -1 means up
         bn::fixed VERTICAL_JUMP_SPEED;
     } FlappyData;
@@ -42,16 +45,19 @@
     namespace Scenes {
 
         class Gameplay : public Scene {
-            Flappy flappy;
-            Background background;
             int currentSubScene;
             bn::fixed backgroundSpeed;
             bn::fixed pipeSpeed;
             bn::fixed MAX_PIPE_SPEED;
-            Score score;
-            FlappyData flappyData;
             bn::vector<bn::optional<PipeWall>, 5> pipes;
             bn::random random;
+
+            FlappyData flappyData;
+            Flappy flappy;
+            Background background;
+            Score score;
+            Floor floor;
+
             void getReadyScene();
             void gameScene();
             void pausedScene();

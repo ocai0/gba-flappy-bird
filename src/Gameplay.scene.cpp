@@ -17,8 +17,7 @@ void Gameplay::reset() {
     this->flappy.setY(0);
     this->flappy.setAliveFlag(true);
     this->flappy.update();
-    this->currentSubScene = GAME;
-    this->score.setValue(0);
+    this->currentSubScene = GET_READY;
 
     this->random.update();
     if(this->random.get_fixed(1) > .6) this->background.setBackground(DAY);
@@ -28,13 +27,13 @@ void Gameplay::reset() {
         PipeWall* pipe = (&this->pipes.at(index))->get();
         this->random.update();
         pipe->setX(PIPE_INITIAL_POSITION + (GAP_BTW_PIPES + PIPE_WALL_WIDTH) * index);
-        pipe->setY(this->random.get_int(-SCREEN_HEIGHT_HALF + 16, SCREEN_HEIGHT_HALF - 56));
+        pipe->setY(this->random.get_int(-SCREEN_HEIGHT_HALF + 16, SCREEN_HEIGHT_HALF - 86));
     }
     bn::core::update();
 }
 
 // main functions
-Gameplay::Gameplay() : flappy(-4, 0, 8, 8, 2, 2), score(0, -64), background() {
+Gameplay::Gameplay() : flappy(-4, 0, 8, 8, 2, 2), score(0, -64), background(), floor(0, 36) {
     this->MAX_PIPE_SPEED = 2;
     this->flappyData.direction = -1;
     this->flappyData.gravity = .15;
@@ -52,7 +51,7 @@ Gameplay::Gameplay() : flappy(-4, 0, 8, 8, 2, 2), score(0, -64), background() {
     for(int index=0; index < this->pipes.max_size(); index++) {
         this->pipes.push_back(PipeWall(
             PIPE_INITIAL_POSITION + (GAP_BTW_PIPES + PIPE_WALL_WIDTH) * index, 
-            this->random.get_int(-SCREEN_HEIGHT_HALF + 16, SCREEN_HEIGHT_HALF - 56), 
+            this->random.get_int(-SCREEN_HEIGHT_HALF + 16, SCREEN_HEIGHT_HALF - 86), 
             PIPE_WALL_WIDTH,
             generateGapSize(&this->random), COLOR_WHITE, 
             -3));
@@ -108,9 +107,11 @@ void Gameplay::getReadyScene() {
 
         this->background.setX(this->background.getX() - this->backgroundSpeed);
         this->flappy.setY(this->flappyData.deltaY);
+        this->floor.setX(this->floor.getX() - this->pipeSpeed);
 
         this->background.update();
         this->flappy.update();
+        this->floor.update();
         bn::core::update();
     }
 }
@@ -164,7 +165,7 @@ void Gameplay::gameScene() {
             if(pipe->getX() < -SCREEN_WIDTH_HALF - PIPE_WALL_WIDTH) {
                 this->random.update();
                 pipe->setX(pipe->getX() + (GAP_BTW_PIPES + PIPE_WALL_WIDTH) * (this->pipes.size()));
-                pipe->setY(this->random.get_int(-SCREEN_HEIGHT_HALF + 16, SCREEN_HEIGHT_HALF - 56));
+                pipe->setY(this->random.get_int(-SCREEN_HEIGHT_HALF + 16, SCREEN_HEIGHT_HALF - 86));
                 pipe->setGapSize(generateGapSize(&this->random));
                 pipe->setScoredFlag(false);
             }
@@ -175,14 +176,20 @@ void Gameplay::gameScene() {
             return;
         }
 
+        if(flappy_nextY > FLOOR_Y) {
+            this->flappy.setAliveFlag(false);
+        }
+
         this->background.setX(this->background.getX() - this->backgroundSpeed);
         
         this->flappy.setX(this->flappy.getX() + this->flappyData.deltaX);
         this->flappy.setY(this->flappy.getY() + this->flappyData.deltaY);
+        this->floor.setX(this->floor.getX() - this->pipeSpeed);
 
         this->background.update();
         this->flappy.update();
         this->score.update();
+        this->floor.update();
         bn::core::update();
         return;
 }
