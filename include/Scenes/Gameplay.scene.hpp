@@ -15,6 +15,7 @@
     #include "Entities/Score.hpp"
     #include "Entities/Background.hpp"
     #include "Entities/Floor.hpp"
+    #include "Entities/GetReady.hpp"
     
     constexpr int COLOR_WHITE = 1;
     constexpr int SCREEN_WIDTH = bn::display::width();
@@ -56,6 +57,7 @@
             Flappy flappy;
             Background background;
             Score score;
+            GetReady getReady;
             Floor floor;
 
             void getReadyScene();

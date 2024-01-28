@@ -1,5 +1,8 @@
 #include "Entities/Background.hpp"
 
+constexpr bn::regular_bg_item bgDay(bn::regular_bg_items::bg_day.tiles_item(), bn::bg_palette_items::palette, bn::regular_bg_items::bg_day.map_item());
+constexpr bn::regular_bg_item bgNight(bn::regular_bg_items::bg_night.tiles_item(), bn::bg_palette_items::palette, bn::regular_bg_items::bg_night.map_item());
+
 Background::Background() {
     this->setX(0);
     this->setY(0);
@@ -23,12 +26,12 @@ void Background::setBackground(BackgroundIndex _backgroundIndex) {
         default:
         case DAY:
             {
-                this->current = bn::regular_bg_items::bg_day.create_bg_optional(0, 0);
+                this->current = bgDay.create_bg_optional(0, 0);
                 break;
             }
         case NIGHT:
             {
-                this->current = bn::regular_bg_items::bg_night.create_bg_optional(0, 0);
+                this->current = bgNight.create_bg_optional(0, 0);
                 break;
             }
     }

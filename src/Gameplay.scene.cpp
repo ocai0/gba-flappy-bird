@@ -33,7 +33,7 @@ void Gameplay::reset() {
 }
 
 // main functions
-Gameplay::Gameplay() : flappy(-4, 0, 8, 8, 2, 2), score(0, -64), background(), floor(0, 36) {
+Gameplay::Gameplay() : flappy(-4, 0, 8, 8, 2, 2), score(0, -64), background(), floor(0, 36), getReady() {
     this->MAX_PIPE_SPEED = 2;
     this->flappyData.direction = -1;
     this->flappyData.gravity = .15;
@@ -94,8 +94,10 @@ void Gameplay::getReadyScene() {
     this->flappyData.deltaY = 0;
     int sign_y = 1;
     bn::fixed FLAPPY_VELOCITY(.1);
+    this->getReady.fadeIn();
     while(true) {
         if(bn::keypad::a_pressed()) {
+            this->getReady.fadeOut();
             this->currentSubScene = GAME;
             return;
         }
@@ -112,6 +114,7 @@ void Gameplay::getReadyScene() {
         this->background.update();
         this->flappy.update();
         this->floor.update();
+        this->getReady.update();
         bn::core::update();
     }
 }
@@ -189,9 +192,9 @@ void Gameplay::gameScene() {
         this->background.update();
         this->flappy.update();
         this->score.update();
+        this->getReady.update();
         this->floor.update();
         bn::core::update();
-        return;
 }
 
 void Gameplay::pausedScene() {}

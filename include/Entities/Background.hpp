@@ -2,14 +2,17 @@
 #define BACKGROUND_H_
 
     #include "bn_regular_bg_ptr.h"
-    #include "bn_unique_ptr.h"
+    #include "bn_bg_palette_item.h"
+    #include "bn_bg_palette_ptr.h"
     #include "bn_optional.h"
+    #include "bn_bg_palette_items_palette.h"
     #include "bn_regular_bg_items_bg_day.h"
     #include "bn_regular_bg_items_bg_night.h"
 
     enum BackgroundIndex { DAY = 0, NIGHT = 1 };
 
     class Background {
+        bn::bg_palette_ptr bg_palette = bn::bg_palette_items::palette.create_palette();
         bn::optional<bn::regular_bg_ptr> current;
         bn::fixed x;
         bn::fixed y;

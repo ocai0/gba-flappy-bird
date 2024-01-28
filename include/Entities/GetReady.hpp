@@ -1,28 +1,26 @@
 #ifndef GET_READY_H_
 #define GET_READY_H_
 
-    #include "bn_regular_bg_map_cell.h"
-    #include "bn_regular_bg_item.h"
+    #include "bn_core.h"
     #include "bn_regular_bg_ptr.h"
-    #include "bn_regular_bg_map_ptr.h"
-    #include "bn_unique_ptr.h"
-    #include "bn_regular_bg_tiles_items_bg_tiles.h"
-    #include "bn_bg_palette_items_palette.h"
-
-
+    #include "bn_optional.h"
+    #include "bn_blending_actions.h"
+    #include "bn_blending_transparency_attributes.h"
+    #include "bn_regular_bg_attributes.h"
+    #include "bn_regular_bg_items_bg_get_ready.h"
 
     class GetReady {
-        static constexpr int COLUMNS = 32;
-        static constexpr int ROWS = 32;
-        static constexpr int cells_count = COLUMNS * ROWS;
-        alignas(int) bn::regular_bg_map_cell tilemap[cells_count];
-        bn::regular_bg_map_item map_item;
-        void copyTileIndexes();
-
+        bn::regular_bg_ptr bg;
+        bn::fixed value;
+        bool done;
+        bool fadeInEnabled;
+        bool fadeOutEnabled;
         public:
             GetReady();
-            void setOpacity(int opacity);
-            void destroy();
+            bool isDone();
+            void fadeIn();
+            void fadeOut();
+            void update();
     };
 
 #endif
