@@ -6,6 +6,7 @@
     #include "bn_random.h"
     #include "bn_display.h"
     #include "bn_keypad.h"
+    #include "bn_unique_ptr.h"
 
     #include "Base/Scene.hpp"
     #include "Math.hpp"
@@ -16,6 +17,7 @@
     #include "Entities/Background.hpp"
     #include "Entities/Floor.hpp"
     #include "Entities/GetReady.hpp"
+    #include "Entities/ScoreBoard.hpp"
     
     constexpr int COLOR_WHITE = 1;
     constexpr int SCREEN_WIDTH = bn::display::width();
@@ -57,8 +59,9 @@
             Flappy flappy;
             Background background;
             Score score;
-            GetReady getReady;
             Floor floor;
+            bn::unique_ptr<GetReady> getReady;
+            bn::unique_ptr<ScoreBoard> scoreBoard;
 
             void getReadyScene();
             void gameScene();
