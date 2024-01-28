@@ -6,6 +6,7 @@ Flappy::Flappy(bn::fixed _x, bn::fixed _y, int _width, int _height, int _offsetX
     this->setX(_x);
     this->setY(_y);
     this->flappy_sprite.set_z_order(-1);
+    this->flappy_sprite.set_bg_priority(1);
     this->setAliveFlag(true);
     this->showDebugBox(false);
 }
