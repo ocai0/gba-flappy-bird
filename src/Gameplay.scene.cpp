@@ -13,7 +13,6 @@ void Gameplay::reset() {
     this->flappyData.deltaY = 0;
     this->flappyData.deltaX = 0;
     this->flappy.setRotation(90);
-    this->flappy.setX(0);
     this->flappy.setY(0);
     this->flappy.setAliveFlag(true);
     this->flappy.update();
@@ -28,12 +27,14 @@ void Gameplay::reset() {
         this->random.update();
         pipe->setX(PIPE_INITIAL_POSITION + (GAP_BTW_PIPES + PIPE_WALL_WIDTH) * index);
         pipe->setY(this->random.get_int(-SCREEN_HEIGHT_HALF + 16, SCREEN_HEIGHT_HALF - 86));
+        pipe->setScoredFlag(false);
     }
+    this->score.update();
     bn::core::update();
 }
 
 // main functions
-Gameplay::Gameplay() : flappy(-4, 0, 8, 8, 2, 2), score(0, -64), background(), floor(0, 36), getReady() {
+Gameplay::Gameplay() : flappy(-64, 0, 8, 8, 2, 2), score(0, -64), background(), floor(0, 36), getReady() {
     this->MAX_PIPE_SPEED = 2;
     this->flappyData.direction = -1;
     this->flappyData.gravity = .15;
