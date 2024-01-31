@@ -1,7 +1,7 @@
 #include "Entities/Background.hpp"
 
-constexpr bn::regular_bg_item bgDay(bn::regular_bg_items::bg_day.tiles_item(), bn::bg_palette_items::palette, bn::regular_bg_items::bg_day.map_item());
-constexpr bn::regular_bg_item bgNight(bn::regular_bg_items::bg_night.tiles_item(), bn::bg_palette_items::palette, bn::regular_bg_items::bg_night.map_item());
+constexpr bn::regular_bg_item bgDay(bn::regular_bg_items::bg_day.tiles_item(), bn::bg_palette_items::palette_bg, bn::regular_bg_items::bg_day.map_item());
+constexpr bn::regular_bg_item bgNight(bn::regular_bg_items::bg_night.tiles_item(), bn::bg_palette_items::palette_bg, bn::regular_bg_items::bg_night.map_item());
 
 Background::Background() {
     this->setX(0);
