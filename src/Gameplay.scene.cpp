@@ -208,17 +208,38 @@ void Gameplay::gameOverScene() {
     int _internal_tick = 0;
     if(this->flappyData.deltaY > -1.6) this->flappyData.deltaY = -1.6;
     this->flappyData.rotationDelta = 145;
+    bool _userCanInteract = false;
+    this->scoreBoard.reset(new ScoreBoard());
 
-    while(_internal_tick++ < 300) {
+    while(1) {
+        if(_internal_tick == 74) {
+            this->scoreBoard.get()->showGameOver();
+        }
+        if(_internal_tick > 200) {
+            _userCanInteract = true;
+        }
+
+        if(_userCanInteract && bn::keypad::a_pressed()) {
+            this->reset();
+            this->scoreBoard.reset();
+            bn::core::update();
+            return;
+        }
+
         this->flappyData.deltaY += this->flappyData.gravity;
+        
         if(this->flappy.getY() > 0) this->flappyData.rotationDelta -= 5;
         else this->flappyData.rotationDelta -= 4;
+
+        if(this->flappyData.rotationDelta < 45) this->flappyData.rotationDelta = 45;
         
-        this->flappy.setY(this->flappy.getY() + this->flappyData.deltaY);
+        if(this->flappy.getY() + this->flappyData.deltaY < FLOOR_Y + 12) {
+            this->flappy.setY(this->flappy.getY() + this->flappyData.deltaY);
+            this->flappy.update();
+        }
+        if(this->scoreBoard) this->scoreBoard.get()->update();
         this->flappy.setRotation(this->flappyData.rotationDelta);
-        this->flappy.update();
+        _internal_tick++;
         bn::core::update();
     }
-    this->reset();
-    return;
 }
