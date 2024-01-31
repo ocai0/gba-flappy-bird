@@ -1,5 +1,4 @@
 #include "Entities/GetReady.hpp"
-#include "bn_log.h"
 
 #define TRANSPARENT 0 
 #define OPAQUE 1 
@@ -8,6 +7,9 @@ GetReady::GetReady() : bg(bn::regular_bg_items::bg_get_ready.create_bg(0, 10)) {
     this->bg.set_blending_enabled(true);
     this->bg.set_priority(1);
     this->value = TRANSPARENT;
+}
+GetReady::~GetReady() {
+    bn::blending::set_transparency_alpha(OPAQUE);
 }
 
 void GetReady::fadeIn() {
@@ -28,7 +30,6 @@ void GetReady::update() {
     if(!this->done) {
         bn::fixed _value(this->value);
         if(this->fadeInEnabled) {
-            BN_LOG("Fade In");
             _value = this->value + .1;
             if(_value >= OPAQUE) {
                 _value = OPAQUE;
@@ -37,7 +38,6 @@ void GetReady::update() {
             }
         }
         if(this->fadeOutEnabled) {
-            BN_LOG("Fade Out");
             _value = this->value - .1;
             if(_value <= TRANSPARENT) {
                 _value = TRANSPARENT;
@@ -46,7 +46,6 @@ void GetReady::update() {
             }
         }
         this->value = _value;
-        BN_LOG(this->value);
         bn::blending::set_transparency_alpha(this->value);
     }
 }

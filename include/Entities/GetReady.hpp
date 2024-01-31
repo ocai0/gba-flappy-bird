@@ -17,6 +17,7 @@
         bool fadeOutEnabled;
         public:
             GetReady();
+            ~GetReady();
             bool isDone();
             void fadeIn();
             void fadeOut();
