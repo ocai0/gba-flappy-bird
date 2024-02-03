@@ -35,6 +35,7 @@
             bool getScoredFlag();
             void showSprite(bool);
             void showDebugBox(bool);
+            void setBlendingEnabled(bool);
     };
 
 #endif

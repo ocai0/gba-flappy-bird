@@ -24,3 +24,7 @@ void Floor::update() {
     this->bg.set_x(this->x);
     this->bg.set_y(this->y);
 }
+
+void Floor::setBlendingEnabled(bool _enabled) {
+    this->bg.set_blending_enabled(_enabled);
+}

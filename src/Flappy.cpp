@@ -91,6 +91,10 @@ void Flappy::update() {
 }
 void Flappy::playDeathAnimation() {}
 
+void Flappy::setBlendingEnabled(bool _enable) {
+    this->flappy_sprite.set_blending_enabled(_enable);
+}
+
 void Flappy::showSprite(bool _show) {
     this->flappy_sprite.set_visible(_show);
 }

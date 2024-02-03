@@ -55,3 +55,8 @@ void Background::update() {
     this->current.get()->set_x(this->x);
     this->current.get()->set_y(this->y);
 }
+
+
+void Background::setBlendingEnabled(bool _enabled) {
+    return this->current.get()->set_blending_enabled(_enabled);
+}

@@ -10,6 +10,7 @@ GetReady::GetReady() : bg(bn::regular_bg_items::bg_get_ready.create_bg(0, 10)) {
 }
 GetReady::~GetReady() {
     bn::blending::set_transparency_alpha(OPAQUE);
+    this->bg.set_blending_enabled(false);
 }
 
 void GetReady::fadeIn() {

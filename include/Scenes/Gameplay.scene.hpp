@@ -9,7 +9,9 @@
     #include "bn_unique_ptr.h"
 
     #include "Base/Scene.hpp"
+    #include "Effects/FadeScreenEffect.hpp"
     #include "Math.hpp"
+    
 
     #include "Entities/Flappy.hpp"
     #include "Entities/PipeWall.hpp"

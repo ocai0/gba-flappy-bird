@@ -102,3 +102,10 @@ void PipeWall::showDebugBox(bool _show) {
 int PipeWall::getWidth() {
     return this->width;
 }
+
+void PipeWall::setBlendingEnabled(bool _enabled) {
+    this->top_pipe->set_blending_enabled(_enabled);
+    this->top_pipe_body->set_blending_enabled(_enabled);
+    this->bottom_pipe->set_blending_enabled(_enabled);
+    this->bottom_pipe_body->set_blending_enabled(_enabled);
+}

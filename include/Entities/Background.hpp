@@ -26,6 +26,7 @@
             void setY(bn::fixed);
             void update();
             void setBackground(BackgroundIndex);
+            void setBlendingEnabled(bool);
     };
 
 #endif

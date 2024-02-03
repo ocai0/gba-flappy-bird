@@ -16,6 +16,7 @@
             bn::fixed getX();
             bn::fixed getY();
             void update();
+            void setBlendingEnabled(bool);
     };
 
 #endif

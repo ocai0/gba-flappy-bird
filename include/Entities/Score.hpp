@@ -24,6 +24,8 @@
             int getX();
             int getY();
             void update();
+            void setBlendingEnabled(bool _enable);
+            void setVisible(bool);
 
     };
 

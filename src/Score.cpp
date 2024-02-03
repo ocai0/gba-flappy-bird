@@ -44,3 +44,9 @@ void Score::update() {
     this->text_sprites.clear();
     this->text_generator.generate(this->x, this->y, this->text, this->text_sprites);
 }
+
+void Score::setVisible(bool visible) {
+    for(bn::sprite_ptr& sprite : this->text_sprites) {
+        sprite.set_visible(visible);
+    }
+}

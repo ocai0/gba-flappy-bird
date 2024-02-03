@@ -58,6 +58,7 @@
             void setCollidingFlag(bool);
 
             void setSkin(Skin);
+            void setBlendingEnabled(bool);
             void showSprite(bool);
             void playDeathAnimation();
             void showDebugBox(bool);
