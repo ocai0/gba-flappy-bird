@@ -1,17 +1,23 @@
 #include "Entities/Score.hpp"
 
-Score::Score(int _x, int _y) : text_generator(big_score_font) {
-    this->text_generator.set_center_alignment();
+Score::Score(int _x, int _y, FontType _font) {
+    if(_font == FontType::BIG) this->ptr_text_generator.reset(new bn::sprite_text_generator(big_score_font));
+    if(_font == FontType::SMALL) this->ptr_text_generator.reset(new bn::sprite_text_generator(small_score_font));
+    
+
+    this->ptr_text_generator.get()->set_center_alignment();
     this->setValue(0);
-    this->text_generator.set_bg_priority(1);
+    this->ptr_text_generator.get()->set_one_sprite_per_character(true);
+    this->ptr_text_generator.get()->set_bg_priority(1);
     this->setX(_x);
     this->setY(_y);
     this->update();
 }
 
-Score::Score(int _x, int _y, int _score) : text_generator(big_score_font) {
+Score::Score(int _x, int _y, int _score, FontType _font) {
     this->setValue(_score);
-    this->text_generator.set_bg_priority(1);
+    this->ptr_text_generator.get()->set_bg_priority(1);
+    this->ptr_text_generator.get()->set_one_sprite_per_character(true);
     this->setX(_x);
     this->setY(_y);
 }
@@ -42,11 +48,21 @@ int Score::getY() {
 }
 void Score::update() {
     this->text_sprites.clear();
-    this->text_generator.generate(this->x, this->y, this->text, this->text_sprites);
+    this->ptr_text_generator.get()->generate(this->x, this->y, this->text, this->text_sprites);
 }
 
 void Score::setVisible(bool visible) {
     for(bn::sprite_ptr& sprite : this->text_sprites) {
         sprite.set_visible(visible);
     }
+}
+
+void Score::setPriority(int priority) {
+    for(bn::sprite_ptr& sprite : this->text_sprites) {
+        sprite.set_bg_priority(priority);
+    }
+}
+
+void Score::setAlignment(bn::sprite_text_generator::alignment_type _align) {
+    this->ptr_text_generator.get()->set_alignment(_align);
 }

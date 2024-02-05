@@ -12,7 +12,16 @@
 
     #include "bn_sprite_palette_items_palette_ui.h"
     #include "bn_sprite_items_ui_gameover.h"
+    #include "bn_sprite_items_ui_new.h"
+    #include "bn_sprite_items_ui_medal.h"
 
+    #include "Entities/Score.hpp"
+
+
+    struct ScoreData {
+        int current;
+        int max;
+    };
     
     namespace ui {
         class GameOver {
@@ -38,30 +47,67 @@
                 int getY();
                 void update();       
         };
+        class NewFlag {
+            int x;
+            int y;
+            bn::sprite_ptr sprite;
+            public:
+                NewFlag(int, int);
+                int getX();
+                void setX(int);
+                int getY();
+                void setY(int);
+                void update();
+                void setPriority(int);
+        };
+        class Medal {
+            int x;
+            int y;
+            bn::sprite_ptr sprite;
+            public:
+                Medal(int, int);
+                void setIndex(int);
+        };
+        class Board {
+            int x;
+            int y;
+            int endY;
+            int maxScoreY;
+            int scoreY;
+            ScoreData scoreData;
+            Score maxScore;
+            Score score;
+            bn::unique_ptr<Medal> ptrMedal;
+            bn::unique_ptr<NewFlag> ptrNewFlag;
+            bn::regular_bg_ptr bg;
+            public:
+                Board(int, ScoreData);
+                void update();
+        };
     }
 
-    // FLAG_STATUS::CREATED means the effect was not started yet
-    // FLAG_STATUS::UP means the effect was already created/started and it will now update
-    enum class FLAG_STATUS { CREATED, UP, DOWN };
+    enum class FLAG_STATUS { UP, DOWN };
 
     class ScoreBoard {
         int x;
         int y;
+        ScoreData score;
         bn::fixed fadeIntensity;
         FLAG_STATUS _gameOverTitle;
-        bn::unique_ptr<bn::regular_bg_ptr> ptrBoardBg;
+        FLAG_STATUS _scoreBoard;
+        bn::unique_ptr<ui::Board> ptrBoard;
         bn::unique_ptr<ui::GameOver> ptrGameOver;
 
         public:
             void resetAllFlags();
-            ScoreBoard();
+            ScoreBoard(int, int);
             // ~ScoreBoard();
             void setX(int);
             void setY(int);
             int getX();
             int getY();
             void showGameOverText(int, int, int, int);
-            // void showBoard();
+            void showBoard(int, int, int, int);
             // void showButtons();
             void update();
     };

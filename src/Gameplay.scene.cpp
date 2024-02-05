@@ -35,7 +35,8 @@ void Gameplay::reset() {
 }
 
 // main functions
-Gameplay::Gameplay() : flappy(-64, 0, 8, 8, 2, 2), score(0, -64), background(), floor(0, 36) {
+Gameplay::Gameplay() : flappy(-64, 0, 8, 8, 2, 2), score(0, -64, FontType::BIG), background(), floor(0, 36) {
+    this->score.setValue(0);
     this->MAX_PIPE_SPEED = 2;
     this->flappyData.direction = -1;
     this->flappyData.gravity = .15;
@@ -211,7 +212,7 @@ void Gameplay::gameOverScene() {
     if(this->flappyData.deltaY > -1.6) this->flappyData.deltaY = -1.6;
     this->flappyData.rotationDelta = 145;
     bool _userCanInteract = false;
-    this->scoreBoard.reset(new ScoreBoard());
+    this->scoreBoard.reset(new ScoreBoard(this->score.getValue(), 1));
 
     this->flappy.setBlendingEnabled(true);
     this->floor.setBlendingEnabled(true);
@@ -235,6 +236,7 @@ void Gameplay::gameOverScene() {
             for(int index=0; index < this->pipes.max_size(); index++) this->pipes.at(index)->setBlendingEnabled(false);
 
             if(_clock == 70) this->scoreBoard.get()->showGameOverText(-48, -54, -48, -72);
+            if(_clock == 100) this->scoreBoard.get()->showBoard(0, 104, 0, 0);
             this->scoreBoard.get()->update();
         }
 
