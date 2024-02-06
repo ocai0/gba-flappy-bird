@@ -3,32 +3,25 @@
 
 using namespace Scenes;
 
-GearsLogo::GearsLogo() : flappy(0, 0, 12, 10, 2, 2), pipe(0, 0, 26, 8, 1) {
-    this->flappy.setRotation(90);
+GearsLogo::GearsLogo() : bg(bn::regular_bg_items::bg_gears_logo.create_bg(0, 0)) {
+    this->bg.set_blending_enabled(true);
+    this->bg.set_x(0);
+    this->bg.set_y(0);
 }
 
 bn::optional<SceneType> GearsLogo::update() {
-    while(!bn::keypad::start_held()) {
-        int deltaX = 1 * (bn::keypad::right_pressed() - bn::keypad::left_pressed());
-        this->flappy.setX(this->flappy.getX() + deltaX);
-        int deltaY = 1 * (bn::keypad::down_pressed() - bn::keypad::up_pressed());
-        this->flappy.setY(this->flappy.getY() + deltaY);
-
-        this->flappy.update();
-        
-        bool collides = this->flappy.getX() < this->pipe.getX() + this->pipe.getWidth() &&
-                        this->flappy.getX() + this->flappy.getWidth() > this->pipe.getX() &&
-                        this->flappy.getY() < this->pipe.getY() + this->pipe.getGapSize() &&
-                        this->flappy.getY() + this->flappy.getHeight() > this->pipe.getY();
-        this->flappy.setCollidingFlag(collides);
-        // if( this->flappy.getX() > this->pipe.getX() && this->flappy.getX() < this->pipe.getX() + PipeWall::PIPE_WIDTH ) {
-        //         if(this->flappy.getY() < this->pipe.getY() || this->flappy.getY() > this->pipe.getY() + this->pipe.getGapSize()) {
-        //             this->flappy.setCollidingFlag(true);
-        //         }
-        // }
-        BN_LOG(this->flappy.isColliding());
+    int _clock = 0;
+    FadeScreenEffect fadeScreenEffect(bn::blending::fade_color_type::BLACK, .1);
+    fadeScreenEffect.fadeOut();
+    fadeScreenEffect.start();
+    while(fadeScreenEffect.isAlive()) {
+        if(_clock > 50) fadeScreenEffect.update();
+        _clock++;
         bn::core::update();
     }
-    return SceneType::GAMEPLAY;
+    this->bg.set_visible(false);
+    delete &fadeScreenEffect;
+    bn::core::update();
+    return SceneType::MAIN_MENU;
 }
 

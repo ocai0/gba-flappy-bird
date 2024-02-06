@@ -18,7 +18,9 @@
 
         public:
             FadeScreenEffect(bn::blending::fade_color_type, bn::fixed);
+            ~FadeScreenEffect();
             void fadeInOut();
+            void fadeOut();
             void start();
             bool isAlive();
             void update();

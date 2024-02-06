@@ -4,7 +4,7 @@
 
 int main() {
     bn::core::init();
-    SceneManager sceneManager(SceneType::GAMEPLAY);
+    SceneManager sceneManager(SceneType::GEARS_LOGO);
     sceneManager.loadScene();
     while(true) {
         sceneManager.update();

@@ -7,6 +7,15 @@ FadeScreenEffect::FadeScreenEffect(bn::blending::fade_color_type _fadeColor, bn:
     bn::blending::set_fade_color(_fadeColor);
 }
 
+FadeScreenEffect::~FadeScreenEffect() {
+    bn::blending::set_fade_alpha(0);
+}
+
+void FadeScreenEffect::fadeOut() {
+    this->effectType = FadeScreenEffectType::FADE_OUT;
+    this->effectCount = 1;
+}
+
 void FadeScreenEffect::fadeInOut() {
     this->effectType = FadeScreenEffectType::FADE_IN_OUT;
     this->effectCount = 2;
@@ -33,6 +42,11 @@ void FadeScreenEffect::update() {
                 {
                     if(this->effectCount == 2) this->currentValue = clamp(this->currentValue + this->_stepValue, 0, 1);
                     else this->currentValue = clamp(this->currentValue - this->_stepValue, 0, 1);
+                }
+            break;
+            case FadeScreenEffectType::FADE_OUT: 
+                {
+                    this->currentValue = min(this->currentValue + this->_stepValue, 1);
                 }
             break;
         }

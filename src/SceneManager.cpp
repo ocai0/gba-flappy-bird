@@ -9,6 +9,11 @@ void SceneManager::loadScene() {
                 currentScene.reset(new Scenes::GearsLogo);
                 break;
             }
+        case SceneType::MAIN_MENU: 
+            {
+                currentScene.reset(new Scenes::MainMenu);
+                break;
+            }
         case SceneType::GAMEPLAY: 
             {
                 currentScene.reset(new Scenes::Gameplay);

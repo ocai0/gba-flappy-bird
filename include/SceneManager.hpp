@@ -5,8 +5,9 @@
     #include "Base/Scene.hpp"
     #include "Base/SceneType.enum.hpp"
 
-    #include "Scenes/Gameplay.scene.hpp"
     #include "Scenes/GearsLogo.scene.hpp"
+    #include "Scenes/MainMenu.scene.hpp"
+    #include "Scenes/Gameplay.scene.hpp"
 
     class SceneManager {
         bn::unique_ptr<Scene> currentScene;

@@ -79,7 +79,6 @@ namespace ui {
 
 namespace ui {
     Board::Board(int _endY, ScoreData _scoreData): endY(_endY), x(0), y(140), scoreData(_scoreData), bg(bn::regular_bg_items::bg_score_board.create_bg(0, 140)), score(44, -11, FontType::SMALL), maxScore(44, 10, FontType::SMALL) {
-        this->scoreData.current = 800;
         this->maxScore.setAlignment(bn::sprite_text_generator::alignment_type::RIGHT);
         this->maxScore.setPriority(0);
         this->maxScore.setValue(this->scoreData.max);
