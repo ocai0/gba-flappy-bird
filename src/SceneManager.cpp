@@ -23,7 +23,6 @@ void SceneManager::loadScene() {
 }
 
 void SceneManager::update() {
-    int waitFrames = 30;
 
     while(1) {
         if(currentScene) {
@@ -32,14 +31,9 @@ void SceneManager::update() {
         if(nextScene) {
             if(currentScene) {
                 currentScene.reset();
-                waitFrames = 30;
             }
             bn::core::update();
-            --waitFrames;
-
-            if(!waitFrames) {
-                this->loadScene();
-            }
+            this->loadScene();
         }
     }
 }
