@@ -16,6 +16,8 @@ void Gameplay::reset() {
     this->flappy.setY(0);
     this->flappy.setAliveFlag(true);
     this->flappy.update();
+    this->scoreBoard.reset();
+    this->ptrPlayButton.reset();
     this->currentSubScene = GET_READY;
     for(int index=0; index < this->pipes.max_size(); index++) this->pipes.at(index)->setBlendingEnabled(true);
 
@@ -229,14 +231,20 @@ void Gameplay::gameOverScene() {
         if(fadeScreenEffect.isAlive()) fadeScreenEffect.update();
         // ScoreBoard
         else {
-            
             this->flappy.setBlendingEnabled(false);
             this->floor.setBlendingEnabled(false);
             this->background.setBlendingEnabled(false);
             for(int index=0; index < this->pipes.max_size(); index++) this->pipes.at(index)->setBlendingEnabled(false);
 
-            if(_clock == 70) this->scoreBoard.get()->showGameOverText(-48, -54, -48, -72);
-            if(_clock == 100) this->scoreBoard.get()->showBoard(0, 104, 0, 0);
+            if(_clock == 70) this->scoreBoard.get()->showGameOverText(-48, -54, -48, -76);
+            if(_clock == 100) this->scoreBoard.get()->showBoard(0, 104, 0, -6);
+            if(this->scoreBoard.get()->scoreAnimationComplete()) {
+                this->ptrPlayButton.reset(new ui::Button(0, 38, ui::ButtonType::PLAY));
+                this->ptrPlayButton.get()->update();
+                if(bn::keypad::start_pressed()) {
+                    return this->reset();
+                }
+            }
             this->scoreBoard.get()->update();
         }
 

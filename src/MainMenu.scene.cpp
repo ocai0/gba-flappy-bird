@@ -26,9 +26,6 @@ namespace Scenes {
             this->ui.set_y(this->ui.y() + _y);
             this->floor.setX(this->floor.getX() - (bn::fixed) .7);
 
-            BN_LOG("UI X: ", this->ui.x());
-            BN_LOG("UI Y: ", this->ui.y());
-
             this->floor.update();
             this->flappy.update();
             bn::core::update();

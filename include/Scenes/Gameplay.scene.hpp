@@ -19,6 +19,7 @@
     #include "Entities/Background.hpp"
     #include "Entities/Floor.hpp"
     #include "Entities/GetReady.hpp"
+    #include "Entities/Button.hpp"
     #include "Entities/ScoreBoard.hpp"
     
     constexpr int COLOR_WHITE = 1;
@@ -64,6 +65,7 @@
             Floor floor;
             bn::unique_ptr<GetReady> getReady;
             bn::unique_ptr<ScoreBoard> scoreBoard;
+            bn::unique_ptr<ui::Button> ptrPlayButton;
 
             void getReadyScene();
             void gameScene();

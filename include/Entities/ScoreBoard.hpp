@@ -80,9 +80,11 @@
             bn::unique_ptr<Medal> ptrMedal;
             bn::unique_ptr<NewFlag> ptrNewFlag;
             bn::regular_bg_ptr bg;
+            bool _scoreAnimationComplete;
             public:
                 Board(int, ScoreData);
                 void update();
+                bool scoreAnimationComplete();
         };
     }
 
@@ -108,6 +110,7 @@
             int getY();
             void showGameOverText(int, int, int, int);
             void showBoard(int, int, int, int);
+            bool scoreAnimationComplete();
             // void showButtons();
             void update();
     };

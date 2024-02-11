@@ -16,7 +16,7 @@ void ScoreBoard::showGameOverText(int _startX, int _startY, int _endX, int _endY
 }
 
 void ScoreBoard::showBoard(int _startX, int _startY, int _endX, int _endY) {
-    this->ptrBoard.reset(new ui::Board(10, this->score));
+    this->ptrBoard.reset(new ui::Board(_endY, this->score));
     this->_scoreBoard = FLAG_STATUS::UP;
 }
 
@@ -28,6 +28,11 @@ void ScoreBoard::update() {
 void ScoreBoard::resetAllFlags() {
     this->_gameOverTitle = FLAG_STATUS::DOWN;
     this->_scoreBoard = FLAG_STATUS::DOWN;
+}
+
+bool ScoreBoard::scoreAnimationComplete() {
+    if (this->ptrBoard) return this->ptrBoard.get()->scoreAnimationComplete();
+    return false;
 }
 
 namespace ui {
@@ -78,7 +83,7 @@ namespace ui {
 }
 
 namespace ui {
-    Board::Board(int _endY, ScoreData _scoreData): endY(_endY), x(0), y(140), scoreData(_scoreData), bg(bn::regular_bg_items::bg_score_board.create_bg(0, 140)), score(44, -11, FontType::SMALL), maxScore(44, 10, FontType::SMALL) {
+    Board::Board(int _endY, ScoreData _scoreData): _scoreAnimationComplete(false), endY(_endY), x(0), y(140), scoreData(_scoreData), bg(bn::regular_bg_items::bg_score_board.create_bg(0, 140)), score(44, -11, FontType::SMALL), maxScore(44, 10, FontType::SMALL) {
         this->maxScore.setAlignment(bn::sprite_text_generator::alignment_type::RIGHT);
         this->maxScore.setPriority(0);
         this->maxScore.setValue(this->scoreData.max);
@@ -91,14 +96,19 @@ namespace ui {
         this->bg.set_priority(1);
     }
 
+    bool Board::scoreAnimationComplete() {
+        return _scoreAnimationComplete;
+    }
+
     void Board::update() {
-        if(this->y > 0) {
-            this->y -= 5;
-            this->maxScoreY -= 5;
-            this->scoreY -= 5;
+        if(this->y > this->endY) {
+            this->y -= 4;
+            this->maxScoreY -= 4;
+            this->scoreY -= 4;
         }
         else {
             if(this->score.getValue() < this->scoreData.current) {
+                this->_scoreAnimationComplete = false;
                 int _step = 1;
                 if(this->scoreData.current > 50) _step = 5;
                 if(this->scoreData.current > 150) _step = 10;
@@ -109,6 +119,7 @@ namespace ui {
                 this->score.setValue(_nextValue);
             }
             else {
+                this->_scoreAnimationComplete = true;
                 if(this->scoreData.current > this->scoreData.max) {
                     int _newFlagXPos = 28;
                     if(this->scoreData.current > 9) _newFlagXPos = 22;
@@ -116,10 +127,10 @@ namespace ui {
                     if(this->scoreData.current > 999) _newFlagXPos = 10;
                     this->maxScore.setValue(this->scoreData.current);
                     this->maxScore.update();
-                    this->ptrNewFlag.reset(new ui::NewFlag(_newFlagXPos, 13));
+                    this->ptrNewFlag.reset(new ui::NewFlag(_newFlagXPos, this->y + 13));
                     this->ptrNewFlag.get()->setPriority(1);
 
-                    if(this->scoreData.current >= 10) this->ptrMedal.reset(new ui::Medal(-33, 4));
+                    if(this->scoreData.current >= 10) this->ptrMedal.reset(new ui::Medal(-33, this->y + 4));
                     if(this->scoreData.current >= 40) this->ptrMedal.get()->setIndex(3);
                     else if(this->scoreData.current >= 30) this->ptrMedal.get()->setIndex(2);
                     else if(this->scoreData.current >= 20) this->ptrMedal.get()->setIndex(1);
