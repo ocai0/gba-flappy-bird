@@ -37,7 +37,7 @@ void Gameplay::reset() {
 }
 
 // main functions
-Gameplay::Gameplay() : flappy(-64, 0, 8, 8, 2, 2), score(0, -64, FontType::BIG), background(), floor(0, 36) {
+Gameplay::Gameplay() : flappy(-64, 0, 8, 8, 2, 2), score(0, -64, FontType::BIG), background(), floor(0, 36), pauseButton(bn::sprite_items::ui_small_btn.create_sprite(-102, -64)) {
     this->score.setValue(0);
     this->MAX_PIPE_SPEED = 2;
     this->flappyData.direction = -1;
@@ -45,6 +45,9 @@ Gameplay::Gameplay() : flappy(-64, 0, 8, 8, 2, 2), score(0, -64, FontType::BIG),
     this->flappyData.MAX_GRAVITY = 2.6;
     this->flappyData.VERTICAL_JUMP_SPEED = -3;
     this->pipeSpeed = .7;
+    this->pauseButton.set_bg_priority(0);
+    this->pauseButton.set_visible(false);
+    this->pauseButton.set_tiles(bn::sprite_items::ui_small_btn.tiles_item().create_tiles(2));
     this->backgroundSpeed = .1;
 
     this->random.update();
@@ -97,6 +100,7 @@ bn::optional<SceneType> Gameplay::update() {
 
 void Gameplay::getReadyScene() {
     this->flappy.setRotation(90);
+    this->pauseButton.set_visible(false);
     this->flappyData.deltaY = 0;
     int sign_y = 1;
     bn::fixed FLAPPY_VELOCITY(.1);
@@ -126,6 +130,7 @@ void Gameplay::getReadyScene() {
     }
 }
 void Gameplay::gameScene() {
+        this->pauseButton.set_visible(true);
         if(!this->flappy.isAlive()) {
             this->currentSubScene = GAME_OVER;
             return;
@@ -207,9 +212,27 @@ void Gameplay::gameScene() {
         bn::core::update();
 }
 
-void Gameplay::pausedScene() {}
+void Gameplay::pausedScene() {
+    this->pauseButton.set_tiles(bn::sprite_items::ui_small_btn.tiles_item().create_tiles(3));
+    bool canResumeGame = false;
+    bool startWasPressed = false;
+    int framesTillResolve = 0;
+    while(!canResumeGame) {
+        if(bn::keypad::start_pressed()) {
+            startWasPressed = true;
+        }
+        if(startWasPressed) {
+            framesTillResolve++;
+        }
+        bn::core::update();
+    }
+    this->currentSubScene = GAME;
+    bn::core::update();
+    return;
+}
 
 void Gameplay::gameOverScene() {
+    this->pauseButton.set_visible(false);
     int _clock = 0;
     if(this->flappyData.deltaY > -1.6) this->flappyData.deltaY = -1.6;
     this->flappyData.rotationDelta = 145;

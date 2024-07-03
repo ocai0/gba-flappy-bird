@@ -11,6 +11,8 @@
     #include "Base/Scene.hpp"
     #include "Effects/FadeScreenEffect.hpp"
     #include "Math.hpp"
+    #include "bn_sprite_tiles_ptr.h"
+    #include "bn_sprite_items_ui_small_btn.h"
     
 
     #include "Entities/Flappy.hpp"
@@ -63,6 +65,7 @@
             Background background;
             Score score;
             Floor floor;
+            bn::sprite_ptr pauseButton;
             bn::unique_ptr<GetReady> getReady;
             bn::unique_ptr<ScoreBoard> scoreBoard;
             bn::unique_ptr<ui::Button> ptrPlayButton;
