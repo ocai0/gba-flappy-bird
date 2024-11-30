@@ -14,13 +14,19 @@ Scene* Scenes::GearsLogo::update() {
     fadeScreenEffect.fadeOut();
     fadeScreenEffect.start();
     while(fadeScreenEffect.isAlive()) {
-        if(_clock > 50) fadeScreenEffect.update();
+        if(_clock > 80) fadeScreenEffect.update();
+        if(bn::keypad::a_pressed()) {
+            if(this->blueBgActive) this->bg = bn::regular_bg_items::bg_gears_logo.create_bg(0, 0);
+            else this->bg = bn::regular_bg_items::bg_gears_logo_alt.create_bg(0, 0);
+            this->blueBgActive = !this->blueBgActive;
+            _clock = 0;
+        }
         _clock++;
         bn::core::update();
     }
     this->bg->set_visible(false);
-    delete &fadeScreenEffect;
     bn::core::update();
+    delete &fadeScreenEffect;
     return new Scenes::GearsLogo;
 }
 
