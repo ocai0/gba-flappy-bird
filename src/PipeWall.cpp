@@ -1,4 +1,4 @@
-#include "Entities/PipeWall.hpp"
+#include "Actors/Obstacle/PipeWall.hpp"
 
 constexpr int SPR_WIDTH = bn::sprite_items::pipe_body.shape_size().width();
 constexpr int SPR_WIDTH_HALF = bn::sprite_items::pipe_body.shape_size().width() >> 1;

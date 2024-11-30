@@ -1,4 +1,4 @@
-#include "Entities/DebugBox.hpp"
+#include "Actors/Debug/DebugBox.hpp"
 constexpr int SPRITE_SIZE_HALF = 4; // because the sprite are rendered at the middle of the image
 
 DebugBox::DebugBox(bn::fixed _x, bn::fixed _y, int _width, int _height): x(_x), y(_y), width(_width), height(_height) {

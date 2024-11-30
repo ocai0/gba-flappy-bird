@@ -8,21 +8,21 @@
     #include "bn_keypad.h"
     #include "bn_unique_ptr.h"
 
-    #include "Base/Scene.hpp"
+    #include "Scene.hpp"
     #include "Effects/FadeScreenEffect.hpp"
     #include "Math.hpp"
     #include "bn_sprite_tiles_ptr.h"
     #include "bn_sprite_items_ui_small_btn.h"
     
 
-    #include "Entities/Flappy.hpp"
-    #include "Entities/PipeWall.hpp"
-    #include "Entities/Score.hpp"
-    #include "Entities/Background.hpp"
-    #include "Entities/Floor.hpp"
-    #include "Entities/GetReady.hpp"
-    #include "Entities/Button.hpp"
-    #include "Entities/ScoreBoard.hpp"
+    #include "Actors/Player/Flappy.hpp"
+    #include "Actors/Obstacle/PipeWall.hpp"
+    #include "Actors/UI/Score.hpp"
+    #include "Actors/Asset/Background.hpp"
+    #include "Actors/Asset/Floor.hpp"
+    #include "Actors/UI/GetReady.hpp"
+    #include "Actors/UI/Button.hpp"
+    #include "Actors/UI/ScoreBoard.hpp"
     
     constexpr int COLOR_WHITE = 1;
     constexpr int SCREEN_WIDTH = bn::display::width();
@@ -77,7 +77,8 @@
             void reset();
             public:
                 Gameplay();
-                bn::optional<SceneType> update();
+                Scene* update();
+                void leave();
         };
     }
 #endif

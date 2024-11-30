@@ -1,4 +1,4 @@
-#include "Entities/Flappy.hpp"
+#include "Actors/Player/Flappy.hpp"
 
 // The Flappy sprite renders at the middle of the hitbox area, and the offset values moves its final position
 

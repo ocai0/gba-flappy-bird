@@ -1,4 +1,4 @@
-#include "Entities/Score.hpp"
+#include "Actors/UI/Score.hpp"
 
 Score::Score(int _x, int _y, FontType _font) {
     if(_font == FontType::BIG) this->ptr_text_generator.reset(new bn::sprite_text_generator(big_score_font));

@@ -1,4 +1,4 @@
-#include "Entities/ScoreBoard.hpp"
+#include "Actors/UI/ScoreBoard.hpp"
 #include "bn_log.h"
 
 #define TRANSPARENT 0 

@@ -1,14 +1,12 @@
-#include "Scenes/Gameplay.scene.hpp"
+#include "Scenes/Gameplay.hpp"
 #include "bn_log.h"
-
-using namespace Scenes;
 
 //misc functions
 int generateGapSize(bn::random* random) {
     return 46;
     return random->get_int(46, 54);
 }
-void Gameplay::reset() {
+void Scenes::Gameplay::reset() {
     this->score.setValue(0);
     this->flappyData.deltaY = 0;
     this->flappyData.deltaX = 0;
@@ -37,7 +35,7 @@ void Gameplay::reset() {
 }
 
 // main functions
-Gameplay::Gameplay() : flappy(-64, 0, 8, 8, 2, 2), score(0, -64, FontType::BIG), background(), floor(0, 36), pauseButton(bn::sprite_items::ui_small_btn.create_sprite(-102, -64)) {
+Scenes::Gameplay::Gameplay() : flappy(-64, 0, 8, 8, 2, 2), score(0, -64, FontType::BIG), background(), floor(0, 36), pauseButton(bn::sprite_items::ui_small_btn.create_sprite(-102, -64)) {
     this->score.setValue(0);
     this->MAX_PIPE_SPEED = 2;
     this->flappyData.direction = -1;
@@ -67,7 +65,7 @@ Gameplay::Gameplay() : flappy(-64, 0, 8, 8, 2, 2), score(0, -64, FontType::BIG),
     }
 }
 
-bn::optional<SceneType> Gameplay::update() {
+Scene* Scenes::Gameplay::update() {
     while(1) {
         switch(this->currentSubScene) {
             default:
@@ -98,7 +96,7 @@ bn::optional<SceneType> Gameplay::update() {
 
 // sub scenes
 
-void Gameplay::getReadyScene() {
+void Scenes::Gameplay::getReadyScene() {
     this->flappy.setRotation(90);
     this->pauseButton.set_visible(false);
     this->flappyData.deltaY = 0;
@@ -129,7 +127,7 @@ void Gameplay::getReadyScene() {
         bn::core::update();
     }
 }
-void Gameplay::gameScene() {
+void Scenes::Gameplay::gameScene() {
         this->pauseButton.set_visible(true);
         if(!this->flappy.isAlive()) {
             this->currentSubScene = GAME_OVER;
@@ -212,7 +210,7 @@ void Gameplay::gameScene() {
         bn::core::update();
 }
 
-void Gameplay::pausedScene() {
+void Scenes::Gameplay::pausedScene() {
     this->pauseButton.set_tiles(bn::sprite_items::ui_small_btn.tiles_item().create_tiles(3));
     bool canResumeGame = false;
     bool startWasPressed = false;
@@ -231,7 +229,7 @@ void Gameplay::pausedScene() {
     return;
 }
 
-void Gameplay::gameOverScene() {
+void Scenes::Gameplay::gameOverScene() {
     this->pauseButton.set_visible(false);
     int _clock = 0;
     if(this->flappyData.deltaY > -1.6) this->flappyData.deltaY = -1.6;

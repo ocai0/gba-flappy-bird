@@ -1,4 +1,4 @@
-#include "Scenes/MainMenu.scene.hpp"
+#include "Scenes/MainMenu.hpp"
 #include "bn_log.h"
 
 namespace Scenes {
@@ -8,7 +8,7 @@ namespace Scenes {
         if(this->random.get_int(1, 2) == 1) this->background.setBackground(NIGHT);
         this->ui.set_priority(0);
     }
-    bn::optional<SceneType> MainMenu::update() {
+    Scene* MainMenu::update() {
         int flappySignMovement = 1;
         bn::fixed flappyVelocity(.125);
         bn::fixed _flappyNextY = 0;
@@ -23,6 +23,9 @@ namespace Scenes {
             this->flappy.update();
             bn::core::update();
         }
-        return SceneType::GAMEPLAY;
+        return new MainMenu;
+    }
+    void MainMenu::leave() {
+
     }
 }

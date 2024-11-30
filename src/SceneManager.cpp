@@ -1,39 +1,15 @@
 #include "SceneManager.hpp"
 
-SceneManager::SceneManager(SceneType _nextScene): nextScene(_nextScene) {}
 
-void SceneManager::loadScene() {
-    switch(*nextScene) {
-        case SceneType::GEARS_LOGO:
-            {
-                currentScene.reset(new Scenes::GearsLogo);
-                break;
-            }
-        case SceneType::MAIN_MENU: 
-            {
-                currentScene.reset(new Scenes::MainMenu);
-                break;
-            }
-        case SceneType::GAMEPLAY: 
-            {
-                currentScene.reset(new Scenes::Gameplay);
-                break;
-            }
-    }
+void SceneManager::load() {
+    ((Scene*) this->scene)->load();
 }
-
 void SceneManager::update() {
-
-    while(1) {
-        if(currentScene) {
-            nextScene = currentScene->update();
-        }
-        if(nextScene) {
-            if(currentScene) {
-                currentScene.reset();
-            }
-            bn::core::update();
-            this->loadScene();
-        }
-    }
+    Scene* newScene = ((Scene*) this->scene)->update();
+    this->next((volatile Scene*) newScene);
+}
+void SceneManager::next(volatile Scene* newScene) {
+    if(this->scene) ((Scene*) this->scene)->leave();
+    ((Scene*) newScene)->load();
+    scene = newScene;
 }

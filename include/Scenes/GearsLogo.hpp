@@ -8,19 +8,17 @@
     #include "bn_regular_bg_ptr.h"
     #include "bn_regular_bg_items_bg_gears_logo.h"
 
-    #include "Base/Scene.hpp"
-    #include "Base/SceneType.enum.hpp"
+    #include "Scene.hpp"
     #include "Effects/FadeScreenEffect.hpp"
-    #include "Entities/Flappy.hpp"
-    #include "Entities/PipeWall.hpp"
     
     namespace Scenes {
 
         class GearsLogo : public Scene {
-            bn::regular_bg_ptr bg;
+            bn::optional<bn::regular_bg_ptr> bg;
             public:
-                GearsLogo();
-                bn::optional<SceneType> update();
+                void load();
+                Scene* update();
+                void leave();
         };
 
     }

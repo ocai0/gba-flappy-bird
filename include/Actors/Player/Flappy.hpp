@@ -5,7 +5,7 @@
     #include "bn_sprite_tiles_ptr.h"
     #include "bn_sprite_items_flappy.h"
     #include "bn_sprite_animate_actions.h"
-    #include "Entities/DebugBox.hpp"
+    #include "Actors/Debug/DebugBox.hpp"
     #include "Math.hpp"
 
 

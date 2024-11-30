@@ -1,21 +1,12 @@
-#ifndef SCENE_MANAGER_H_
-#define SCENE_MANAGER_H_
-
-    #include "bn_core.h"
-    #include "Base/Scene.hpp"
-    #include "Base/SceneType.enum.hpp"
-
-    #include "Scenes/GearsLogo.scene.hpp"
-    #include "Scenes/MainMenu.scene.hpp"
-    #include "Scenes/Gameplay.scene.hpp"
-
+#ifndef SCENE_MANAGER
+#define SCENE_MANAGER
+    #include "Scene.hpp"
+    
     class SceneManager {
-        bn::unique_ptr<Scene> currentScene;
-        bn::optional<SceneType> nextScene;
+        volatile Scene* scene = nullptr;
         public:
-            [[nodiscard]] SceneManager(SceneType);
-            void loadScene();
+            void load();
             void update();
+            void next(volatile Scene*);
     };
-
 #endif

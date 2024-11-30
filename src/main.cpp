@@ -1,14 +1,15 @@
 #include "bn_core.h"
 #include "bn_log.h"
 #include "SceneManager.hpp"
+#include "Scenes/GearsLogo.hpp"
 
 int main() {
     bn::core::init();
-    SceneManager sceneManager(SceneType::GEARS_LOGO);
-    sceneManager.loadScene();
+    SceneManager sceneManager;
+    sceneManager.next(new Scenes::GearsLogo);
+
     while(true) {
-        sceneManager.update();
         bn::core::update();
+        sceneManager.update();
     }
-    BN_LOG("End main()");
 }

@@ -8,13 +8,12 @@
     #include "bn_regular_bg_attributes.h"
     #include "bn_regular_bg_items_bg_main_menu.h"
 
-    #include "Base/Scene.hpp"
+    #include "Scene.hpp"
     #include "Effects/FadeScreenEffect.hpp"
     #include "Math.hpp"
-    #include "Entities/Flappy.hpp"
-    // #include "Entities/Score.hpp"
-    #include "Entities/Background.hpp"
-    #include "Entities/Floor.hpp"
+    #include "Actors/Player/Flappy.hpp"
+    #include "Actors/Asset/Background.hpp"
+    #include "Actors/Asset/Floor.hpp"
 
 
     namespace Scenes {
@@ -26,7 +25,8 @@
             bn::random random;
             public:
                 MainMenu();
-                bn::optional<SceneType> update();
+                Scene* update();
+                void leave();
         };
     }
 

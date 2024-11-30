@@ -1,4 +1,4 @@
-#include "Entities/GetReady.hpp"
+#include "Actors/UI/GetReady.hpp"
 
 #define TRANSPARENT 0 
 #define OPAQUE 1 

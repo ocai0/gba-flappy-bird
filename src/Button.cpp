@@ -1,4 +1,4 @@
-#include "Entities/Button.hpp"
+#include "Actors/UI/Button.hpp"
 
 using namespace ui;
 

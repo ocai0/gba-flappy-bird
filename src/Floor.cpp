@@ -1,4 +1,4 @@
-#include "Entities/Floor.hpp"
+#include "Actors/Asset/Floor.hpp"
 
 Floor::Floor(bn::fixed _x, bn::fixed _y): x(_x), y(_y), bg(bn::regular_bg_items::bg_floor.create_bg(_x, _y)) {
     this->bg.set_priority(0);

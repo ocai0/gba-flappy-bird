@@ -5,7 +5,7 @@
     #include "bn_optional.h"
     #include "bn_sprite_items_pipe.h"
     #include "bn_sprite_items_pipe_body.h"
-    #include "Entities/DebugBox.hpp"
+    #include "Actors/Debug/DebugBox.hpp"
 
     class PipeWall {
         bn::fixed x;

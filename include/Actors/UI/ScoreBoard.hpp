@@ -15,7 +15,7 @@
     #include "bn_sprite_items_ui_new.h"
     #include "bn_sprite_items_ui_medal.h"
 
-    #include "Entities/Score.hpp"
+    #include "Actors/UI/Score.hpp"
 
 
     struct ScoreData {
