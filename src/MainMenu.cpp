@@ -3,14 +3,13 @@
 
 void Scenes::MainMenu::load() {
     this->flappy = Flappy(-2, -8, 8, 8, 2, 2);
+    this->flappy->setRotation(90);
     this->ui = bn::regular_bg_items::bg_main_menu.create_bg(2, 0);
     this->background = Background();
     this->floor = Floor(0, 32);
     this->random = bn::random();
 
-    this->flappy->setRotation(90);
     this->background->setBackground(DAY);
-    BN_LOG(this->random->get_int(1, 2));
     if(this->random->get_int(1, 2) == 1) this->background->setBackground(NIGHT);
     this->ui->set_priority(0);
 }
@@ -31,7 +30,7 @@ Scene* Scenes::MainMenu::update() {
         this->flappy->update();
         bn::core::update();
     }
-    return new MainMenu;
+    return new Scenes::Gameplay;
 }
 
 void Scenes::MainMenu::leave() {

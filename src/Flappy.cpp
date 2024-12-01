@@ -9,6 +9,7 @@ Flappy::Flappy(bn::fixed _x, bn::fixed _y, int _width, int _height, int _offsetX
     this->flappy_sprite.set_bg_priority(1);
     this->setAliveFlag(true);
     this->showDebugBox(false);
+    this->flappy_sprite.set_rotation_angle(90);
 }
 
 bn::fixed Flappy::getX() {

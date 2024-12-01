@@ -58,14 +58,14 @@
             bn::fixed pipeSpeed;
             bn::fixed MAX_PIPE_SPEED;
             bn::vector<bn::optional<PipeWall>, 5> pipes;
-            bn::random random;
 
-            FlappyData flappyData;
-            Flappy flappy;
-            Background background;
-            Score score;
-            Floor floor;
-            bn::sprite_ptr pauseButton;
+            bn::optional<bn::random> random;
+            bn::optional<FlappyData> flappyData;
+            bn::optional<Flappy> flappy;
+            bn::optional<Background> background;
+            bn::optional<Score> score;
+            bn::optional<Floor> floor;
+            bn::optional<bn::sprite_ptr> pauseButton;
             bn::unique_ptr<GetReady> getReady;
             bn::unique_ptr<ScoreBoard> scoreBoard;
             bn::unique_ptr<ui::Button> ptrPlayButton;
@@ -76,7 +76,7 @@
             void gameOverScene();
             void reset();
             public:
-                Gameplay();
+                void load();
                 Scene* update();
                 void leave();
         };

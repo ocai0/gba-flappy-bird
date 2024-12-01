@@ -11,6 +11,7 @@
 
     #include "Math.hpp"
     #include "Scene.hpp"
+    #include "Scenes/Gameplay.hpp"
     #include "Effects/FadeScreenEffect.hpp"
     #include "Actors/Player/Flappy.hpp"
     #include "Actors/Asset/Background.hpp"
