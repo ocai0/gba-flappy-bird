@@ -5,10 +5,10 @@
     #include "bn_optional.h"
     #include "bn_keypad.h"
     #include "bn_regular_bg_ptr.h"
+    #include "bn_bg_palette_ptr.h"
     
     #include "bn_regular_bg_items_bg_gears_logo.h"
-    #include "bn_regular_bg_items_bg_gears_logo_alt.h"
-    // #include "bn_bg_palette_items_bg_gears_logo_alt.h"
+    #include "bn_bg_palette_items_bg_gears_logo_alt.h"
 
     #include "Scene.hpp"
     #include "Effects/FadeScreenEffect.hpp"
