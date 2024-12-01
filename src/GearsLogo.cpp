@@ -30,7 +30,7 @@ Scene* Scenes::GearsLogo::update() {
     }
     this->bg->set_visible(false);
     bn::core::update();
-    return new Scenes::GearsLogo;
+    return new Scenes::MainMenu;
 }
 
 void Scenes::GearsLogo::leave() {

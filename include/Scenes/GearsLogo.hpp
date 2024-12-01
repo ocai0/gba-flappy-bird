@@ -11,6 +11,7 @@
     #include "bn_bg_palette_items_bg_gears_logo_alt.h"
 
     #include "Scene.hpp"
+    #include "Scenes/MainMenu.hpp"
     #include "Effects/FadeScreenEffect.hpp"
     
     namespace Scenes {
