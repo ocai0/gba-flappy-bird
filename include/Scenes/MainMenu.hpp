@@ -8,6 +8,8 @@
     #include "bn_regular_bg_ptr.h"
     #include "bn_regular_bg_attributes.h"
     #include "bn_regular_bg_items_bg_main_menu.h"
+    #include "bn_sound_items.h"
+    #include "bn_sound_handle.h"
 
     #include "Math.hpp"
     #include "Scene.hpp"

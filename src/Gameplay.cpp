@@ -162,6 +162,8 @@ void Scenes::Gameplay::gameScene() {
             else this->flappy->setRotation(this->flappy->getRotation() + 120);
 
             this->flappyData->deltaY = this->flappyData->VERTICAL_JUMP_SPEED;
+            bn::sound_handle sfxWingHandler = bn::sound_items::sfx_wing.play();
+            sfxWingHandler.release();
         }
         if(this->flappyData->deltaY < 0 && bn::keypad::a_released()) {
             this->flappyData->deltaY = max(this->flappyData->deltaY, 0);
@@ -178,12 +180,14 @@ void Scenes::Gameplay::gameScene() {
                 //check if is colliding with any of the pipes
                 if(flappy_nextY < pipe->getY() || flappy_nextY + this->flappy->getHeight() > pipe->getY() + pipe->getGapSize()) {
                     this->flappy->setAliveFlag(false);
+                    bn::sound_items::sfx_hit.play();
                 }
 
                 //check if scored a point after pass the middle of them
                 if(this->flappy->isAlive() && (pipe->getScoredFlag() == false) && (flappy_nextX + 2) > pipe_deltaX + PIPE_WALL_WIDTH_HALF) {
                     this->score->setValue(this->score->getValue() + 1);
                     pipe->setScoredFlag(true);
+                    bn::sound_items::sfx_point.play();
                 }
             }
             
@@ -205,6 +209,7 @@ void Scenes::Gameplay::gameScene() {
 
         if(flappy_nextY > FLOOR_Y) {
             this->flappy->setAliveFlag(false);
+            bn::sound_items::sfx_hit.play();
         }
 
         this->background->setX(this->background->getX() - this->backgroundSpeed);
@@ -249,6 +254,7 @@ void Scenes::Gameplay::gameOverScene() {
     if(this->flappyData->deltaY > -1.6) this->flappyData->deltaY = -1.6;
     this->flappyData->rotationDelta = 145;
     bool _userCanInteract = false;
+    bool _playedDeathSound = false;
     this->scoreBoard.reset(new ScoreBoard(this->score->getValue(), 1));
 
     this->flappy->setBlendingEnabled(true);
@@ -261,7 +267,6 @@ void Scenes::Gameplay::gameOverScene() {
     this->score->setVisible(false);
 
     while(1) {
-
         // fadeInOut Effect
         if(fadeScreenEffect.isAlive()) fadeScreenEffect.update();
         // ScoreBoard
@@ -270,8 +275,10 @@ void Scenes::Gameplay::gameOverScene() {
             this->floor->setBlendingEnabled(false);
             this->background->setBlendingEnabled(false);
             for(int index=0; index < this->pipes.max_size(); index++) this->pipes.at(index)->setBlendingEnabled(false);
-
-            if(_clock == 70) this->scoreBoard->showGameOverText(-48, -54, -48, -76);
+            if(_clock == 70) {
+                this->scoreBoard->showGameOverText(-48, -54, -48, -76);
+                bn::sound_items::sfx_swooshing.play();
+            }
             if(_clock == 100) this->scoreBoard->showBoard(0, 104, 0, -6);
             if(this->scoreBoard->scoreAnimationComplete()) {
                 this->ptrPlayButton.reset(new ui::Button(0, 38, ui::ButtonType::PLAY));
@@ -289,6 +296,10 @@ void Scenes::Gameplay::gameOverScene() {
         else this->flappyData->rotationDelta -= 4;
         if(this->flappyData->rotationDelta < 45) this->flappyData->rotationDelta = 45;
         if(this->flappy->getY() + this->flappyData->deltaY < FLOOR_Y + 12) {
+            if(!_playedDeathSound) {
+                _playedDeathSound = true;
+                bn::sound_items::sfx_die.play();
+            }
             this->flappy->setY(this->flappy->getY() + this->flappyData->deltaY);
             this->flappy->update();
         }

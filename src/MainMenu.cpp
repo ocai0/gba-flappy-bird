@@ -30,6 +30,7 @@ Scene* Scenes::MainMenu::update() {
         this->flappy->update();
         bn::core::update();
     }
+    bn::sound_items::sfx_swooshing.play();
     return new Scenes::Gameplay;
 }
 

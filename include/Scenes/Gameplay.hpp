@@ -7,6 +7,9 @@
     #include "bn_display.h"
     #include "bn_keypad.h"
     #include "bn_unique_ptr.h"
+    #include "bn_sound_items.h"
+    #include "bn_sound_handle.h"
+
 
     #include "Scene.hpp"
     #include "Effects/FadeScreenEffect.hpp"
