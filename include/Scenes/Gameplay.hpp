@@ -7,6 +7,7 @@
 
     #include "Scene.hpp"
     #include "MainMenuVars.hpp"
+    #include "Actors/FlappyBird.hpp"
 
     enum SubState {
         GET_READY_STATE,
@@ -22,6 +23,7 @@
             SubState* currentState;
             MainMenuVars* mainMenuVars;
             Scene* nextScene;
+            FlappyBird* player;
             void init(MainMenuVars&);
             public:
                 Gameplay();

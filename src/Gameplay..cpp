@@ -3,6 +3,7 @@
 
 Scenes::Gameplay::Gameplay() {
     MainMenuVars userOptions;
+    userOptions.selectedFlappy = -1;
     this->init(userOptions);
 }
 
@@ -10,12 +11,19 @@ Scenes::Gameplay::Gameplay(MainMenuVars& userOptions) {
     this->init(userOptions);
 }
 
-void Scenes::Gameplay::init(MainMenuVars& options) {}
+void Scenes::Gameplay::init(MainMenuVars& options) {
+    this->player = new FlappyBird(0, 0);
+    this->player->setWeight(.5);
+    // if(options.selectedFlappy == 1) {
+    //     BN_LOG("Ala");
+    // }
+}
 
 void Scenes::Gameplay::load() {}
 
 Scene* Scenes::Gameplay::update() {
     while(1) {
+        this->player->update();
         bn::core::update();
     }
 }
