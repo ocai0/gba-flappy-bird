@@ -13,7 +13,9 @@ Scenes::Gameplay::Gameplay(MainMenuVars& userOptions) {
 
 void Scenes::Gameplay::init(MainMenuVars& options) {
     this->player = new FlappyBird(0, 0);
-    this->player->setWeight(.5);
+    this->player
+        ->setWeight(.5)
+        ->showHitbox();
     this->currentState = GET_READY_STATE;
     // if(options.selectedFlappy == 1) {
     //     BN_LOG("Ala");
