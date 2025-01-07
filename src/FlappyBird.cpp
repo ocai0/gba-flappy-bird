@@ -26,15 +26,32 @@ void FlappyBird::setY(bn::fixed _y) {
     if(this->sprite.has_value()) this->sprite->set_y(this->y);
 }
 
+void FlappyBird::idle() {
+    this->animation->update();
+    this->_timeToUpdate = (this->_timeToUpdate + 1) % (FRAMES_PER_SECONDS);
+    BN_LOG("this->_timeToUpdate: ", this->_timeToUpdate);
+    if(this->_timeToUpdate == 0) return;
+
+    if(this->y < -4) {
+        this->deltaYSign = 1;
+    }
+    if(this->y > 4) {
+        this->deltaYSign = -1;
+    }
+    this->deltaY = .1 * this->deltaYSign;
+    this->setY(this->y + this->deltaY);
+}
+
 void FlappyBird::update() {
-    
     this->animation->update();
     if(bn::keypad::a_pressed()) {
         this->deltaY = -5;
     }
-    if(++this->_timeToUpdate % (FRAMES_PER_SECONDS/4) == 0) return;
+    // this->_timeToUpdate = (this->_timeToUpdate + 1) % (FRAMES_PER_SECONDS * 4);
+    // BN_LOG("this->_timeToUpdate: ", this->_timeToUpdate);
+    // if(this->_timeToUpdate == 0) return;
+
     this->deltaY += this->weight;
-    BN_LOG("deltaY: ", this->deltaY);
     if(this->deltaY > 3.8) this->deltaY = 3.8;
     this->setY(this->y + this->deltaY);
     if(this->y > 64) this->setY(64);

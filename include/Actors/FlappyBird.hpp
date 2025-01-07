@@ -14,6 +14,7 @@
         bn::fixed y;
         bn::fixed deltaX;
         bn::fixed deltaY;
+        int deltaYSign = -1;
         bn::fixed weight;
         int _timeToUpdate;
         bn::optional<bn::sprite_ptr> sprite;
@@ -23,6 +24,7 @@
             FlappyBird* setSprite(bn::sprite_ptr);
             FlappyBird* setWeight(bn::fixed);
             void setY(bn::fixed);
+            void idle();
             void update();
     };
 #endif
