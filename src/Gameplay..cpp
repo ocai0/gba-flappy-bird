@@ -14,6 +14,7 @@ Scenes::Gameplay::Gameplay(MainMenuVars& userOptions) {
 void Scenes::Gameplay::init(MainMenuVars& options) {
     this->player = new FlappyBird(0, 0);
     this->player->setWeight(.5);
+    this->currentState = GET_READY_STATE;
     // if(options.selectedFlappy == 1) {
     //     BN_LOG("Ala");
     // }
@@ -22,21 +23,60 @@ void Scenes::Gameplay::init(MainMenuVars& options) {
 void Scenes::Gameplay::load() {}
 
 Scene* Scenes::Gameplay::update() {
-    while(1) {
-        this->player->update();
+    while(this->nextScene == NULL) {
+        switch(this->currentState) {
+            default:
+            case GET_READY_STATE:
+                this->setGetReadyState();
+                break;
+            case IN_GAME_STATE:
+                this->setGameState();
+                break;
+            case PAUSED_STATE:
+                this->setPauseState();
+                break;
+            case BONUS_STATE:
+                this->setBonusState();
+                break;
+            case GAME_OVER_STATE:
+                this->setGameOverState();
+                break;
+            case YOU_WIN_STATE:
+                this->setYouWinState();
+                break;
+        }
         bn::core::update();
     }
+    return this->nextScene;
 }
 
 void Scenes::Gameplay::leave() {}
 
-void Scenes::Gameplay::setGetReadyState() {}
+void Scenes::Gameplay::setGetReadyState() {
+    while(!bn::keypad::a_pressed()) {
+        this->player->idle();
+        bn::core::update();
+    }
+    this->currentState = IN_GAME_STATE;
+}
 
-void Scenes::Gameplay::setGameState() {}
+void Scenes::Gameplay::setGameState() {
+    while(this->currentState == IN_GAME_STATE) {
+        this->player->update();
+        if(bn::keypad::start_pressed()) {
+            this->currentState = PAUSED_STATE;
+        }
+        bn::core::update();
+    }
+}
 
 void Scenes::Gameplay::setBonusState() {}
 
 Scene* Scenes::Gameplay::setPauseState() {
+    while(!bn::keypad::start_pressed()) {
+        bn::core::update();
+    }
+    this->currentState = IN_GAME_STATE;
     return this->nextScene;
 }
 

@@ -20,7 +20,7 @@
 
     namespace Scenes {
         class Gameplay : public Scene {
-            SubState* currentState;
+            SubState currentState;
             MainMenuVars* mainMenuVars;
             Scene* nextScene;
             FlappyBird* player;
