@@ -1,14 +1,15 @@
 #include "Actors/FlappyBird.hpp"
 #include "bn_log.h"
 
-constexpr int FRAMES_PER_SECONDS = 55;
+constexpr int FRAME_COUNT_PER_SECOND = 60;
 
 FlappyBird::FlappyBird(bn::fixed _x, bn::fixed _y) {
     this->setSprite(bn::sprite_items::common_bird.create_sprite(0, 0));
     this->animation = bn::create_sprite_animate_action_forever(*this->sprite, 6, bn::sprite_items::common_bird.tiles_item(), 0, 1, 2, 1);
     this->setX(_x);
     this->setY(_y);
-    this->sprite->set_rotation_angle(90);
+    this->rotationAngle = 90;
+    this->sprite->set_rotation_angle(this->rotationAngle);
 }
 
 FlappyBird* FlappyBird::setWeight(bn::fixed _weight) {
@@ -50,18 +51,20 @@ void FlappyBird::idle() {
 void FlappyBird::update() {
     this->animation->update();
     if(this->hitbox.has_value()) this->hitbox->update();
-
     if(bn::keypad::a_pressed()) {
-        this->deltaY = -5;
+        this->deltaY = -150;
     }
-    // this->_timeToUpdate = (this->_timeToUpdate + 1) % (FRAMES_PER_SECONDS * 4);
-    // BN_LOG("this->_timeToUpdate: ", this->_timeToUpdate);
-    // if(this->_timeToUpdate == 0) return;
+    if(this->deltaY < 0 && bn::keypad::a_released()) {
+        this->deltaY = 0;
+    }
+
+    this->_timeToUpdate = (this->_timeToUpdate + 1) % FRAME_COUNT_PER_SECOND / 2;
+    if(this->_timeToUpdate != 0) return;
 
     this->deltaY += this->weight;
-    if(this->deltaY > 3.8) this->deltaY = 3.8;
-    this->setY(this->y + this->deltaY);
+    this->setY(this->y + bn::clamp(this->deltaY.integer(), -4, 3));
     if(this->y > 64) this->setY(64);
+    //this->calculateRotation();
 }
 
 FlappyBird* FlappyBird::showHitbox() {
@@ -71,4 +74,11 @@ FlappyBird* FlappyBird::showHitbox() {
 FlappyBird* FlappyBird::hideHitbox() {
     this->hitbox.reset();
     return this;
+}
+
+void FlappyBird::calculateRotation() {
+
+    if(bn::keypad::up_pressed()) this->rotationAngle-=1;
+    if(bn::keypad::down_pressed()) this->rotationAngle+=1;
+    this->sprite->set_rotation_angle(bn::clamp(this->rotationAngle.integer(), 0, 180));
 }

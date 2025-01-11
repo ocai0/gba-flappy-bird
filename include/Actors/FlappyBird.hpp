@@ -22,6 +22,7 @@
         int deltaYSign = -1;
         bn::fixed weight;
         int _timeToUpdate;
+        bn::fixed rotationAngle;
         bn::optional<DebugBox> hitbox;
         bn::optional<bn::sprite_ptr> sprite;
         bn::optional<bn::sprite_animate_action<4>> animation;
@@ -33,6 +34,7 @@
             void setY(bn::fixed);
             void idle();
             void update();
+            void calculateRotation();
             FlappyBird* showHitbox();
             FlappyBird* hideHitbox();
     };
