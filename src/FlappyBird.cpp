@@ -77,7 +77,6 @@ FlappyBird* FlappyBird::hideHitbox() {
 }
 
 void FlappyBird::calculateRotation() {
-
     if(bn::keypad::up_pressed()) this->rotationAngle-=1;
     if(bn::keypad::down_pressed()) this->rotationAngle+=1;
     this->sprite->set_rotation_angle(bn::clamp(this->rotationAngle.integer(), 0, 180));
