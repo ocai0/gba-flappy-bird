@@ -3,10 +3,13 @@
     #include "bn_core.h"
     #include "bn_optional.h"
     #include "bn_keypad.h"
+    #include "bn_array.h"
     #include "bn_sprite_ptr.h"
     #include "bn_sprite_animate_actions.h"
     #include "Actors/Actor.hpp"
+    #include "Actors/Obstacle.hpp"
     #include "Actors/DebugBox.hpp"
+    #include "Actors/Obstacle.hpp"
 
     #include "bn_sprite_items_common_bird.h"
 
@@ -26,6 +29,7 @@
         bn::optional<DebugBox> hitbox;
         bn::optional<bn::sprite_ptr> sprite;
         bn::optional<bn::sprite_animate_action<4>> animation;
+        bn::array<Obstacle*, 10> obstacleList;
         public:
             FlappyBird(bn::fixed, bn::fixed);
             FlappyBird* setSprite(bn::sprite_ptr);
@@ -35,6 +39,8 @@
             void idle();
             void update();
             void calculateRotation();
+            void watchObstacles(bn::array<Obstacle*, 10>);
+            bool collidesWith(Obstacle*);
             FlappyBird* showHitbox();
             FlappyBird* hideHitbox();
     };

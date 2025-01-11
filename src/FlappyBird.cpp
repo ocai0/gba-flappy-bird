@@ -52,19 +52,33 @@ void FlappyBird::update() {
     this->animation->update();
     if(this->hitbox.has_value()) this->hitbox->update();
     if(bn::keypad::a_pressed()) {
-        this->deltaY = -150;
+        this->deltaY = -10;
     }
     if(this->deltaY < 0 && bn::keypad::a_released()) {
         this->deltaY = 0;
     }
 
+    if(bn::keypad::left_held()) this->setX(this->x - 1);
+    if(bn::keypad::right_held()) this->setX(this->x + 1);
+
     this->_timeToUpdate = (this->_timeToUpdate + 1) % FRAME_COUNT_PER_SECOND / 2;
     if(this->_timeToUpdate != 0) return;
 
     this->deltaY += this->weight;
-    this->setY(this->y + bn::clamp(this->deltaY.integer(), -4, 3));
-    if(this->y > 64) this->setY(64);
-    //this->calculateRotation();
+    bn::fixed _normalizedDeltaY = this->deltaY;
+    if(this->deltaY < -5) _normalizedDeltaY = -5;
+    if(this->deltaY > 2.5) _normalizedDeltaY = 2.5;
+    this->setY(this->y + _normalizedDeltaY);
+
+    for(Obstacle* obstacle : this->obstacleList) {
+        if(obstacle == nullptr) continue;
+        if(this->collidesWith(obstacle)) {
+            BN_LOG("InstanceName: ", obstacle->getInstanceName());
+            this->setY(obstacle->y - this->height);
+            this->deltaY = 0;
+        }
+    }
+    this->calculateRotation();
 }
 
 FlappyBird* FlappyBird::showHitbox() {
@@ -80,4 +94,15 @@ void FlappyBird::calculateRotation() {
     if(bn::keypad::up_pressed()) this->rotationAngle-=1;
     if(bn::keypad::down_pressed()) this->rotationAngle+=1;
     this->sprite->set_rotation_angle(bn::clamp(this->rotationAngle.integer(), 0, 180));
+}
+
+bool FlappyBird::collidesWith(Obstacle* other) {
+    return this->x < other->x + other->width 
+        && this->x + this->width > other->x 
+        && this->y < other->y + other->height 
+        && this->y + this->height > other->y;
+}
+
+void FlappyBird::watchObstacles(bn::array<Obstacle*, 10> _obstacleList) {
+    this->obstacleList = _obstacleList;
 }

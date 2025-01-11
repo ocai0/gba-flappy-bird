@@ -2,15 +2,18 @@
 #define GAMEPLAY_SCENE_H_
     #include "bn_core.h"
     #include "bn_optional.h"
-    #include "bn_vector.h"
+    #include "bn_array.h"
     #include "bn_random.h"
 
     #include "Scene.hpp"
     #include "MainMenuVars.hpp"
+    #include "Background.hpp"
     #include "Actors/FlappyBird.hpp"
+    #include "Actors/Obstacle.hpp"
     #include "Actors/Floor.hpp"
 
     #include "bn_regular_bg_items_bg_floor.h"
+    #include "bn_regular_bg_items_bg_day.h"
 
     enum SubState {
         GET_READY_STATE,
@@ -28,6 +31,8 @@
             Scene* nextScene;
             FlappyBird* player;
             Floor* floor;
+            Background* background;
+            bn::array<Obstacle*, 10> obstacles;
             void init(MainMenuVars&);
             public:
                 Gameplay();

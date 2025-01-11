@@ -1,6 +1,7 @@
 #include "Actors/Floor.hpp"
 
 Floor::Floor() {
+    this->instanceName = "FLOOR";
     this->x = -120;
     this->y = 64;
     this->width = 240;

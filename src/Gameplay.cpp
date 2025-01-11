@@ -14,11 +14,16 @@ Scenes::Gameplay::Gameplay(MainMenuVars& userOptions) {
 void Scenes::Gameplay::init(MainMenuVars& options) {
     this->player = new FlappyBird(0, 0);
     this->player
-        ->setWeight(2)
+        ->setWeight(1)
         ->showHitbox();
+
     this->currentState = GET_READY_STATE;
+    this->background = new Background();
+    this->background->setImage(bn::regular_bg_items::bg_day.create_bg(0, -10));
     this->floor = new Floor();
     this->floor->setImage(bn::regular_bg_items::bg_floor.create_bg(0, 36));
+    this->obstacles[0] = (Obstacle*) this->floor;
+    this->player->watchObstacles(this->obstacles);
 }
 
 void Scenes::Gameplay::load() {}
@@ -57,6 +62,7 @@ void Scenes::Gameplay::setGetReadyState() {
     while(!bn::keypad::a_pressed()) {
         this->player->idle();
         this->floor->update();
+        this->background->update();
         bn::core::update();
     }
     this->currentState = IN_GAME_STATE;
@@ -68,6 +74,8 @@ void Scenes::Gameplay::setGameState() {
         if(bn::keypad::start_pressed()) {
             this->currentState = PAUSED_STATE;
         }
+        this->floor->update();
+        this->background->update();
         bn::core::update();
     }
 }
