@@ -8,6 +8,9 @@
     #include "Scene.hpp"
     #include "MainMenuVars.hpp"
     #include "Actors/FlappyBird.hpp"
+    #include "Actors/Floor.hpp"
+
+    #include "bn_regular_bg_items_bg_floor.h"
 
     enum SubState {
         GET_READY_STATE,
@@ -24,6 +27,7 @@
             MainMenuVars* mainMenuVars;
             Scene* nextScene;
             FlappyBird* player;
+            Floor* floor;
             void init(MainMenuVars&);
             public:
                 Gameplay();

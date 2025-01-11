@@ -14,9 +14,11 @@ Scenes::Gameplay::Gameplay(MainMenuVars& userOptions) {
 void Scenes::Gameplay::init(MainMenuVars& options) {
     this->player = new FlappyBird(0, 0);
     this->player
-        ->setWeight(2);
+        ->setWeight(2)
         ->showHitbox();
     this->currentState = GET_READY_STATE;
+    this->floor = new Floor();
+    this->floor->setImage(bn::regular_bg_items::bg_floor.create_bg(0, 36));
 }
 
 void Scenes::Gameplay::load() {}
@@ -54,6 +56,7 @@ void Scenes::Gameplay::leave() {}
 void Scenes::Gameplay::setGetReadyState() {
     while(!bn::keypad::a_pressed()) {
         this->player->idle();
+        this->floor->update();
         bn::core::update();
     }
     this->currentState = IN_GAME_STATE;
