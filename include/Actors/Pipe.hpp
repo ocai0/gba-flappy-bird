@@ -14,14 +14,14 @@
         bn::fixed xSpeed;
         bn::optional<bn::sprite_ptr> sprite;
         bn::optional<DebugBox> hitbox;
+        bn::fixed offsetX;
+        bn::fixed offsetY;
         public:
-            bn::fixed offsetX;
-            bn::fixed offsetY;
-            bn::fixed spacerHeight;
             Pipe(bn::fixed, bn::fixed);
             Pipe* setX(bn::fixed);
+            Pipe* setOffsetX(bn::fixed);
+            Pipe* setOffsetY(bn::fixed);
             Pipe* setY(bn::fixed);
-            Pipe* setSpacerHeight(bn::fixed);
             Pipe* setXSpeed(bn::fixed);
             Pipe* setSprite(const bn::sprite_item*);
             void update();

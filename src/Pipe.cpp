@@ -1,15 +1,17 @@
 #include "Actors/Pipe.hpp"
 
+const int SPRITE_WIDTH = 32;
+const int SPRITE_HEIGHT = 64;
+
 Pipe::Pipe(bn::fixed _x, bn::fixed _y) {
     this->instanceName = "PIPE";
     this->xSpeed = .5;
     this->setX(_x);
     this->setY(_y);
-    this->offsetX = 0;
-    this->offsetY = 3;
     this->width = 18;
-    this->height = 57;// - 7;
-    this->spacerHeight = 6;// - 2;
+    this->height = 56;
+    this->setOffsetX(7);
+    this->setOffsetY(8);
     this->showHitbox();
     this->setSprite(&bn::sprite_items::common_pipe);
 }
@@ -17,29 +19,31 @@ Pipe::Pipe(bn::fixed _x, bn::fixed _y) {
 Pipe* Pipe::setX(bn::fixed _x) {
     this->x = _x;
     if(this->sprite.has_value()) {
-        bn::fixed _renderX = this->x + this->width / 2;
-        this->sprite->set_x(_renderX + this->offsetX);
+        bn::fixed _renderX = this->x + SPRITE_WIDTH / 2;
+        this->sprite->set_x(_renderX - this->offsetX);
     }
+    return this;
+}
+
+Pipe* Pipe::setOffsetX(bn::fixed _offsetX) {
+    this->offsetX = _offsetX;
+    this->setX(this->x);
     return this;
 }
 
 Pipe* Pipe::setY(bn::fixed _y) {
     this->y = _y;
     if(this->sprite.has_value()) {
-        bn::fixed _renderY = this->y + this->height / 2;
-        if(this->sprite->vertical_flip()) this->sprite->set_y(_renderY + this->spacerHeight - this->offsetY);
-        else this->sprite->set_y(_renderY - this->spacerHeight + this->offsetY);
+        bn::fixed _renderY = this->y + SPRITE_HEIGHT / 2;
+        if(this->sprite->vertical_flip()) this->sprite->set_y(_renderY);
+        else this->sprite->set_y(_renderY - this->offsetY);
     }
     return this;
 }
 
-Pipe* Pipe::setSpacerHeight(bn::fixed _spacerHeight) {
-    this->spacerHeight = _spacerHeight;
-    if(this->sprite.has_value()) {
-        bn::fixed _renderY = this->y + this->height / 2;
-        if(this->sprite->vertical_flip()) this->sprite->set_y(_renderY + this->spacerHeight);
-        else this->sprite->set_y(_renderY - this->spacerHeight);
-    }
+Pipe* Pipe::setOffsetY(bn::fixed _offsetY) {
+    this->offsetY = _offsetY;
+    this->setY(this->y);
     return this;
 }
 
