@@ -12,7 +12,7 @@ Scenes::Gameplay::Gameplay(MainMenuVars& userOptions) {
 }
 
 void Scenes::Gameplay::init(MainMenuVars& options) {
-    this->player = new FlappyBird(0, 0);
+    this->player = new FlappyBird(-80, 0);
     this->player
         ->setWeight(1)
         ->showHitbox();
@@ -20,9 +20,23 @@ void Scenes::Gameplay::init(MainMenuVars& options) {
     this->currentState = GET_READY_STATE;
     this->background = new Background();
     this->background->setImage(bn::regular_bg_items::bg_day.create_bg(0, -10));
+
+    PipeWall* pipeWall = new PipeWall;
+    pipeWall->topPipe = new Pipe(0, -40);
+    pipeWall->topPipe->setPalette(bn::sprite_palette_items::blue_pipe.create_palette());
+
+    pipeWall->bottomPipe = new PunchPipe(64, -40);
+    // pipeWall->bottomPipe->flipVertically();
+    // pipeWall->bottomPipe->setPalette(bn::sprite_palette_items::blue_pipe.create_palette());
+    this->pipes[0] = pipeWall;
+    PipeWall* pipeWall2 = new PipeWall();
+    pipeWall->topPipe = new Pipe(32, -40);
+    pipeWall->topPipe->flipVertically();
+
     this->floor = new Floor();
     this->floor->setImage(bn::regular_bg_items::bg_floor.create_bg(0, 36));
     this->obstacles[0] = (Obstacle*) this->floor;
+
     this->player->watchObstacles(this->obstacles);
 }
 
