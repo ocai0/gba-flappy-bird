@@ -82,7 +82,7 @@ void FlappyBird::update() {
 }
 
 FlappyBird* FlappyBird::showHitbox() {
-    this->hitbox = (DebugBox(this->x, this->y, this->width, this->height));
+    this->hitbox = DebugBox(this->x, this->y, this->width, this->height);
     return this;
 }
 FlappyBird* FlappyBird::hideHitbox() {
