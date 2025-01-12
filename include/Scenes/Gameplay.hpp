@@ -12,6 +12,8 @@
     #include "Actors/Obstacle.hpp"
     #include "Actors/Pipe.hpp"
     #include "Actors/PunchPipe.hpp"
+    #include "Actors/CactusPipe.hpp"
+    #include "Actors/AncientPipe.hpp"
     #include "Actors/Floor.hpp"
 
     #include "bn_regular_bg_items_bg_floor.h"
