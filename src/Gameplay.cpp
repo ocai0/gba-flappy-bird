@@ -22,16 +22,23 @@ void Scenes::Gameplay::init(MainMenuVars& options) {
     this->background->setImage(bn::regular_bg_items::bg_day.create_bg(0, -10));
 
     PipeWall* pipeWall = new PipeWall;
-    pipeWall->topPipe = new Pipe(0, -40);
+    pipeWall->topPipe = new PunchPipe(0, -40);
     pipeWall->topPipe->setPalette(bn::sprite_palette_items::blue_pipe.create_palette());
-
-    pipeWall->bottomPipe = new PunchPipe(64, -40);
-    // pipeWall->bottomPipe->flipVertically();
-    // pipeWall->bottomPipe->setPalette(bn::sprite_palette_items::blue_pipe.create_palette());
+    pipeWall->bottomPipe = new CactusPipe(64, -40);
     this->pipes[0] = pipeWall;
-    PipeWall* pipeWall2 = new PipeWall();
-    pipeWall->topPipe = new Pipe(32, -40);
+    this->obstacles[1] = pipeWall->topPipe;
+    this->obstacles[2] = pipeWall->bottomPipe;
+
     pipeWall->topPipe->flipVertically();
+
+    PipeWall* pipeWall2 = new PipeWall();
+    pipeWall2->topPipe = new Pipe(32, -40);
+    pipeWall2->bottomPipe = new AncientPipe(-32, -40);
+    this->pipes[1] = pipeWall2;
+    this->obstacles[3] = pipeWall2->topPipe;
+    this->obstacles[4] = pipeWall2->bottomPipe;
+
+    pipeWall2->bottomPipe->flipVertically();
 
     this->floor = new Floor();
     this->floor->setImage(bn::regular_bg_items::bg_floor.create_bg(0, 36));
