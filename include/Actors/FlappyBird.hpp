@@ -5,6 +5,7 @@
     #include "bn_keypad.h"
     #include "bn_array.h"
     #include "bn_sprite_ptr.h"
+    #include "bn_camera_ptr.h"
     #include "bn_sprite_animate_actions.h"
     #include "Actors/Actor.hpp"
     #include "Actors/Obstacle.hpp"
@@ -43,5 +44,6 @@
             bool collidesWith(Obstacle*);
             FlappyBird* showHitbox();
             FlappyBird* hideHitbox();
+            FlappyBird* setCamera(bn::optional<bn::camera_ptr>);
     };
 #endif

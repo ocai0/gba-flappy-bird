@@ -86,3 +86,10 @@ Pipe* Pipe::flipVertically() {
     }
     return this;
 }
+
+Pipe* Pipe::setCamera(bn::optional<bn::camera_ptr> _camera) {
+    this->camera = _camera;
+    if(this->sprite.has_value()) this->sprite->set_camera(this->camera.value());
+    if(this->hitbox.has_value()) this->hitbox->setCamera(this->camera);
+    return this;
+}

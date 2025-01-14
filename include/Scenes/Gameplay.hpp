@@ -8,6 +8,10 @@
     #include "Scene.hpp"
     #include "MainMenuVars.hpp"
     #include "Background.hpp"
+    #include "bn_display.h"
+    #include "bn_window.h"
+    #include "bn_camera_ptr.h"
+    #include "bn_blending.h"
     #include "Actors/FlappyBird.hpp"
     #include "Actors/Obstacle.hpp"
     #include "Actors/Pipe.hpp"
@@ -47,6 +51,8 @@
             Background* background;
             bn::array<PipeWall*, 6> pipes;
             bn::array<Obstacle*, 10> obstacles;
+            bn::optional<bn::camera_ptr> camera;
+            bn::optional<bn::window> window;
             void init(MainMenuVars&);
             public:
                 Gameplay();

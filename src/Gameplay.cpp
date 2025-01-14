@@ -12,14 +12,18 @@ Scenes::Gameplay::Gameplay(MainMenuVars& userOptions) {
 }
 
 void Scenes::Gameplay::init(MainMenuVars& options) {
+    this->camera = bn::camera_ptr::create(0, 0);
     this->player = new FlappyBird(-80, 0);
     this->player
-        ->setWeight(1)
-        ->showHitbox();
+        ->showHitbox()
+        ->setCamera(this->camera)
+        ->setWeight(1);
 
     this->currentState = GET_READY_STATE;
     this->background = new Background();
-    this->background->setImage(bn::regular_bg_items::bg_day.create_bg(0, -10));
+    this->background
+        ->setImage(bn::regular_bg_items::bg_day.create_bg(0, -10))
+        ->setCamera(this->camera);
 
     PipeWall* pipeWall = new PipeWall;
     pipeWall->topPipe = new PunchPipe(0, -40);
@@ -40,8 +44,14 @@ void Scenes::Gameplay::init(MainMenuVars& options) {
 
     pipeWall2->bottomPipe->flipVertically();
 
+    pipeWall->topPipe->setCamera(this->camera);
+    pipeWall->bottomPipe->setCamera(this->camera);
+    pipeWall2->topPipe->setCamera(this->camera);
+    pipeWall2->bottomPipe->setCamera(this->camera);
+
     this->floor = new Floor();
     this->floor->setImage(bn::regular_bg_items::bg_floor.create_bg(0, 36));
+    this->floor->setCamera(this->camera);
     this->obstacles[0] = (Obstacle*) this->floor;
 
     this->player->watchObstacles(this->obstacles);
@@ -94,6 +104,12 @@ void Scenes::Gameplay::setGameState() {
         this->player->update();
         if(bn::keypad::start_pressed()) {
             this->currentState = PAUSED_STATE;
+        }
+        if(bn::keypad::l_held()) {
+            this->camera->set_y(this->camera->y() - 1);
+        }
+        if(bn::keypad::r_held()) {
+            this->camera->set_y(this->camera->y() + 1);
         }
         this->floor->update();
         this->background->update();

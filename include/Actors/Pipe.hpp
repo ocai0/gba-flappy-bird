@@ -3,6 +3,7 @@
 
     #include "bn_optional.h"
     #include "bn_sprite_ptr.h"
+    #include "bn_camera_ptr.h"
     #include "bn_sprite_palette_ptr.h"
 
     #include "Actors/Obstacle.hpp"
@@ -14,6 +15,7 @@
         bn::fixed xSpeed;
         bn::optional<bn::sprite_ptr> sprite;
         bn::optional<DebugBox> hitbox;
+        bn::optional<bn::camera_ptr> camera;
         bn::fixed offsetX;
         bn::fixed offsetY;
         public:
@@ -29,5 +31,6 @@
             Pipe* hideHitbox();
             Pipe* setPalette(bn::sprite_palette_ptr);
             Pipe* flipVertically();
+            Pipe* setCamera(bn::optional<bn::camera_ptr>);
     };
 #endif

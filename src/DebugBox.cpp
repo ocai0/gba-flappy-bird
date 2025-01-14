@@ -48,5 +48,8 @@ void DebugBox::setVisible(bool _isVisible) {
 }
 
 void DebugBox::setCamera(bn::optional<bn::camera_ptr> _camera) {   
-
+    this->top_left->set_camera(_camera.value());
+    this->top_right->set_camera(_camera.value());
+    this->bottom_left->set_camera(_camera.value());
+    this->bottom_right->set_camera(_camera.value());
 }
