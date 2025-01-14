@@ -20,6 +20,7 @@
     #include "Actors/AncientPipe.hpp"
     #include "Actors/Floor.hpp"
 
+    #include "bn_regular_bg_items_bg_get_ready.h"
     #include "bn_regular_bg_items_bg_floor.h"
     #include "bn_regular_bg_items_bg_day.h"
     #include "bn_sprite_palette_items_red_pipe.h"
@@ -51,6 +52,7 @@
             Background* background;
             bn::array<PipeWall*, 6> pipes;
             bn::array<Obstacle*, 10> obstacles;
+            bn::optional<bn::regular_bg_ptr> getReadyBg;
             bn::optional<bn::camera_ptr> camera;
             bn::optional<bn::window> window;
             void init(MainMenuVars&);

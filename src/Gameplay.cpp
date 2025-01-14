@@ -90,6 +90,8 @@ Scene* Scenes::Gameplay::update() {
 void Scenes::Gameplay::leave() {}
 
 void Scenes::Gameplay::setGetReadyState() {
+    this->getReadyBg = bn::regular_bg_items::bg_get_ready.create_bg(0, -10);
+    this->getReadyBg->set_blending_enabled(true);
     while(!bn::keypad::a_pressed()) {
         this->player->idle();
         this->floor->update();
@@ -100,7 +102,14 @@ void Scenes::Gameplay::setGetReadyState() {
 }
 
 void Scenes::Gameplay::setGameState() {
+    bn::fixed getReadyTransparencyValue = 1;
     while(this->currentState == IN_GAME_STATE) {
+        if(this->getReadyBg.has_value()) {
+            getReadyTransparencyValue -= .05;
+            if(getReadyTransparencyValue < 0) getReadyTransparencyValue = 0;
+            bn::blending::set_transparency_alpha(getReadyTransparencyValue);
+            if(getReadyTransparencyValue == 0) this->getReadyBg.reset();
+        }
         this->player->update();
         if(bn::keypad::start_pressed()) {
             this->currentState = PAUSED_STATE;
