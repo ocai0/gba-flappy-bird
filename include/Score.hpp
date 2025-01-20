@@ -7,6 +7,7 @@
     #include "bn_optional.h"
 
     #include "Fonts/BigScore.hpp"
+    #include "Fonts/SmallScore.hpp"
 
     class Score {
         int value;
@@ -23,6 +24,7 @@
             Score* setX(bn::fixed);
             Score* setY(bn::fixed);
             Score* useBigFont();
+            Score* useSmallFont();
             Score* fadeIn();
             Score* fadeOut();
             void update();

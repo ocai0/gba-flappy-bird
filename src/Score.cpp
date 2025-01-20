@@ -12,6 +12,12 @@ Score* Score::useBigFont() {
     return this;
 }
 
+Score* Score::useSmallFont() {
+    this->textGenerator = bn::sprite_text_generator(small_score_font);
+    this->textGenerator->set_one_sprite_per_character(true);
+    return this;
+}
+
 int Score::getValue() {
     return this->value;
 }
