@@ -15,7 +15,7 @@ void Scenes::Gameplay::init(MainMenuVars& options) {
     this->camera = bn::camera_ptr::create(0, 0);
     this->player = new FlappyBird(-80, 0);
     this->player
-        ->showHitbox()
+        // ->showHitbox()
         ->setCamera(this->camera)
         ->setWeight(1);
 
@@ -25,29 +25,29 @@ void Scenes::Gameplay::init(MainMenuVars& options) {
         ->setImage(bn::regular_bg_items::bg_day.create_bg(0, -10))
         ->setCamera(this->camera);
 
-    PipeWall* pipeWall = new PipeWall;
-    pipeWall->topPipe = new PunchPipe(0, -40);
-    pipeWall->topPipe->setPalette(bn::sprite_palette_items::blue_pipe.create_palette());
-    pipeWall->bottomPipe = new CactusPipe(64, -40);
-    this->pipes[0] = pipeWall;
-    this->obstacles[1] = pipeWall->topPipe;
-    this->obstacles[2] = pipeWall->bottomPipe;
+    // PipeWall* pipeWall = new PipeWall;
+    // pipeWall->topPipe = new PunchPipe(0, -40);
+    // pipeWall->topPipe->setPalette(bn::sprite_palette_items::blue_pipe.create_palette());
+    // pipeWall->bottomPipe = new CactusPipe(64, -40);
+    // this->pipes[0] = pipeWall;
+    // this->obstacles[1] = pipeWall->topPipe;
+    // this->obstacles[2] = pipeWall->bottomPipe;
 
-    pipeWall->topPipe->flipVertically();
+    // pipeWall->topPipe->flipVertically();
 
-    PipeWall* pipeWall2 = new PipeWall();
-    pipeWall2->topPipe = new Pipe(32, -40);
-    pipeWall2->bottomPipe = new AncientPipe(-32, -40);
-    this->pipes[1] = pipeWall2;
-    this->obstacles[3] = pipeWall2->topPipe;
-    this->obstacles[4] = pipeWall2->bottomPipe;
+    // PipeWall* pipeWall2 = new PipeWall();
+    // pipeWall2->topPipe = new Pipe(32, -40);
+    // pipeWall2->bottomPipe = new AncientPipe(-32, -40);
+    // this->pipes[1] = pipeWall2;
+    // this->obstacles[3] = pipeWall2->topPipe;
+    // this->obstacles[4] = pipeWall2->bottomPipe;
 
-    pipeWall2->bottomPipe->flipVertically();
+    // pipeWall2->bottomPipe->flipVertically();
 
-    pipeWall->topPipe->setCamera(this->camera);
-    pipeWall->bottomPipe->setCamera(this->camera);
-    pipeWall2->topPipe->setCamera(this->camera);
-    pipeWall2->bottomPipe->setCamera(this->camera);
+    // pipeWall->topPipe->setCamera(this->camera);
+    // pipeWall->bottomPipe->setCamera(this->camera);
+    // pipeWall2->topPipe->setCamera(this->camera);
+    // pipeWall2->bottomPipe->setCamera(this->camera);
 
     this->floor = new Floor();
     this->floor->setImage(bn::regular_bg_items::bg_floor.create_bg(0, 36));
@@ -55,6 +55,9 @@ void Scenes::Gameplay::init(MainMenuVars& options) {
     this->obstacles[0] = (Obstacle*) this->floor;
 
     this->player->watchObstacles(this->obstacles);
+    this->score = new Score(-7, -60);
+    this->score->useBigFont();
+    this->score->setValue(1001);
 }
 
 void Scenes::Gameplay::load() {}
@@ -102,6 +105,7 @@ void Scenes::Gameplay::setGetReadyState() {
 }
 
 void Scenes::Gameplay::setGameState() {
+    this->score->update();
     bn::fixed getReadyTransparencyValue = 1;
     while(this->currentState == IN_GAME_STATE) {
         if(this->getReadyBg.has_value()) {

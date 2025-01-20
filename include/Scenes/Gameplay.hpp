@@ -19,6 +19,7 @@
     #include "Actors/CactusPipe.hpp"
     #include "Actors/AncientPipe.hpp"
     #include "Actors/Floor.hpp"
+    #include "Score.hpp"
 
     #include "bn_regular_bg_items_bg_get_ready.h"
     #include "bn_regular_bg_items_bg_floor.h"
@@ -55,6 +56,7 @@
             bn::optional<bn::regular_bg_ptr> getReadyBg;
             bn::optional<bn::camera_ptr> camera;
             bn::optional<bn::window> window;
+            Score* score;
             void init(MainMenuVars&);
             public:
                 Gameplay();
