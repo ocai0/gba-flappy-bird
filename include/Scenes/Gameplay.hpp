@@ -27,31 +27,33 @@
     #include "bn_sprite_palette_items_red_pipe.h"
     #include "bn_sprite_palette_items_blue_pipe.h"
 
-    enum SubState {
-        GET_READY_STATE,
-        IN_GAME_STATE,
-        PAUSED_STATE,
-        BONUS_STATE,
-        GAME_OVER_STATE,
-        YOU_WIN_STATE
-    };
+    namespace GameplayScene {
+        enum SubState {
+            GET_READY_STATE,
+            IN_GAME_STATE,
+            PAUSED_STATE,
+            BONUS_STATE,
+            GAME_OVER_STATE,
+            YOU_WIN_STATE
+        };
 
-    typedef struct {
-        bn::fixed x;
-        bn::fixed y;
-        Pipe* topPipe;
-        Pipe* bottomPipe;
-    } PipeWall;
+        typedef struct {
+            bn::fixed x;
+            bn::fixed y;
+            Pipe* topPipe;
+            Pipe* bottomPipe;
+        } PipeWall;
+    }
 
     namespace Scenes {
         class Gameplay : public Scene {
-            SubState currentState;
+            GameplayScene::SubState currentState;
             MainMenuVars* mainMenuVars;
             Scene* nextScene;
             FlappyBird* player;
             Floor* floor;
             Background* background;
-            bn::array<PipeWall*, 6> pipes;
+            bn::array<GameplayScene::PipeWall*, 6> pipes;
             bn::array<Obstacle*, 10> obstacles;
             bn::optional<bn::regular_bg_ptr> getReadyBg;
             bn::optional<bn::camera_ptr> camera;
