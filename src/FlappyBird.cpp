@@ -83,6 +83,13 @@ bool FlappyBird::collidesWith(Obstacle* other) {
         && this->y + this->height > other->y;
 }
 
+bool FlappyBird::collidesWith(bn::fixed x, bn::fixed y, int width, int height, Obstacle* other) {
+    return x < other->x + other->width 
+        && x + width > other->x 
+        && y < other->y + other->height 
+        && y + height > other->y;
+}
+
 void FlappyBird::watchObstacles(bn::array<Obstacle*, 10> _obstacleList) {
     this->obstacleList = _obstacleList;
 }
@@ -126,19 +133,26 @@ void FlappyBird::routineAlive() {
     this->calculateRotation();
 }
 void FlappyBird::routineFallFromAHit() {
-    this->deltaY -= 10;
-    bool floorNotHit = true;
-    while(floorNotHit) {
+    if(!this->fallFromAHit) {
+        this->fallFromAHit = new Vars::routineFallFromAHit();
+        this->deltaY = -3.5;
+        this->fallFromAHit->floorNotHit = true;
+    }
+
+    if(this->fallFromAHit->floorNotHit) {
+        this->deltaY += .3;
         for(Obstacle* obstacle : this->obstacleList) {
             if(obstacle == nullptr) continue;
             bn::string<32> instanceName = obstacle->getInstanceName();
             if(instanceName != (bn::string<32>) "FLOOR") continue;
 
-            if(this->collidesWith(obstacle)) {
+            if(this->collidesWith(this->x, this->y + this->deltaY, this->width, this->height, obstacle)) {
                 this->deltaY = 0;
-                floorNotHit = false;
+                this->fallFromAHit->floorNotHit = false;
             }
         }
         this->setY(this->y + this->deltaY);
     }
+    else {}
+    if(this->hitbox.has_value()) this->hitbox->update();
 }

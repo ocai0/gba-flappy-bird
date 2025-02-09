@@ -21,6 +21,12 @@
         };
     }
 
+    namespace Vars {
+        typedef struct {
+            bool floorNotHit;
+        } routineFallFromAHit;
+    }
+
     class FlappyBird : public Actor {
         bn::fixed x;
         bn::fixed y;
@@ -39,6 +45,7 @@
         bn::optional<bn::sprite_animate_action<4>> animation;
         bn::array<Obstacle*, 10> obstacleList;
         Bird::SubState currentState;
+        Vars::routineFallFromAHit* fallFromAHit;
         public:
             FlappyBird(bn::fixed, bn::fixed);
             FlappyBird* setSprite(bn::sprite_ptr);
@@ -50,6 +57,7 @@
             void calculateRotation();
             void watchObstacles(bn::array<Obstacle*, 10>);
             bool collidesWith(Obstacle*);
+            bool collidesWith(bn::fixed, bn::fixed, int, int, Obstacle*);
             void routineAlive();
             void routineFallFromAHit();
             FlappyBird* showHitbox();
