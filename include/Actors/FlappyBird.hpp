@@ -14,6 +14,13 @@
 
     #include "bn_sprite_items_common_bird.h"
 
+    namespace Bird {
+        enum SubState {
+            IS_ALIVE,
+            HIT_A_PIPE,
+        };
+    }
+
     class FlappyBird : public Actor {
         bn::fixed x;
         bn::fixed y;
@@ -31,6 +38,7 @@
         bn::optional<bn::sprite_ptr> sprite;
         bn::optional<bn::sprite_animate_action<4>> animation;
         bn::array<Obstacle*, 10> obstacleList;
+        Bird::SubState currentState;
         public:
             FlappyBird(bn::fixed, bn::fixed);
             FlappyBird* setSprite(bn::sprite_ptr);
@@ -42,6 +50,8 @@
             void calculateRotation();
             void watchObstacles(bn::array<Obstacle*, 10>);
             bool collidesWith(Obstacle*);
+            void routineAlive();
+            void routineFallFromAHit();
             FlappyBird* showHitbox();
             FlappyBird* hideHitbox();
             FlappyBird* setCamera(bn::optional<bn::camera_ptr>);
