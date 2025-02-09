@@ -103,6 +103,7 @@ void FlappyBird::routineAlive() {
     this->animation->update();
     if(this->hitbox.has_value()) this->hitbox->update();
     if(bn::keypad::a_pressed()) {
+        bn::sound_items::sfx_wing.play();
         this->deltaY = -10;
     }
     if(this->deltaY < 0 && bn::keypad::a_released()) {
@@ -134,6 +135,7 @@ void FlappyBird::routineAlive() {
 }
 void FlappyBird::routineFallFromAHit() {
     if(!this->fallFromAHit) {
+        bn::sound_items::sfx_hit.play();
         this->fallFromAHit = new Vars::routineFallFromAHit();
         this->deltaY = -3.5;
         this->fallFromAHit->floorNotHit = true;
@@ -141,12 +143,16 @@ void FlappyBird::routineFallFromAHit() {
 
     if(this->fallFromAHit->floorNotHit) {
         this->deltaY += .3;
+        if(this->deltaY > -1 && !this->fallFromAHit->dieSoundPlayed) {
+            bn::sound_items::sfx_die.play();
+            this->fallFromAHit->dieSoundPlayed = true;
+        }
         for(Obstacle* obstacle : this->obstacleList) {
             if(obstacle == nullptr) continue;
             bn::string<32> instanceName = obstacle->getInstanceName();
             if(instanceName != (bn::string<32>) "FLOOR") continue;
 
-            if(this->collidesWith(this->x, this->y + this->deltaY, this->width, this->height, obstacle)) {
+            if(this->collidesWith(this->x, this->y + this->deltaY - 2, this->width, this->height, obstacle)) {
                 this->deltaY = 0;
                 this->fallFromAHit->floorNotHit = false;
             }
