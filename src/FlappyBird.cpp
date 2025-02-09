@@ -159,6 +159,8 @@ void FlappyBird::routineFallFromAHit() {
         }
         this->setY(this->y + this->deltaY);
     }
-    else {}
+    else {
+        this->currentState = Bird::IS_DEAD;
+    }
     if(this->hitbox.has_value()) this->hitbox->update();
 }

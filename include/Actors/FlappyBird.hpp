@@ -20,6 +20,7 @@
         enum SubState {
             IS_ALIVE,
             HIT_A_PIPE,
+            IS_DEAD,
         };
     }
 
