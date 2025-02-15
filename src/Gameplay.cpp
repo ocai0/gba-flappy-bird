@@ -118,6 +118,9 @@ void Scenes::Gameplay::setGameState() {
             if(getReadyTransparencyValue == 0) this->getReadyBg.reset();
         }
         this->player->update();
+        if(this->player->getCurrentState() == Bird::IS_DEAD) {
+            this->currentState == GameplayScene::GAME_OVER_STATE;
+        }
         if(bn::keypad::start_pressed()) {
             this->currentState = GameplayScene::PAUSED_STATE;
         }

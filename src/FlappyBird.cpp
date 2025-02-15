@@ -164,3 +164,7 @@ void FlappyBird::routineFallFromAHit() {
     }
     if(this->hitbox.has_value()) this->hitbox->update();
 }
+
+Bird::SubState FlappyBird::getCurrentState() {
+    return this->currentState;
+}

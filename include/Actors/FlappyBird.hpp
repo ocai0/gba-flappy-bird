@@ -59,6 +59,7 @@
             void idle();
             void update();
             void calculateRotation();
+            Bird::SubState getCurrentState();
             void watchObstacles(bn::array<Obstacle*, 10>);
             bool collidesWith(Obstacle*);
             bool collidesWith(bn::fixed, bn::fixed, int, int, Obstacle*);
