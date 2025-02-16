@@ -24,12 +24,11 @@ void _FlappyBird::FallState::update() {
             bn::string<32> _instanceName = obstacle->getInstanceName();
             if(_instanceName != (bn::string<32>) "FLOOR") continue;
 
-            if(this->actor->collidesWith(this->actor->x, this->actor->y + this->actor->deltaY - 2, this->actor->width, this->actor->height, obstacle)) {
+            if(this->actor->collidesWith(obstacle)) {
                 this->actor->deltaY = 0;
                 this->floorNotHit = false;
             }
         }
-        this->actor->setY(this->actor->y + this->actor->deltaY);
         this->render();
     }
     else {
