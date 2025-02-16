@@ -1,5 +1,5 @@
-#ifndef FLAPPY_BIRD_FALL_PLAY_H_
-#define FLAPPY_BIRD_FALL_PLAY_H_
+#ifndef FLAPPY_BIRD_STATE_FALL_H_
+#define FLAPPY_BIRD_STATE_FALL_H_
     #include "Commons/AbstractState.hpp"
     #include "Actors/FlappyBird.hpp"
     class FlappyBird;
