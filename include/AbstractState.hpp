@@ -20,6 +20,7 @@
             virtual void render();
             void tick();
             bn::string<32> getName();
+            void setName(bn::string<32>);
             /** Run only once! Activated when Scene is unloaded */
             virtual void leave();
             virtual ~AbstractState() = default;
