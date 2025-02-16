@@ -75,35 +75,3 @@ FlappyBird* FlappyBird::setCamera(bn::optional<bn::camera_ptr> _camera) {
     if(this->hitbox.has_value()) this->hitbox->setCamera(_camera);
     return this;
 }
-
-void FlappyBird::routineFallFromAHit() {
-    if(!this->fallFromAHit) {
-        bn::sound_items::sfx_hit.play();
-        this->fallFromAHit = new Vars::routineFallFromAHit();
-        this->deltaY = -3.5;
-        this->fallFromAHit->floorNotHit = true;
-    }
-
-    if(this->fallFromAHit->floorNotHit) {
-        this->deltaY += .3;
-        if(this->deltaY > -1 && !this->fallFromAHit->dieSoundPlayed) {
-            bn::sound_items::sfx_die.play();
-            this->fallFromAHit->dieSoundPlayed = true;
-        }
-        for(Obstacle* obstacle : this->obstacleList) {
-            if(obstacle == nullptr) continue;
-            bn::string<32> _instanceName = obstacle->getInstanceName();
-            if(_instanceName != (bn::string<32>) "FLOOR") continue;
-
-            if(this->collidesWith(this->x, this->y + this->deltaY - 2, this->width, this->height, obstacle)) {
-                this->deltaY = 0;
-                this->fallFromAHit->floorNotHit = false;
-            }
-        }
-        this->setY(this->y + this->deltaY);
-    }
-    else {
-        // this->currentState = Bird::IS_DEAD;
-    }
-    if(this->hitbox.has_value()) this->hitbox->update();
-}

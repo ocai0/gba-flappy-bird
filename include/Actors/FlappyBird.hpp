@@ -18,19 +18,12 @@
 
     #include "bn_sprite_items_common_bird.h"
 
-    namespace Vars {
-        typedef struct {
-            bool floorNotHit;
-            bool dieSoundPlayed = false;
-        } routineFallFromAHit;
-    }
-
     class FlappyBird : public Actor {
+        public:
         int offsetY = 4;
         int offsetX = 4;
         int width = 10;
         int height = 8;
-        public:
         bn::fixed x;
         bn::fixed y;
         bn::fixed deltaX;
@@ -43,7 +36,6 @@
         bn::optional<bn::sprite_ptr> sprite;
         bn::optional<bn::sprite_animate_action<4>> animation;
         bn::array<Obstacle*, 10> obstacleList;
-        Vars::routineFallFromAHit* fallFromAHit;
         StateMachine* stateMachine;
             FlappyBird(bn::fixed, bn::fixed);
             FlappyBird* setSprite(bn::sprite_ptr);
@@ -56,7 +48,6 @@
             void watchObstacles(bn::array<Obstacle*, 10>);
             bool collidesWith(Obstacle*);
             bool collidesWith(bn::fixed, bn::fixed, int, int, Obstacle*);
-            void routineFallFromAHit();
             FlappyBird* showHitbox();
             FlappyBird* hideHitbox();
             FlappyBird* setCamera(bn::optional<bn::camera_ptr>);
