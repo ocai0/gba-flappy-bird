@@ -1,8 +1,6 @@
 #include "Actors/FlappyBird.hpp"
 #include "bn_log.h"
 
-constexpr int FRAME_COUNT_PER_SECOND = 60;
-
 FlappyBird::FlappyBird(bn::fixed _x, bn::fixed _y) {
     this->setSprite(bn::sprite_items::common_bird.create_sprite(0, 0));
     this->animation = bn::create_sprite_animate_action_forever(*this->sprite, 6, bn::sprite_items::common_bird.tiles_item(), 0, 1, 2, 1);
@@ -10,7 +8,8 @@ FlappyBird::FlappyBird(bn::fixed _x, bn::fixed _y) {
     this->setY(_y);
     this->rotationAngle = 90;
     this->sprite->set_rotation_angle(this->rotationAngle);
-    this->currentState = Bird::IS_ALIVE;
+    this->stateMachine = new StateMachine();
+    this->stateMachine->set(new _FlappyBird::IdleState(this));
 }
 
 FlappyBird* FlappyBird::setWeight(bn::fixed _weight) {
@@ -36,15 +35,7 @@ void FlappyBird::setY(bn::fixed _y) {
 }
 
 void FlappyBird::update() {
-    switch(this->currentState) {
-        default:
-        case Bird::IS_ALIVE:
-            this->routineAlive();
-            break;
-        case Bird::HIT_A_PIPE:
-            this->routineFallFromAHit();
-            break;
-    }
+    this->stateMachine->update();
 }
 
 FlappyBird* FlappyBird::showHitbox() {
@@ -85,40 +76,6 @@ FlappyBird* FlappyBird::setCamera(bn::optional<bn::camera_ptr> _camera) {
     return this;
 }
 
-void FlappyBird::routineAlive() {
-    this->animation->update();
-    if(this->hitbox.has_value()) this->hitbox->update();
-    if(bn::keypad::a_pressed()) {
-        bn::sound_items::sfx_wing.play();
-        this->deltaY = -10;
-    }
-    if(this->deltaY < 0 && bn::keypad::a_released()) {
-        this->deltaY = 0;
-    }
-
-    if(bn::keypad::left_held()) this->setX(this->x - 1);
-    if(bn::keypad::right_held()) this->setX(this->x + 1);
-
-    this->_timeToUpdate = (this->_timeToUpdate + 1) % FRAME_COUNT_PER_SECOND / 2;
-    if(this->_timeToUpdate != 0) return;
-
-    this->deltaY += this->weight;
-    bn::fixed _normalizedDeltaY = this->deltaY;
-    if(this->deltaY < -5) _normalizedDeltaY = -5;
-    if(this->deltaY > 2.5) _normalizedDeltaY = 2.5;
-    this->setY(this->y + _normalizedDeltaY);
-
-    for(Obstacle* obstacle : this->obstacleList) {
-        if(obstacle == nullptr) continue;
-        if(this->collidesWith(obstacle)) {
-            bn::string<32> instanceName = obstacle->getInstanceName();
-            if(instanceName == ((bn::string<32>) "PIPE")) {
-                this->currentState = Bird::HIT_A_PIPE;
-            }
-        }
-    }
-    this->calculateRotation();
-}
 void FlappyBird::routineFallFromAHit() {
     if(!this->fallFromAHit) {
         bn::sound_items::sfx_hit.play();
@@ -146,11 +103,7 @@ void FlappyBird::routineFallFromAHit() {
         this->setY(this->y + this->deltaY);
     }
     else {
-        this->currentState = Bird::IS_DEAD;
+        // this->currentState = Bird::IS_DEAD;
     }
     if(this->hitbox.has_value()) this->hitbox->update();
-}
-
-Bird::SubState FlappyBird::getCurrentState() {
-    return this->currentState;
 }

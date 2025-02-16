@@ -1,4 +1,5 @@
-#include "Actors/FlappyBird/FlappyBird.State.Idle"
+#include "Actors/FlappyBird/FlappyBird.State.Idle.hpp"
+#include "bn_log.h"
 
 _FlappyBird::IdleState::IdleState(FlappyBird* _actor) {
     this->actor = _actor;
@@ -7,17 +8,29 @@ _FlappyBird::IdleState::IdleState(FlappyBird* _actor) {
 void _FlappyBird::IdleState::load() {}
 
 void _FlappyBird::IdleState::update() {
-    this->animation->update();
-    if(this->hitbox.has_value()) this->hitbox->update();
+    if(this->actor->y < -4) {
+        this->actor->deltaYSign = 1;
+    }
+    if(this->actor->y > 4) {
+        this->actor->deltaYSign = -1;
+    }
+    this->actor->deltaY = .1 * this->actor->deltaYSign;
+    this->actor->setY(this->actor->y + this->actor->deltaY);
 
-    if(this->y < -4) {
-        this->deltaYSign = 1;
+    if(bn::keypad::a_pressed()) {
+        this->actor->stateMachine->set(new _FlappyBird::PlayState(this->actor));
     }
-    if(this->y > 4) {
-        this->deltaYSign = -1;
-    }
-    this->deltaY = .1 * this->deltaYSign;
-    this->setY(this->y + this->deltaY);
+
+    this->render();
 }
 
-void _FlappyBird::IdleState::render() {}
+void _FlappyBird::IdleState::render() {
+    this->actor->setX(this->actor->x + this->actor->deltaX);
+    this->actor->setY(this->actor->y + this->actor->deltaY);
+    this->actor->animation->update();
+    if(this->actor->hitbox.has_value()) this->actor->hitbox->update();
+}
+
+void _FlappyBird::IdleState::leave() {
+    BN_LOG("LEAVE IDLESTATE");
+}

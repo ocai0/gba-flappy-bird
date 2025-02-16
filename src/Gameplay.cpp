@@ -99,7 +99,7 @@ void Scenes::Gameplay::setGetReadyState() {
     this->getReadyBg = bn::regular_bg_items::bg_get_ready.create_bg(0, -10);
     this->getReadyBg->set_blending_enabled(true);
     while(!bn::keypad::a_pressed()) {
-        this->player->idle();
+        this->player->update();
         this->floor->update();
         this->background->update();
         bn::core::update();

@@ -1,14 +1,13 @@
-#ifndef FLAPPY_BIRD_STATE_IDLE_H_
-#define FLAPPY_BIRD_STATE_IDLE_H_
+#ifndef FLAPPY_BIRD_STATE_PLAY_H_
+#define FLAPPY_BIRD_STATE_PLAY_H_
     #include "Commons/AbstractState.hpp"
     #include "Actors/FlappyBird.hpp"
-    #include "Actors/FlappyBird/FlappyBird.State.Play.hpp"
     class FlappyBird;
     namespace _FlappyBird {
-        class IdleState: public AbstractState {
+        class PlayState: public AbstractState {
             public:
             FlappyBird* actor;
-            IdleState(FlappyBird* actor);
+            PlayState(FlappyBird* actor);
             void load();
             void update();
             void render();
