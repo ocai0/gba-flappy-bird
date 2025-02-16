@@ -2,13 +2,13 @@
 
 constexpr int FRAME_COUNT_PER_SECOND = 60;
 
-_FlappyBird::IdleState::IdleState(FlappyBird* _actor) {
+_FlappyBird::PlayState::PlayState(FlappyBird* _actor) {
     this->actor = _actor;
 }
 
-void _FlappyBird::IdleState::load() {}
+void _FlappyBird::PlayState::load() {}
 
-void _FlappyBird::IdleState::update() {
+void _FlappyBird::PlayState::update() {
     this->actor->animation->update();
     if(this->actor->hitbox.has_value()) this->actor->hitbox->update();
     if(bn::keypad::a_pressed()) {
@@ -44,11 +44,11 @@ void _FlappyBird::IdleState::update() {
     this->render();
 }
 
-void _FlappyBird::IdleState::render() {
+void _FlappyBird::PlayState::render() {
     this->actor->setX(this->actor->x + this->actor->deltaX);
     this->actor->setY(this->actor->y + this->actor->deltaY);
     this->actor->animation->update();
     if(this->actor->hitbox.has_value()) this->actor->hitbox->update();
 }
 
-void _FlappyBird::IdleState::leave() {}
+void _FlappyBird::PlayState::leave() {}
