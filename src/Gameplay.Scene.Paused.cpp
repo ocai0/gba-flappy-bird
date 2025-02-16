@@ -4,8 +4,7 @@ _Gameplay::Paused::Paused(Scene::Gameplay* _parentState) {
     this->parentState = _parentState;
 }
 
-void _Gameplay::Paused::load() {
-}
+void _Gameplay::Paused::load() {}
 
 void _Gameplay::Paused::update() {
     if(bn::keypad::start_pressed()) {
@@ -13,11 +12,7 @@ void _Gameplay::Paused::update() {
     }
 }
 
-void _Gameplay::Paused::render() {
+void _Gameplay::Paused::render() {}
 
-}
-
-void _Gameplay::Paused::leave() {
-
-}
+void _Gameplay::Paused::leave() {}
 
