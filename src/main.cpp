@@ -1,19 +1,20 @@
 #include "bn_core.h"
-#include "SceneManager.hpp"
-#include "Scenes/Gameplay.hpp"
+#include "Commons/StateMachine.hpp"
+#include "Scenes/Gameplay.Scene.hpp"
 
 int main() {
     bn::core::init();
-    SceneManager sceneManager;
+    StateMachine* sceneManager = new StateMachine();
     MainMenuVars userOptions;
     userOptions.selectedFlappy = 0;
     userOptions.selectedBackground = 1;
     userOptions.selectedPipes = 1;
 
-    sceneManager.next(new Scenes::Gameplay(userOptions));
+    sceneManager->set(new Scene::Gameplay(userOptions));
 
     while(true) {
+        sceneManager->update();
+        sceneManager->render();
         bn::core::update();
-        sceneManager.update();
     }
 }
