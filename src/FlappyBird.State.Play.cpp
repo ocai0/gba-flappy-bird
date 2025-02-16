@@ -9,8 +9,6 @@ _FlappyBird::PlayState::PlayState(FlappyBird* _actor) {
 void _FlappyBird::PlayState::load() {}
 
 void _FlappyBird::PlayState::update() {
-    this->actor->animation->update();
-    if(this->actor->hitbox.has_value()) this->actor->hitbox->update();
     if(bn::keypad::a_pressed()) {
         bn::sound_items::sfx_wing.play();
         this->actor->deltaY = -10;
@@ -26,10 +24,8 @@ void _FlappyBird::PlayState::update() {
     if(this->actor->_timeToUpdate != 0) return;
 
     this->actor->deltaY += this->actor->weight;
-    bn::fixed _normalizedDeltaY = this->actor->deltaY;
-    if(this->actor->deltaY < -5) _normalizedDeltaY = -5;
-    if(this->actor->deltaY > 2.5) _normalizedDeltaY = 2.5;
-    this->actor->setY(this->actor->y + _normalizedDeltaY);
+    if(this->actor->deltaY < -5) this->actor->deltaY = -5;
+    if(this->actor->deltaY > 2.5) this->actor->deltaY = 2.5;
 
     for(Obstacle* obstacle : this->actor->obstacleList) {
         if(obstacle == nullptr) continue;

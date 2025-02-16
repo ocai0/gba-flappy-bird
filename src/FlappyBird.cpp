@@ -54,10 +54,10 @@ void FlappyBird::calculateRotation() {
 }
 
 bool FlappyBird::collidesWith(Obstacle* other) {
-    return this->x < other->x + other->width 
-        && this->x + this->width > other->x 
-        && this->y < other->y + other->height 
-        && this->y + this->height > other->y;
+    return this->x + this->deltaX < other->x + other->width 
+        && this->x + this->deltaX + this->width > other->x 
+        && this->y + this->deltaY < other->y + other->height 
+        && this->y + this->deltaY + this->height > other->y;
 }
 
 bool FlappyBird::collidesWith(bn::fixed _x, bn::fixed _y, int _width, int _height, Obstacle* _other) {
