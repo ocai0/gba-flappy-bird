@@ -56,7 +56,6 @@
             FlappyBird* setWeight(bn::fixed);
             void setX(bn::fixed);
             void setY(bn::fixed);
-            void idle();
             void update();
             void calculateRotation();
             Bird::SubState getCurrentState();

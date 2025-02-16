@@ -35,20 +35,6 @@ void FlappyBird::setY(bn::fixed _y) {
     if(this->hitbox.has_value()) this->hitbox->setY(this->y);
 }
 
-void FlappyBird::idle() {
-    this->animation->update();
-    if(this->hitbox.has_value()) this->hitbox->update();
-
-    if(this->y < -4) {
-        this->deltaYSign = 1;
-    }
-    if(this->y > 4) {
-        this->deltaYSign = -1;
-    }
-    this->deltaY = .1 * this->deltaYSign;
-    this->setY(this->y + this->deltaY);
-}
-
 void FlappyBird::update() {
     switch(this->currentState) {
         default:
