@@ -6,4 +6,5 @@ void AbstractState::tick() {
 
     this->render();
     if(this->machine != nullptr) this->machine->render();
+    this->time++;
 }
