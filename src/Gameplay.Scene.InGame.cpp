@@ -6,11 +6,11 @@ _Gameplay::InGame::InGame(Scene::Gameplay* _parentState) {
     this->parentState = _parentState;
 }
 
-void  _Gameplay::InGame::load() {
+void _Gameplay::InGame::load() {
     this->parentState->score->update();
 }
 
-void  _Gameplay::InGame::update() {
+void _Gameplay::InGame::update() {
     if(this->parentState->getReadyBg.has_value()) {
         getReadyTransparencyValue -= .05;
         if(getReadyTransparencyValue < 0) getReadyTransparencyValue = 0;
@@ -31,11 +31,11 @@ void  _Gameplay::InGame::update() {
     this->parentState->background->update();
 }
 
-void  _Gameplay::InGame::render() {
-
+void _Gameplay::GetReady::render() {
+    this->parentState->player->render();
 }
 
-void  _Gameplay::InGame::leave() {
+void _Gameplay::InGame::leave() {
 
 }
 

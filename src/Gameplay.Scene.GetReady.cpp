@@ -4,11 +4,11 @@ _Gameplay::GetReady::GetReady(Scene::Gameplay* _parentState) {
     this->parentState = _parentState;
 }
 
-void  _Gameplay::GetReady::load() {
+void _Gameplay::GetReady::load() {
 
 }
 
-void  _Gameplay::GetReady::update() {
+void _Gameplay::GetReady::update() {
     this->parentState->getReadyBg = bn::regular_bg_items::bg_get_ready.create_bg(0, -10);
     this->parentState->getReadyBg->set_blending_enabled(true);
     if(!bn::keypad::a_pressed()) {
@@ -21,11 +21,11 @@ void  _Gameplay::GetReady::update() {
     }
 }
 
-void  _Gameplay::GetReady::render() {
+void _Gameplay::GetReady::render() {
 
 }
 
-void  _Gameplay::GetReady::leave() {
+void _Gameplay::GetReady::leave() {
 
 }
 
