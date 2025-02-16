@@ -29,7 +29,6 @@ void _FlappyBird::FallState::update() {
                 this->floorNotHit = false;
             }
         }
-        this->render();
     }
     else {
         // this->currentState = Bird::IS_DEAD;
@@ -39,7 +38,7 @@ void _FlappyBird::FallState::update() {
 void _FlappyBird::FallState::render() {
     this->actor->setX(this->actor->x + this->actor->deltaX);
     this->actor->setY(this->actor->y + this->actor->deltaY);
-    this->actor->animation->update();
+    if(this->floorNotHit) this->actor->animation->update();
     if(this->actor->hitbox.has_value()) this->actor->hitbox->update();
 }
 

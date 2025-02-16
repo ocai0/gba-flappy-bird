@@ -40,7 +40,6 @@ void _FlappyBird::PlayState::update() {
         }
     }
     this->actor->calculateRotation();
-    this->render();
 }
 
 void _FlappyBird::PlayState::render() {

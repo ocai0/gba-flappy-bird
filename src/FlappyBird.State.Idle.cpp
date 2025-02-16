@@ -20,8 +20,6 @@ void _FlappyBird::IdleState::update() {
     if(bn::keypad::a_pressed()) {
         this->actor->stateMachine->set(new _FlappyBird::PlayState(this->actor));
     }
-
-    this->render();
 }
 
 void _FlappyBird::IdleState::render() {
@@ -32,5 +30,4 @@ void _FlappyBird::IdleState::render() {
 }
 
 void _FlappyBird::IdleState::leave() {
-    BN_LOG("LEAVE IDLESTATE");
 }
