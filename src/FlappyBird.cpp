@@ -60,11 +60,11 @@ bool FlappyBird::collidesWith(Obstacle* other) {
         && this->y + this->height > other->y;
 }
 
-bool FlappyBird::collidesWith(bn::fixed x, bn::fixed y, int width, int height, Obstacle* other) {
-    return x < other->x + other->width 
-        && x + width > other->x 
-        && y < other->y + other->height 
-        && y + height > other->y;
+bool FlappyBird::collidesWith(bn::fixed _x, bn::fixed _y, int _width, int _height, Obstacle* _other) {
+    return _x < _other->x + _other->width 
+        && _x + _width > _other->x 
+        && _y < _other->y + _other->height 
+        && _y + _height > _other->y;
 }
 
 void FlappyBird::watchObstacles(bn::array<Obstacle*, 10> _obstacleList) {
@@ -92,8 +92,8 @@ void FlappyBird::routineFallFromAHit() {
         }
         for(Obstacle* obstacle : this->obstacleList) {
             if(obstacle == nullptr) continue;
-            bn::string<32> instanceName = obstacle->getInstanceName();
-            if(instanceName != (bn::string<32>) "FLOOR") continue;
+            bn::string<32> _instanceName = obstacle->getInstanceName();
+            if(_instanceName != (bn::string<32>) "FLOOR") continue;
 
             if(this->collidesWith(this->x, this->y + this->deltaY - 2, this->width, this->height, obstacle)) {
                 this->deltaY = 0;
