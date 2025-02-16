@@ -30,6 +30,7 @@ void _FlappyBird::FallState::update() {
             }
         }
         this->actor->setY(this->actor->y + this->actor->deltaY);
+        this->render();
     }
     else {
         // this->currentState = Bird::IS_DEAD;
