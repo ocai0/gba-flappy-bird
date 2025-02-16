@@ -7,6 +7,7 @@
 
     #include "Commons/AbstractState.hpp"
     #include "Commons/StateMachine.hpp"
+    #include "Scenes/Gameplay/Gameplay.Scene.GetReady.hpp"
     #include "MainMenuVars.hpp"
     #include "Background.hpp"
     #include "bn_display.h"
@@ -28,34 +29,21 @@
     #include "bn_sprite_palette_items_red_pipe.h"
     #include "bn_sprite_palette_items_blue_pipe.h"
 
-    namespace GameplayScene {
-        enum SubState {
-            GET_READY_STATE,
-            IN_GAME_STATE,
-            PAUSED_STATE,
-            BONUS_STATE,
-            GAME_OVER_STATE,
-            YOU_WIN_STATE
-        };
-
-        typedef struct {
-            bn::fixed x;
-            bn::fixed y;
-            Pipe* topPipe;
-            Pipe* bottomPipe;
-        } PipeWall;
-    }
+    typedef struct {
+        bn::fixed x;
+        bn::fixed y;
+        Pipe* topPipe;
+        Pipe* bottomPipe;
+    } PipeWall;
 
     namespace Scene {
         class Gameplay : public AbstractState {
             public:
-                GameplayScene::SubState currentState;
                 MainMenuVars* mainMenuVars;
-                AbstractState* nextScene;
                 FlappyBird* player;
                 Floor* floor;
                 Background* background;
-                bn::array<GameplayScene::PipeWall*, 6> pipes;
+                bn::array<PipeWall*, 6> pipes;
                 bn::array<Obstacle*, 10> obstacles;
                 bn::optional<bn::regular_bg_ptr> getReadyBg;
                 bn::optional<bn::camera_ptr> camera;
@@ -69,13 +57,6 @@
                 void update();
                 void render();
                 void leave();
-
-                void setGetReadyState();
-                void setGameState();
-                void setBonusState();
-                AbstractState* setPauseState();
-                AbstractState* setGameOverState();
-                AbstractState* setYouWinState();
 
                 int selectFlappyBird();
                 int selectFlappyBird(int);
