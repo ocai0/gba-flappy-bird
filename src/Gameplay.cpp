@@ -17,7 +17,7 @@ void Scenes::Gameplay::init(MainMenuVars& options) {
     this->player
         ->showHitbox()
         ->setCamera(this->camera)
-        ->setWeight(1);
+        ->setWeight(.5);
 
     this->currentState = GameplayScene::GET_READY_STATE;
     this->background = new Background();
