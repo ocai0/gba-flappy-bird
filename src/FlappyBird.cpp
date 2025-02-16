@@ -38,6 +38,10 @@ void FlappyBird::update() {
     this->stateMachine->update();
 }
 
+void FlappyBird::render() {
+    this->stateMachine->render();
+}
+
 FlappyBird* FlappyBird::showHitbox() {
     this->hitbox = DebugBox(this->x, this->y, this->width, this->height);
     return this;
