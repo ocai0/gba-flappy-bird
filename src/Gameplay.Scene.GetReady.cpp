@@ -22,7 +22,7 @@ void _Gameplay::GetReady::update() {
 }
 
 void _Gameplay::GetReady::render() {
-
+    this->parentState->player->render();
 }
 
 void _Gameplay::GetReady::leave() {

@@ -31,7 +31,7 @@ void _Gameplay::InGame::update() {
     this->parentState->background->update();
 }
 
-void _Gameplay::GetReady::render() {
+void _Gameplay::InGame::render() {
     this->parentState->player->render();
 }
 
