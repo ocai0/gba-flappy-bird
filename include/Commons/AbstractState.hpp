@@ -1,18 +1,17 @@
 #ifndef ABSTRACT_STATE_H_
 #define ABSTRACT_STATE_H_
     #include "bn_string.h"
-    #include "Actors/Actor.hpp"
-    #include "StateMachine.hpp"
+    #include "Commons/StateMachine.hpp"
     class StateMachine;
 
     class AbstractState {
         bn::string<32> name;
         public:
-            Actor* actor;
-            StateMachine* machine;
+            StateMachine* parentStateMachine;
+            StateMachine* subStateMachine;
             AbstractState* parentState;
             /** Amount of time this scene is alive (in ms) */
-            int time;
+            unsigned int time;
             /** Run only once! Activated when Scene is loaded */
             virtual void load();
             /** Run every tick */

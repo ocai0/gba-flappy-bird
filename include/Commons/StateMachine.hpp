@@ -1,11 +1,11 @@
 #ifndef STATE_MACHINE_H_
 #define STATE_MACHINE_H_
-    #include "AbstractState.hpp"
+    #include "Commons/AbstractState.hpp"
     class AbstractState;
     
     class StateMachine {
-        volatile AbstractState* currentState = nullptr;
-        volatile AbstractState* nextState = nullptr;
+        AbstractState* currentState = nullptr;
+        AbstractState* nextState = nullptr;
         bool forceStateReset = false;
         public:
             void set(AbstractState* newState);
