@@ -8,3 +8,7 @@ void AbstractState::tick() {
     if(this->machine != nullptr) this->machine->render();
     this->time++;
 }
+
+bn::string<32> AbstractState::getName() {
+    return this->name;
+}
