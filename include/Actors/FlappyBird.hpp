@@ -30,7 +30,6 @@
         bn::fixed deltaY;
         int deltaYSign = -1;
         bn::fixed weight;
-        int _timeToUpdate;
         bn::fixed rotationAngle;
         bn::optional<DebugBox> hitbox;
         bn::optional<bn::sprite_ptr> sprite;
