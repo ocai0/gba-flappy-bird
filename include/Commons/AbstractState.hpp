@@ -7,9 +7,7 @@
     class AbstractState {
         bn::string<32> name;
         public:
-            StateMachine* parentStateMachine;
             StateMachine* subStateMachine;
-            AbstractState* parentState;
             /** Amount of time this scene is alive (in ms) */
             unsigned int time;
             /** Run only once! Activated when Scene is loaded */
