@@ -1,17 +1,19 @@
-#include "Scenes/Gameplay.hpp"
+#include "Scenes/Gameplay.Scene.hpp"
 #include "bn_log.h"
 
-Scenes::Gameplay::Gameplay() {
+Scene::Gameplay::Gameplay() {
     MainMenuVars userOptions;
     userOptions.selectedFlappy = -1;
     this->init(userOptions);
 }
 
-Scenes::Gameplay::Gameplay(MainMenuVars& userOptions) {
+Scene::Gameplay::Gameplay(MainMenuVars& userOptions) {
     this->init(userOptions);
 }
 
-void Scenes::Gameplay::init(MainMenuVars& options) {
+void Scene::Gameplay::init(MainMenuVars& options) {
+    this->stateMachine = new StateMachine();
+    this->stateMachine->set(new _Gameplay::GetReady(this));
     this->camera = bn::camera_ptr::create(0, 0);
     this->player = new FlappyBird(-80, 0);
     this->player
@@ -19,7 +21,7 @@ void Scenes::Gameplay::init(MainMenuVars& options) {
         ->setCamera(this->camera)
         ->setWeight(.5);
 
-    this->currentState = GameplayScene::GET_READY_STATE;
+    // this->currentState = GameplayScene::GET_READY_STATE;
     this->background = new Background();
     this->background
         ->setImage(bn::regular_bg_items::bg_day.create_bg(0, -10))
@@ -63,39 +65,44 @@ void Scenes::Gameplay::init(MainMenuVars& options) {
     this->score->setValue(1001);
 }
 
-void Scenes::Gameplay::load() {}
+void Scene::Gameplay::load() {}
 
-Scene* Scenes::Gameplay::update() {
-    while(this->nextScene == NULL) {
-        switch(this->currentState) {
-            default:
-            case GameplayScene::GET_READY_STATE:
-                this->setGetReadyState();
-                break;
-            case GameplayScene::IN_GAME_STATE:
-                this->setGameState();
-                break;
-            case GameplayScene::PAUSED_STATE:
-                this->setPauseState();
-                break;
-            case GameplayScene::BONUS_STATE:
-                this->setBonusState();
-                break;
-            case GameplayScene::GAME_OVER_STATE:
-                this->setGameOverState();
-                break;
-            case GameplayScene::YOU_WIN_STATE:
-                this->setYouWinState();
-                break;
-        }
-        bn::core::update();
-    }
-    return this->nextScene;
+void Scene::Gameplay::update() {
+    this->stateMachine->update();
+    // while(this->nextScene == NULL) {
+    //     switch(this->currentState) {
+    //         default:
+    //         case GameplayScene::GET_READY_STATE:
+    //             this->setGetReadyState();
+    //             break;
+    //         case GameplayScene::IN_GAME_STATE:
+    //             this->setGameState();
+    //             break;
+    //         case GameplayScene::PAUSED_STATE:
+    //             this->setPauseState();
+    //             break;
+    //         case GameplayScene::BONUS_STATE:
+    //             this->setBonusState();
+    //             break;
+    //         case GameplayScene::GAME_OVER_STATE:
+    //             this->setGameOverState();
+    //             break;
+    //         case GameplayScene::YOU_WIN_STATE:
+    //             this->setYouWinState();
+    //             break;
+    //     }
+    //     bn::core::update();
+    // }
+    // return this->nextScene;
 }
 
-void Scenes::Gameplay::leave() {}
+void Scene::Gameplay::render() {
+    this->stateMachine->render();
+}
 
-void Scenes::Gameplay::setGetReadyState() {
+void Scene::Gameplay::leave() {}
+
+void Scene::Gameplay::setGetReadyState() {
     this->getReadyBg = bn::regular_bg_items::bg_get_ready.create_bg(0, -10);
     this->getReadyBg->set_blending_enabled(true);
     while(!bn::keypad::a_pressed()) {
@@ -107,7 +114,7 @@ void Scenes::Gameplay::setGetReadyState() {
     this->currentState = GameplayScene::IN_GAME_STATE;
 }
 
-void Scenes::Gameplay::setGameState() {
+void Scene::Gameplay::setGameState() {
     this->score->update();
     bn::fixed getReadyTransparencyValue = 1;
     while(this->currentState == GameplayScene::IN_GAME_STATE) {
@@ -118,9 +125,6 @@ void Scenes::Gameplay::setGameState() {
             if(getReadyTransparencyValue == 0) this->getReadyBg.reset();
         }
         this->player->update();
-        // if(this->player->getCurrentState() == Bird::IS_DEAD) {
-        //     this->currentState == GameplayScene::GAME_OVER_STATE;
-        // }
         if(bn::keypad::start_pressed()) {
             this->currentState = GameplayScene::PAUSED_STATE;
         }
@@ -136,9 +140,9 @@ void Scenes::Gameplay::setGameState() {
     }
 }
 
-void Scenes::Gameplay::setBonusState() {}
+void Scene::Gameplay::setBonusState() {}
 
-Scene* Scenes::Gameplay::setPauseState() {
+AbstractState* Scene::Gameplay::setPauseState() {
     while(!bn::keypad::start_pressed()) {
         bn::core::update();
     }
@@ -146,10 +150,10 @@ Scene* Scenes::Gameplay::setPauseState() {
     return this->nextScene;
 }
 
-Scene* Scenes::Gameplay::setGameOverState() {
+AbstractState* Scene::Gameplay::setGameOverState() {
     return this->nextScene;
 }
 
-Scene* Scenes::Gameplay::setYouWinState() {
+AbstractState* Scene::Gameplay::setYouWinState() {
     return this->nextScene;
 }

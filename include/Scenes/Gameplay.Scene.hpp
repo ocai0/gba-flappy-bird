@@ -5,7 +5,8 @@
     #include "bn_array.h"
     #include "bn_random.h"
 
-    #include "Scene.hpp"
+    #include "Commons/AbstractState.hpp"
+    #include "Commons/StateMachine.hpp"
     #include "MainMenuVars.hpp"
     #include "Background.hpp"
     #include "bn_display.h"
@@ -45,34 +46,36 @@
         } PipeWall;
     }
 
-    namespace Scenes {
-        class Gameplay : public Scene {
-            GameplayScene::SubState currentState;
-            MainMenuVars* mainMenuVars;
-            Scene* nextScene;
-            FlappyBird* player;
-            Floor* floor;
-            Background* background;
-            bn::array<GameplayScene::PipeWall*, 6> pipes;
-            bn::array<Obstacle*, 10> obstacles;
-            bn::optional<bn::regular_bg_ptr> getReadyBg;
-            bn::optional<bn::camera_ptr> camera;
-            bn::optional<bn::window> window;
-            Score* score;
-            void init(MainMenuVars&);
+    namespace Scene {
+        class Gameplay : public AbstractState {
             public:
+                GameplayScene::SubState currentState;
+                MainMenuVars* mainMenuVars;
+                AbstractState* nextScene;
+                FlappyBird* player;
+                Floor* floor;
+                Background* background;
+                bn::array<GameplayScene::PipeWall*, 6> pipes;
+                bn::array<Obstacle*, 10> obstacles;
+                bn::optional<bn::regular_bg_ptr> getReadyBg;
+                bn::optional<bn::camera_ptr> camera;
+                bn::optional<bn::window> window;
+                Score* score;
+                StateMachine* stateMachine;
+                void init(MainMenuVars&);
                 Gameplay();
                 Gameplay(MainMenuVars&);
                 void load();
-                Scene* update();
+                void update();
+                void render();
                 void leave();
 
                 void setGetReadyState();
                 void setGameState();
                 void setBonusState();
-                Scene* setPauseState();
-                Scene* setGameOverState();
-                Scene* setYouWinState();
+                AbstractState* setPauseState();
+                AbstractState* setGameOverState();
+                AbstractState* setYouWinState();
 
                 int selectFlappyBird();
                 int selectFlappyBird(int);
