@@ -1,12 +1,13 @@
 #ifndef ABSTRACT_STATE_H_
 #define ABSTRACT_STATE_H_
     #include "Actors/Actor.hpp"
-    // #include "StateMachine.hpp"
+    #include "StateMachine.hpp"
+    class StateMachine;
 
     class AbstractState {
         public:
             Actor* actor;
-            // StateMachine* machine;
+            StateMachine* machine;
             AbstractState* parentState;
             /** Amount of time this scene is alive (in ms) */
             int time;

@@ -2,8 +2,8 @@
 
 void AbstractState::tick() {
     this->update();
-    // if(this->machine != nullptr) this->machine->update();
+    if(this->machine != nullptr) this->machine->update();
 
     this->render();
-    // if(this->machine != nullptr) this->machine->render();
+    if(this->machine != nullptr) this->machine->render();
 }

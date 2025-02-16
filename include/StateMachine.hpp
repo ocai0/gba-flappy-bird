@@ -1,6 +1,7 @@
 #ifndef STATE_MACHINE_H_
 #define STATE_MACHINE_H_
     #include "AbstractState.hpp"
+    class AbstractState;
     
     class StateMachine {
         volatile AbstractState* currentState = nullptr;
