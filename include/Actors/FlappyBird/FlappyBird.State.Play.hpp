@@ -6,12 +6,12 @@
     namespace _FlappyBird {
         class PlayState: public AbstractState {
             public:
-            FlappyBird* actor;
-            PlayState(FlappyBird* actor);
-            void load();
-            void update();
-            void render();
-            void leave();
+                FlappyBird* actor;
+                PlayState(FlappyBird* actor);
+                void load();
+                void update();
+                void render();
+                void leave();
         };
     }
 #endif

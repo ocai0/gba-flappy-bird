@@ -6,14 +6,14 @@
     namespace _FlappyBird {
         class FallState: public AbstractState {
             public:
-            bool floorNotHit;
-            bool dieSoundPlayed = false;
-            FlappyBird* actor;
-            FallState(FlappyBird* actor);
-            void load();
-            void update();
-            void render();
-            void leave();
+                bool floorNotHit;
+                bool dieSoundPlayed = false;
+                FlappyBird* actor;
+                FallState(FlappyBird* actor);
+                void load();
+                void update();
+                void render();
+                void leave();
         };
     }
 #endif

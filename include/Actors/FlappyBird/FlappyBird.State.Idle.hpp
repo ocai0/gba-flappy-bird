@@ -7,12 +7,12 @@
     namespace _FlappyBird {
         class IdleState: public AbstractState {
             public:
-            FlappyBird* actor;
-            IdleState(FlappyBird* actor);
-            void load();
-            void update();
-            void render();
-            void leave();
+                FlappyBird* actor;
+                IdleState(FlappyBird* actor);
+                void load();
+                void update();
+                void render();
+                void leave();
         };
     }
 #endif
