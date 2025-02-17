@@ -27,6 +27,8 @@
             Score* useSmallFont();
             Score* fadeIn();
             Score* fadeOut();
+            Score* show();
+            Score* hide();
             void update();
             void setPriority(int);
     };

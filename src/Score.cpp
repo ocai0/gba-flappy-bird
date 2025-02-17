@@ -46,6 +46,16 @@ Score* Score::fadeOut() {
     return this;
 }
 
+Score* Score::show() {
+    for(bn::sprite_ptr& letter : this->sprites) letter.set_visible(true);
+    return this;
+}
+
+Score* Score::hide() {
+    for(bn::sprite_ptr& letter : this->sprites) letter.set_visible(false);
+    return this;
+}
+
 void Score::update() {
     this->sprites.clear();
     this->textGenerator->generate(this->x, this->y, this->text, this->sprites);
