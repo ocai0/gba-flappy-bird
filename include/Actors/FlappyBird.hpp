@@ -20,22 +20,22 @@
 
     class FlappyBird : public Actor {
         public:
-        int offsetY = 4;
-        int offsetX = 4;
-        int width = 10;
-        int height = 8;
-        bn::fixed x;
-        bn::fixed y;
-        bn::fixed deltaX;
-        bn::fixed deltaY;
-        int deltaYSign = -1;
-        bn::fixed weight;
-        bn::fixed rotationAngle;
-        bn::optional<DebugBox> hitbox;
-        bn::optional<bn::sprite_ptr> sprite;
-        bn::optional<bn::sprite_animate_action<4>> animation;
-        bn::array<Obstacle*, 10> obstacleList;
-        StateMachine* stateMachine;
+            int offsetY = 4;
+            int offsetX = 4;
+            int width = 10;
+            int height = 8;
+            bn::fixed x;
+            bn::fixed y;
+            bn::fixed deltaX;
+            bn::fixed deltaY;
+            int deltaYSign = -1;
+            bn::fixed weight;
+            bn::fixed rotationAngle;
+            bn::optional<DebugBox> hitbox;
+            bn::optional<bn::sprite_ptr> sprite;
+            bn::optional<bn::sprite_animate_action<4>> animation;
+            bn::array<Obstacle*, 10> obstacleList;
+            StateMachine* stateMachine;
             FlappyBird(bn::fixed, bn::fixed);
             FlappyBird* setSprite(bn::sprite_ptr);
             FlappyBird* setWeight(bn::fixed);
