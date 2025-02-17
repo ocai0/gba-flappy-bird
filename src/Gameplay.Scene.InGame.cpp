@@ -8,6 +8,7 @@ _Gameplay::InGame::InGame(Scene::Gameplay* _parentState) {
 
 void _Gameplay::InGame::load() {
     this->parentState->score->update();
+    this->parentState->score->show();
 }
 
 void _Gameplay::InGame::update() {
@@ -15,7 +16,10 @@ void _Gameplay::InGame::update() {
         getReadyTransparencyValue -= .05;
         if(getReadyTransparencyValue < 0) getReadyTransparencyValue = 0;
         bn::blending::set_transparency_alpha(getReadyTransparencyValue);
-        if(getReadyTransparencyValue == 0) this->parentState->getReadyBg.reset();
+        if(getReadyTransparencyValue == 0) {
+            this->parentState->getReadyBg.reset();
+            bn::blending::set_transparency_alpha(1);
+        }
     }
     this->parentState->player->update();
     if(bn::keypad::start_pressed()) {
@@ -29,6 +33,9 @@ void _Gameplay::InGame::update() {
     }
     this->parentState->floor->update();
     this->parentState->background->update();
+    if(bn::keypad::select_pressed()) {
+        this->parentState->stateMachine->set(new _Gameplay::GameOver(this->parentState));
+    }
 }
 
 void _Gameplay::InGame::render() {
