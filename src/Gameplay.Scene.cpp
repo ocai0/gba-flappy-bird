@@ -75,3 +75,21 @@ void Scene::Gameplay::render() {
 }
 
 void Scene::Gameplay::leave() {}
+
+void Scene::Gameplay::enableBlendingOnAllActors() {
+    this->player->enableBlending();
+    this->background->enableBlending();
+    for (Obstacle* obstacle : this->obstacles) {
+        if(obstacle == nullptr) continue;
+        obstacle->enableBlending();
+    }
+}
+
+void Scene::Gameplay::disableBlendingOnAllActors() {
+    this->player->disableBlending();
+    this->background->disableBlending();
+    for (Obstacle* obstacle : this->obstacles) {
+        if(obstacle == nullptr) continue;
+        obstacle->disableBlending();
+    }
+}

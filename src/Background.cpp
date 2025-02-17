@@ -14,3 +14,11 @@ Background* Background::setCamera(bn::optional<bn::camera_ptr> _camera) {
     if(this->sprite.has_value()) this->sprite->set_camera(this->camera.value());
     return this;
 }
+
+void Background::enableBlending() {
+    if(this->sprite.has_value()) this->sprite->set_blending_enabled(true);
+}
+
+void Background::disableBlending() {
+    if(this->sprite.has_value()) this->sprite->set_blending_enabled(false);
+}

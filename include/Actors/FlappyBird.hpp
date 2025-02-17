@@ -50,5 +50,7 @@
             FlappyBird* showHitbox();
             FlappyBird* hideHitbox();
             FlappyBird* setCamera(bn::optional<bn::camera_ptr>);
+            void enableBlending();
+            void disableBlending();
     };
 #endif

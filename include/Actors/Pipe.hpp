@@ -32,5 +32,8 @@
             Pipe* setPalette(bn::sprite_palette_ptr);
             Pipe* flipVertically();
             Pipe* setCamera(bn::optional<bn::camera_ptr>);
+            
+            void enableBlending();
+            void disableBlending();
     };
 #endif

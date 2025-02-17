@@ -93,3 +93,11 @@ Pipe* Pipe::setCamera(bn::optional<bn::camera_ptr> _camera) {
     if(this->hitbox.has_value()) this->hitbox->setCamera(this->camera);
     return this;
 }
+
+void Pipe::enableBlending() {
+    if(this->sprite.has_value()) this->sprite->set_blending_enabled(true);
+}
+
+void Pipe::disableBlending() {
+    if(this->sprite.has_value()) this->sprite->set_blending_enabled(false);
+}

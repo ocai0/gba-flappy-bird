@@ -74,8 +74,17 @@ bool FlappyBird::collidesWith(bn::fixed _x, bn::fixed _y, int _width, int _heigh
 void FlappyBird::watchObstacles(bn::array<Obstacle*, 10> _obstacleList) {
     this->obstacleList = _obstacleList;
 }
+
 FlappyBird* FlappyBird::setCamera(bn::optional<bn::camera_ptr> _camera) {
     if(this->sprite.has_value()) this->sprite->set_camera(_camera.value());
     if(this->hitbox.has_value()) this->hitbox->setCamera(_camera);
     return this;
+}
+
+void FlappyBird::enableBlending() {
+    this->sprite->set_blending_enabled(true);
+}
+
+void FlappyBird::disableBlending() {
+    this->sprite->set_blending_enabled(false);
 }

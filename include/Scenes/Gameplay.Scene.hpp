@@ -66,6 +66,8 @@
                 int selectBackground(int);
                 int selectPipes();
                 int selectPipes(int);
+                void enableBlendingOnAllActors();
+                void disableBlendingOnAllActors();
         };
     }
 #endif

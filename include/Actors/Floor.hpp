@@ -15,5 +15,7 @@
             void setImage(bn::regular_bg_ptr);
             void update();
             void setCamera(bn::optional<bn::camera_ptr>);
+            void enableBlending();
+            void disableBlending();
     };
 #endif

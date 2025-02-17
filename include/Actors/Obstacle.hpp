@@ -9,5 +9,8 @@
             bn::fixed y;
             bn::fixed width;
             bn::fixed height;
+            virtual void enableBlending();
+            virtual void disableBlending();
+            virtual ~Obstacle() = default;
     };
 #endif
