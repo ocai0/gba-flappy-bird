@@ -7,8 +7,8 @@
     namespace _Gameplay {
         class GameOver: public AbstractState {
             bool fadeComplete = false;
-            bn::fixed fadeIntensity = .01;
-            bn::fixed fadeDeltaValue = .025;
+            bn::fixed fadeIntensity = .1;
+            const bn::fixed step = .08;
             int fadeMultiplierSign = 1;
             public:
                 Scene::Gameplay* parentState;
