@@ -1,4 +1,5 @@
 #include "Scenes/Gameplay/Gameplay.Scene.GameOver.hpp"
+#include "bn_log.h"
 
 _Gameplay::GameOver::GameOver(Scene::Gameplay* _parentState) {
     this->parentState = _parentState;
@@ -12,24 +13,26 @@ void _Gameplay::GameOver::load() {
 }
 
 void _Gameplay::GameOver::update() {
+    this->parentState->player->update();
     // fade effect update
     if(!this->fadeComplete) {
         if(this->fadeIntensity == 0) this->fadeComplete = true;
         else {
             if(this->fadeIntensity == 1) this->fadeMultiplierSign = -1;
-            this->fadeIntensity = bn::clamp(this->fadeIntensity + (this->fadeDeltaValue * this->fadeMultiplierSign), bn::fixed(0), bn::fixed(1));
+            this->fadeIntensity = bn::clamp(this->fadeIntensity + (this->step * this->fadeMultiplierSign), bn::fixed(0), bn::fixed(1));
             bn::blending::set_fade_alpha(this->fadeIntensity);
         }
     }
     else {
     // if player is dead
+    if(this->parentState->player->getStateName() == (bn::string<32>) "DeadState") {
         // show scoreboard
         // let user control
+    }
     }
 }
 
 void _Gameplay::GameOver::render() {
-    BN_LOG(this->fadeIntensity);
     this->parentState->player->render();
 }
 

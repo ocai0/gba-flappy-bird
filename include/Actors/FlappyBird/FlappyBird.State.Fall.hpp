@@ -2,6 +2,7 @@
 #define FLAPPY_BIRD_STATE_FALL_H_
     #include "Commons/AbstractState.hpp"
     #include "Actors/FlappyBird.hpp"
+    #include "Actors/FlappyBird/FlappyBird.State.Dead.hpp"
     class FlappyBird;
     namespace _FlappyBird {
         class FallState: public AbstractState {

@@ -1,9 +1,9 @@
 #include "Actors/FlappyBird/FlappyBird.State.Fall.hpp"
 
-constexpr int FRAME_COUNT_PER_SECOND = 60;
 
 _FlappyBird::FallState::FallState(FlappyBird* _actor) {
     this->actor = _actor;
+    this->setName("FallState");
 }
 
 void _FlappyBird::FallState::load() {
@@ -31,7 +31,7 @@ void _FlappyBird::FallState::update() {
         }
     }
     else {
-        // this->currentState = Bird::IS_DEAD;
+        this->actor->stateMachine->set(new _FlappyBird::DeadState(this->actor));
     }
 }
 

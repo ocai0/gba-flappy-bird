@@ -33,7 +33,7 @@ void _Gameplay::InGame::update() {
     }
     this->parentState->floor->update();
     this->parentState->background->update();
-    if(bn::keypad::select_pressed()) {
+    if(this->parentState->player->getStateName() == (bn::string<32>) "FallState") {
         this->parentState->stateMachine->set(new _Gameplay::GameOver(this->parentState));
     }
 }
