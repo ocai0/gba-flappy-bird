@@ -23,3 +23,11 @@ void StateMachine::update() {
 void StateMachine::render() {
     if(this->currentState) this->currentState->render();
 }
+
+bn::string<32> StateMachine::getStateName() {
+    return this->currentState->getName();
+}
+
+AbstractState* StateMachine::get() {
+    return this->currentState;
+}

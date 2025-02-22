@@ -52,5 +52,6 @@
             FlappyBird* setCamera(bn::optional<bn::camera_ptr>);
             void enableBlending();
             void disableBlending();
+            bn::string<32> getStateName();
     };
 #endif

@@ -88,3 +88,7 @@ void FlappyBird::enableBlending() {
 void FlappyBird::disableBlending() {
     this->sprite->set_blending_enabled(false);
 }
+
+bn::string<32> FlappyBird::getStateName() {
+    return this->stateMachine->getStateName();
+}

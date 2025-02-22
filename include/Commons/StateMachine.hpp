@@ -12,5 +12,7 @@
             void set(AbstractState* newState, bool forceReset);
             void update();
             void render();
+            AbstractState* get();
+            bn::string<32> getStateName();
     };
 #endif
