@@ -7,7 +7,7 @@ constexpr bn::fixed MAX_VERTICAL_FORCE = -7;
 
 _FlappyBird::PlayState::PlayState(FlappyBird* _actor) {
     this->actor = _actor;
-    this->SetName("PlayState");
+    this->setName("PlayState");
 }
 
 void _FlappyBird::PlayState::load() {}
