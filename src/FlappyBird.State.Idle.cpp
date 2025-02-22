@@ -3,6 +3,7 @@
 
 _FlappyBird::IdleState::IdleState(FlappyBird* _actor) {
     this->actor = _actor;
+    this->setName("IdleState");
 }
 
 void _FlappyBird::IdleState::load() {}
