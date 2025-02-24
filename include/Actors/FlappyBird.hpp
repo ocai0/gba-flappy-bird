@@ -34,7 +34,7 @@
             bn::optional<DebugBox> hitbox;
             bn::optional<bn::sprite_ptr> sprite;
             bn::optional<bn::sprite_animate_action<4>> animation;
-            bn::array<Obstacle*, 10> obstacleList;
+            bn::array<Obstacle*, 15> obstacleList;
             StateMachine* stateMachine;
             FlappyBird(bn::fixed, bn::fixed);
             FlappyBird* setSprite(bn::sprite_ptr);
@@ -44,7 +44,7 @@
             void update();
             void render();
             void calculateRotation();
-            void watchObstacles(bn::array<Obstacle*, 10>);
+            void watchObstacles(bn::array<Obstacle*, 15>);
             bool collidesWith(Obstacle*);
             bool collidesWith(bn::fixed, bn::fixed, int, int, Obstacle*);
             FlappyBird* showHitbox();
@@ -53,5 +53,6 @@
             void enableBlending();
             void disableBlending();
             bn::string<32> getStateName();
+            FlappyBird* setRenderPriority(int);
     };
 #endif

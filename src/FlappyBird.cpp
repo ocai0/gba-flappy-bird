@@ -71,7 +71,7 @@ bool FlappyBird::collidesWith(bn::fixed _x, bn::fixed _y, int _width, int _heigh
         && _y + _height > _other->y;
 }
 
-void FlappyBird::watchObstacles(bn::array<Obstacle*, 10> _obstacleList) {
+void FlappyBird::watchObstacles(bn::array<Obstacle*, 15> _obstacleList) {
     this->obstacleList = _obstacleList;
 }
 
@@ -91,4 +91,9 @@ void FlappyBird::disableBlending() {
 
 bn::string<32> FlappyBird::getStateName() {
     return this->stateMachine->getStateName();
+}
+
+FlappyBird* FlappyBird::setRenderPriority(int _order) {
+    this->sprite->set_z_order(_order);
+    return this;
 }
