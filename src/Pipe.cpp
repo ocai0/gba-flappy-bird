@@ -12,7 +12,7 @@ Pipe::Pipe(bn::fixed _x, bn::fixed _y) {
     this->height = 56;
     this->setOffsetX(7);
     this->setOffsetY(8);
-    this->showHitbox();
+    // this->showHitbox();
     this->setSprite(&bn::sprite_items::common_pipe);
 }
 
@@ -22,6 +22,7 @@ Pipe* Pipe::setX(bn::fixed _x) {
         bn::fixed _renderX = this->x + SPRITE_WIDTH / 2;
         this->sprite->set_x(_renderX - this->offsetX);
     }
+    if(this->hitbox.has_value()) this->hitbox->setX(this->x);
     return this;
 }
 
@@ -38,6 +39,7 @@ Pipe* Pipe::setY(bn::fixed _y) {
         if(this->sprite->vertical_flip()) this->sprite->set_y(_renderY);
         else this->sprite->set_y(_renderY - this->offsetY);
     }
+    if(this->hitbox.has_value()) this->hitbox->setY(this->y);
     return this;
 }
 
@@ -57,11 +59,6 @@ Pipe* Pipe::setSprite(const bn::sprite_item* _sprite) {
     this->setX(this->x);
     this->setY(this->y);
     return this;
-}
-
-void Pipe::update() {
-    this->setX(this->x - this->xSpeed);
-    if(this->hitbox.has_value()) this->hitbox->setX(this->x);
 }
 
 Pipe* Pipe::showHitbox() {
