@@ -6,9 +6,9 @@ int main() {
     bn::core::init();
     StateMachine* sceneManager = new StateMachine();
     MainMenuVars userOptions;
-    userOptions.selectedFlappy = 0;
-    userOptions.selectedBackground = 1;
-    userOptions.selectedPipes = 1;
+    userOptions.birdType = Enum::BirdType::ROBOT_BIRD;
+    userOptions.backgroundType = Enum::BackgroundType::CITY;
+    userOptions.pipeType = Enum::BackgroundType::CITY;
 
     sceneManager->set(new Scene::Gameplay(userOptions));
 
