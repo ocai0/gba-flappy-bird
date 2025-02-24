@@ -34,6 +34,7 @@
         bn::fixed y;
         Pipe* topPipe;
         Pipe* bottomPipe;
+        bool scored = false;
     } PipeWall;
 
     namespace Scene {
@@ -44,7 +45,9 @@
                 Floor* floor;
                 Background* background;
                 bn::array<PipeWall*, 6> pipes;
-                bn::array<Obstacle*, 10> obstacles;
+                int pipeLastItemIndex = -1;
+                bn::array<Obstacle*, 15> obstacles;
+                int obstacleLastItemIndex = -1;
                 bn::optional<bn::regular_bg_ptr> getReadyBg;
                 bn::optional<bn::camera_ptr> camera;
                 bn::optional<bn::window> window;
@@ -58,14 +61,18 @@
                 void render();
                 void leave();
 
-                int selectFlappyBird();
-                int selectFlappyBird(int);
+                void initializePlayer();
+                void initializePlayer(Enum::BirdType);
+                void initializeBackground();
+                void initializeBackground(Enum::BackgroundType);
+                void initializePipes();
+                void initializePipes(Enum::PipeType);
+                void initializeFloor();
+                void initializeFloor(Enum::FloorType);
                 int pickAPaletteForFlappy();
                 int pickAPaletteForFlappy(int);
-                int selectBackground();
-                int selectBackground(int);
-                int selectPipes();
-                int selectPipes(int);
+                int addToObstacleList(Obstacle*);
+                int addToPipeList(PipeWall*);
                 void enableBlendingOnAllActors();
                 void disableBlendingOnAllActors();
         };
