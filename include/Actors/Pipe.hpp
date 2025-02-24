@@ -26,14 +26,18 @@
             Pipe* setY(bn::fixed);
             Pipe* setXSpeed(bn::fixed);
             Pipe* setSprite(const bn::sprite_item*);
+            bn::fixed getHeight();
             void update();
             Pipe* showHitbox();
             Pipe* hideHitbox();
             Pipe* setPalette(bn::sprite_palette_ptr);
             Pipe* flipVertically();
             Pipe* setCamera(bn::optional<bn::camera_ptr>);
-            
+            Pipe* addBody();
+            Pipe* removeBody();
+
             void enableBlending();
             void disableBlending();
+            Pipe* setRenderPriority(int);
     };
 #endif

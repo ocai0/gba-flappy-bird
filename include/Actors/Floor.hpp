@@ -17,5 +17,6 @@
             void setCamera(bn::optional<bn::camera_ptr>);
             void enableBlending();
             void disableBlending();
+            void setRenderPriority(int);
     };
 #endif
