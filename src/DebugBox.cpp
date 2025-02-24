@@ -21,9 +21,11 @@ DebugBox::DebugBox(bn::fixed _x, bn::fixed _y, int _width, int _height): x(_x), 
 }
 void DebugBox::setX(bn::fixed _x) {
     this->x = _x;
+    this->update();
 }
 void DebugBox::setY(bn::fixed _y) {
     this->y = _y;
+    this->update();
 }
 void DebugBox::update() {
     this->top_left->set_x(this->x + SPRITE_SIZE_HALF);
