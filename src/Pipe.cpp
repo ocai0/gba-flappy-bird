@@ -101,3 +101,24 @@ void Pipe::enableBlending() {
 void Pipe::disableBlending() {
     if(this->sprite.has_value()) this->sprite->set_blending_enabled(false);
 }
+
+bn::fixed Pipe::getHeight() {
+    return this->height;
+}
+
+Pipe* Pipe::addBody() {
+    // add pipeBody w/ pipe palette
+    // update height
+    return this;
+}
+
+Pipe* Pipe::removeBody() {
+    // remove pipeBody w/ pipe palette
+    // update height
+    return this;
+}
+
+Pipe* Pipe::setRenderPriority(int _order) {
+    this->sprite->set_z_order(_order);
+    return this;
+}

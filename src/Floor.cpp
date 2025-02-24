@@ -30,3 +30,7 @@ void Floor::enableBlending() {
 void Floor::disableBlending() {
     if(this->sprite.has_value()) this->sprite->set_blending_enabled(false);
 }
+
+void Floor::setRenderPriority(int _order) {
+    this->sprite->set_priority(_order);
+}
