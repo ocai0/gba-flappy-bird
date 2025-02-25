@@ -18,5 +18,7 @@
             void enableBlending();
             void disableBlending();
             void setRenderPriority(int);
+            void showHitbox();
+            void hideHitbox();
     };
 #endif

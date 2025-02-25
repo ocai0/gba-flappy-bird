@@ -7,7 +7,6 @@ Floor::Floor() {
     this->width = 240;
     this->height = 16;
     this->xSpeed = .5;
-    this->hitbox = DebugBox(this->x, this->y, this->width.integer(), this->height.integer());
 }
 
 void Floor::setImage(bn::regular_bg_ptr _sprite) {
@@ -33,4 +32,11 @@ void Floor::disableBlending() {
 
 void Floor::setRenderPriority(int _order) {
     this->sprite->set_priority(_order);
+}
+
+void Floor::showHitbox() {
+    this->hitbox = DebugBox(this->x, this->y, this->width.integer(), this->height.integer());
+}
+void Floor::hideHitbox() {
+    this->hitbox.reset();
 }
