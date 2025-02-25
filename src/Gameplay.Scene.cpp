@@ -1,6 +1,8 @@
 #include "Scenes/Gameplay.Scene.hpp"
 #include "bn_log.h"
 
+bn::random random;
+
 Scene::Gameplay::Gameplay() {
     MainMenuVars userOptions;
     userOptions.birdType = Enum::BirdType::FLAPPY_BIRD;
@@ -26,6 +28,7 @@ void Scene::Gameplay::init(MainMenuVars& options) {
     this->score = new Score(-7, -60);
     this->score->useBigFont();
     this->score->setValue(1001);
+    this->randomGenerator = &random;
 }
 
 void Scene::Gameplay::load() {}
@@ -100,8 +103,9 @@ void Scene::Gameplay::initializePipes(Enum::PipeType _selectedType) {
     constexpr int PIPE_WALLS_ON_SCRREN = 4;
 
     bn::fixed pipeX = -40;
-    bn::fixed pipeY = -80;
+    bn::fixed pipeY;
     for(int index=0; index < PIPE_WALLS_ON_SCRREN; index++) {
+        pipeY = random.get_int(-124, -48);
         PipeWall* pipeWall = new PipeWall;
         this->addToPipeList(pipeWall);
         switch(_selectedType) {

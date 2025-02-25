@@ -2,7 +2,6 @@
 #include "bn_log.h"
 
 bn::fixed getReadyTransparencyValue = 1;
-bn::random randomGenerator;
 
 _Gameplay::InGame::InGame(Scene::Gameplay* _parentState) {
     this->parentState = _parentState;
@@ -38,8 +37,8 @@ void _Gameplay::InGame::update() {
             int _neighborPipeIndex = index - 1;
             if(_neighborPipeIndex < 0) _neighborPipeIndex = this->parentState->pipeLastItemIndex;
             PipeWall* _neighborPipe = this->parentState->pipes.at(_neighborPipeIndex);
-            randomGenerator.update();
-            pipeWall->y = randomGenerator.get_int(-124, -48);
+            this->parentState->randomGenerator->update();
+            pipeWall->y = this->parentState->randomGenerator->get_int(-124, -48);
             pipeWall->x = _neighborPipe->x + _neighborPipe->topPipe->getWidth() + this->parentState->GAP_SIZE_BTW_PIPES;
             pipeWall->scored = false;
         }
