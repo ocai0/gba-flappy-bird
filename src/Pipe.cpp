@@ -12,7 +12,6 @@ Pipe::Pipe(bn::fixed _x, bn::fixed _y) {
     this->height = 56;
     this->setOffsetX(7);
     this->setOffsetY(8);
-    // this->showHitbox();
     this->setSprite(&bn::sprite_items::common_pipe);
 }
 

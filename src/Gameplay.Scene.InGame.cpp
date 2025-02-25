@@ -10,7 +10,6 @@ _Gameplay::InGame::InGame(Scene::Gameplay* _parentState) {
 void _Gameplay::InGame::load() {
     this->parentState->score->update();
     this->parentState->score->show();
-    this->parentState->pipes[0]->topPipe->showHitbox();
 }
 
 void _Gameplay::InGame::update() {
