@@ -27,7 +27,7 @@ void Scene::Gameplay::init(MainMenuVars& options) {
     this->player->watchObstacles(this->obstacles);
     this->score = new Score(-7, -60);
     this->score->useBigFont();
-    this->score->setValue(1001);
+    this->score->setValue(0);
     this->randomGenerator = &random;
 }
 
@@ -102,7 +102,7 @@ int Scene::Gameplay::addToPipeList(PipeWall* _pipe) {
 void Scene::Gameplay::initializePipes(Enum::PipeType _selectedType) {
     constexpr int PIPE_WALLS_ON_SCRREN = 4;
 
-    bn::fixed pipeX = -40;
+    bn::fixed pipeX = 160;
     bn::fixed pipeY;
     for(int index=0; index < PIPE_WALLS_ON_SCRREN; index++) {
         pipeY = random.get_int(-124, -48);
