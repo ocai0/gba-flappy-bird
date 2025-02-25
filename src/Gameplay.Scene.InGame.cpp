@@ -9,6 +9,7 @@ _Gameplay::InGame::InGame(Scene::Gameplay* _parentState) {
 void _Gameplay::InGame::load() {
     this->parentState->score->update();
     this->parentState->score->show();
+    this->parentState->pipes[0]->topPipe->showHitbox();
 }
 
 void _Gameplay::InGame::update() {
@@ -22,6 +23,24 @@ void _Gameplay::InGame::update() {
         }
     }
     this->parentState->player->update();
+    for(int index=this->parentState->pipeLastItemIndex; index >= 0 ; index--) {
+        PipeWall* pipeWall = this->parentState->pipes.at(index);
+        pipeWall->x -= bn::fixed(.5);
+        if(!pipeWall->scored && this->parentState->player->x > pipeWall->x) {
+            bn::sound_items::sfx_point.play();
+            int currentScore = this->parentState->score->getValue();
+            this->parentState->score->setValue(currentScore + 1);
+            pipeWall->scored = true;
+        }
+        // HALF_SCREEN + PIPE_WIDTH
+        if(pipeWall->x <= -120 - 32) {
+            int _neighborPipeIndex = index - 1;
+            if(_neighborPipeIndex < 0) _neighborPipeIndex = this->parentState->pipeLastItemIndex;
+            pipeWall->x = this->parentState->pipes.at(_neighborPipeIndex)->x + 96;
+            pipeWall->scored = false;
+        }
+    }
+
     if(bn::keypad::start_pressed()) {
         this->parentState->stateMachine->set(new _Gameplay::Paused(this->parentState));
     }
@@ -40,6 +59,12 @@ void _Gameplay::InGame::update() {
 
 void _Gameplay::InGame::render() {
     this->parentState->player->render();
+    for(PipeWall* pipeWall : this->parentState->pipes) {
+        if(pipeWall == nullptr) continue;
+        pipeWall->topPipe->setX(pipeWall->x);
+        pipeWall->bottomPipe->setX(pipeWall->x);
+    }
+    this->parentState->score->update();
 }
 
 void _Gameplay::InGame::leave() {
