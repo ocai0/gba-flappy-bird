@@ -98,11 +98,9 @@ int Scene::Gameplay::addToPipeList(PipeWall* _pipe) {
 
 void Scene::Gameplay::initializePipes(Enum::PipeType _selectedType) {
     constexpr int PIPE_WALLS_ON_SCRREN = 4;
-    constexpr int GAP_BTW_PIPES = 96;
-    constexpr int GAP_SIZE = 40;
 
-    int pipeX = -40;
-    int pipeY = -80;
+    bn::fixed pipeX = -40;
+    bn::fixed pipeY = -80;
     for(int index=0; index < PIPE_WALLS_ON_SCRREN; index++) {
         PipeWall* pipeWall = new PipeWall;
         this->addToPipeList(pipeWall);
@@ -136,18 +134,21 @@ void Scene::Gameplay::initializePipes(Enum::PipeType _selectedType) {
             ;
         pipeWall->bottomPipe
             ->setX(pipeX)
-            ->setY(pipeY + pipeWall->topPipe->getHeight() + GAP_SIZE)
+            ->setY(pipeY + pipeWall->topPipe->getHeight() + this->GAP_SIZE)
             ->setCamera(this->camera)
             ->setRenderPriority(2)
-            // ->setPalette(bn::sprite_palette_items::blue_pipe.create_palette())
             ;
+        if(index % 2 == 0) {
+            pipeWall->topPipe->setPalette(bn::sprite_palette_items::blue_pipe.create_palette());
+            pipeWall->bottomPipe->setPalette(bn::sprite_palette_items::blue_pipe.create_palette());
+        }
         pipeWall->x = pipeX;
         pipeWall->y = pipeY;
 
         // this->addToObstacleList(pipeWall->topPipe);
         // this->addToObstacleList(pipeWall->bottomPipe);
 
-        pipeX += GAP_BTW_PIPES;
+        pipeX += pipeWall->topPipe->getWidth() + this->GAP_SIZE_BTW_PIPES;
     }
 }
 
@@ -171,7 +172,7 @@ void Scene::Gameplay::initializePlayer(Enum::BirdType _selectedType) {
     }
     
     this->player
-        ->showHitbox()
+        // ->showHitbox()
         ->setCamera(this->camera)
         ->setWeight(.5)
         ->setRenderPriority(2)
