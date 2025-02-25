@@ -3,6 +3,7 @@
 
 _Gameplay::GameOver::GameOver(Scene::Gameplay* _parentState) {
     this->parentState = _parentState;
+    this->sram = &SramData::getInstance();
 }
 
 void _Gameplay::GameOver::load() {
@@ -10,6 +11,13 @@ void _Gameplay::GameOver::load() {
     this->parentState->score->hide();
     this->parentState->enableBlendingOnAllActors();
     bn::blending::set_fade_color(bn::blending::fade_color_type::WHITE);
+    int currentScore = this->parentState->score->getValue();
+    int highScore = this->sram->getHighScore();
+    if(currentScore > highScore) {
+        this->sram->setHighScore(currentScore);
+        this->sram->write();
+        this->newHighSocre = true;
+    }
 }
 
 void _Gameplay::GameOver::update() {
@@ -24,9 +32,9 @@ void _Gameplay::GameOver::update() {
         }
     }
     else {
-    // if player is dead
     if(this->parentState->player->getStateName() == (bn::string<32>) "DeadState") {
         // show scoreboard
+        // this->scoreboard = new ScoreBoard();
         // let user control
     }
     }

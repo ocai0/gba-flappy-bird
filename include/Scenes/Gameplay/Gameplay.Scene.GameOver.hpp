@@ -1,5 +1,6 @@
 #ifndef GAMEPLAY_GAME_OVER_H_
 #define GAMEPLAY_GAME_OVER_H_
+    #include "SramData.hpp"
     #include "Commons/AbstractState.hpp"
     #include "Scenes/Gameplay.Scene.hpp"
 
@@ -10,6 +11,8 @@
             bn::fixed fadeIntensity = .1;
             const bn::fixed step = .08;
             int fadeMultiplierSign = 1;
+            SramData* sram;
+            bool newHighSocre = false;
             public:
                 Scene::Gameplay* parentState;
                 GameOver(Scene::Gameplay*);
