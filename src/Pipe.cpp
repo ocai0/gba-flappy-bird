@@ -103,6 +103,10 @@ bn::fixed Pipe::getHeight() {
     return this->height;
 }
 
+bn::fixed Pipe::getWidth() {
+    return this->width;
+}
+
 Pipe* Pipe::addBody() {
     // add pipeBody w/ pipe palette
     // update height

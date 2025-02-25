@@ -27,6 +27,7 @@
             Pipe* setXSpeed(bn::fixed);
             Pipe* setSprite(const bn::sprite_item*);
             bn::fixed getHeight();
+            bn::fixed getWidth();
             Pipe* showHitbox();
             Pipe* hideHitbox();
             Pipe* setPalette(bn::sprite_palette_ptr);
