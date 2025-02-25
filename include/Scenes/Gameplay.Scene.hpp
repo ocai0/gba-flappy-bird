@@ -43,6 +43,8 @@
                 MainMenuVars* mainMenuVars;
                 FlappyBird* player;
                 Floor* floor;
+                const int GAP_SIZE_BTW_PIPES = 80;
+                const int GAP_SIZE = 40;
                 Background* background;
                 bn::array<PipeWall*, 6> pipes;
                 int pipeLastItemIndex = -1;
