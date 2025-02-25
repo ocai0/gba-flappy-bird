@@ -149,8 +149,8 @@ void Scene::Gameplay::initializePipes(Enum::PipeType _selectedType) {
         pipeWall->x = pipeX;
         pipeWall->y = pipeY;
 
-        // this->addToObstacleList(pipeWall->topPipe);
-        // this->addToObstacleList(pipeWall->bottomPipe);
+        this->addToObstacleList(pipeWall->topPipe);
+        this->addToObstacleList(pipeWall->bottomPipe);
 
         pipeX += pipeWall->topPipe->getWidth() + this->GAP_SIZE_BTW_PIPES;
     }
