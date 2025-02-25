@@ -1,6 +1,8 @@
 #include "Scenes/Gameplay/Gameplay.Scene.InGame.hpp"
+#include "bn_log.h"
 
 bn::fixed getReadyTransparencyValue = 1;
+bn::random randomGenerator;
 
 _Gameplay::InGame::InGame(Scene::Gameplay* _parentState) {
     this->parentState = _parentState;
@@ -32,11 +34,13 @@ void _Gameplay::InGame::update() {
             this->parentState->score->setValue(currentScore + 1);
             pipeWall->scored = true;
         }
-        // HALF_SCREEN + PIPE_WIDTH
-        if(pipeWall->x <= -120 - 32) {
+        if(pipeWall->x <= -bn::display::width() / 2 - pipeWall->topPipe->getWidth()) {
             int _neighborPipeIndex = index - 1;
             if(_neighborPipeIndex < 0) _neighborPipeIndex = this->parentState->pipeLastItemIndex;
-            pipeWall->x = this->parentState->pipes.at(_neighborPipeIndex)->x + 96;
+            PipeWall* _neighborPipe = this->parentState->pipes.at(_neighborPipeIndex);
+            randomGenerator.update();
+            pipeWall->y = randomGenerator.get_int(-124, -48);
+            pipeWall->x = _neighborPipe->x + _neighborPipe->topPipe->getWidth() + this->parentState->GAP_SIZE_BTW_PIPES;
             pipeWall->scored = false;
         }
     }
@@ -63,6 +67,9 @@ void _Gameplay::InGame::render() {
         if(pipeWall == nullptr) continue;
         pipeWall->topPipe->setX(pipeWall->x);
         pipeWall->bottomPipe->setX(pipeWall->x);
+
+        pipeWall->topPipe->setY(pipeWall->y);
+        pipeWall->bottomPipe->setY(pipeWall->y + pipeWall->topPipe->getHeight() + this->parentState->GAP_SIZE);
     }
     this->parentState->score->update();
 }

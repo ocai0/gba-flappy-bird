@@ -1,5 +1,7 @@
 #ifndef GAMEPLAY_IN_GAME_H_
 #define GAMEPLAY_IN_GAME_H_
+    #include "bn_random.h"
+    
     #include "Commons/AbstractState.hpp"
     #include "Scenes/Gameplay.Scene.hpp"
     #include "Scenes/Gameplay/Gameplay.Scene.Paused.hpp"
