@@ -1,6 +1,7 @@
 #ifndef GEARS_LOGO_SCENE_H_
 #define GEARS_LOGO_SCENE_H_
     #include "bn_core.h"
+    #include "bn_bg_palette_ptr.h"
 
     #include "Commons/AbstractState.hpp"
     #include "Commons/StateMachine.hpp"
@@ -12,8 +13,10 @@
     namespace Scene {
         class GearsLogo : public AbstractState {
             bn::optional<bn::regular_bg_ptr> bg;
+            bn::optional<bn::bg_palette_ptr> bg_palette;
             StateMachine* sceneManager;
-            bn::fixed transparencyValue = 10;
+            bn::fixed fadeValue = -4;
+            bool fadeOutComplete = false;
             bool goToMainMenu = false;
             public:
                 GearsLogo(StateMachine*);
