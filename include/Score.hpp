@@ -29,7 +29,8 @@
             Score* fadeOut();
             Score* show();
             Score* hide();
+            Score* alignToTheRight();
+            Score* setPriority(int);
             void update();
-            void setPriority(int);
     };
 #endif

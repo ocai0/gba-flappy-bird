@@ -61,8 +61,13 @@ void Score::update() {
     this->textGenerator->generate(this->x, this->y, this->text, this->sprites);
 }
 
-void Score::setPriority(int priority) {
-    for(bn::sprite_ptr& letter : this->sprites) {
-        letter.set_bg_priority(priority);
-    }
+Score* Score::setPriority(int priority) {
+    this->textGenerator->set_bg_priority(priority);
+    this->textGenerator->set_z_order(priority);
+    return this;
+}
+
+Score* Score::alignToTheRight() {
+    if(this->textGenerator.has_value()) this->textGenerator->set_right_alignment();
+    return this;
 }
