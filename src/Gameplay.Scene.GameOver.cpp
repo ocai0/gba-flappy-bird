@@ -33,16 +33,20 @@ void _Gameplay::GameOver::update() {
     }
     else {
         if(this->parentState->player->getStateName() == (bn::string<32>) "DeadState") {
-            if(!this->scoreboard.has_value()) {
-                this->scoreboard = UI::ScoreBoard();
-                this->scoreboard->load();
-            }
-            if(this->scoreboard.has_value()) {
-                this->scoreboard->update();
-            }
+            if(!this->scoreboard.has_value()) this->initializeScoreBoard();
+            if(this->scoreboard.has_value()) this->scoreboard->update();
             // let user control
         }
     }
+}
+
+void _Gameplay::GameOver::initializeScoreBoard() {
+    this->scoreboard = UI::ScoreBoard();
+    this->scoreboard->load();
+    int currentScore = this->parentState->score->getValue();
+    int highScore = this->sram->getHighScore();
+    this->scoreboard->currentScore->setValue(currentScore);
+    this->scoreboard->highScore->setValue(highScore);
 }
 
 void _Gameplay::GameOver::render() {

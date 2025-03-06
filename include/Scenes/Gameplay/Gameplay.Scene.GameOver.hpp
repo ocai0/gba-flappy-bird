@@ -23,6 +23,7 @@
                 void update();
                 void render();
                 void leave();
+                void initializeScoreBoard();
         };
     }
 #endif
