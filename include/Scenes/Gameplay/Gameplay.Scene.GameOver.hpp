@@ -1,8 +1,10 @@
 #ifndef GAMEPLAY_GAME_OVER_H_
 #define GAMEPLAY_GAME_OVER_H_
+    #include "bn_optional.h"
     #include "SramData.hpp"
     #include "Commons/AbstractState.hpp"
     #include "Scenes/Gameplay.Scene.hpp"
+    #include "UI/ScoreBoard.hpp"
 
     namespace Scene { class Gameplay; }
     namespace _Gameplay {
@@ -13,6 +15,7 @@
             int fadeMultiplierSign = 1;
             SramData* sram;
             bool newHighSocre = false;
+            bn::optional<UI::ScoreBoard> scoreboard;
             public:
                 Scene::Gameplay* parentState;
                 GameOver(Scene::Gameplay*);

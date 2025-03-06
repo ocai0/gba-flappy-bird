@@ -32,16 +32,26 @@ void _Gameplay::GameOver::update() {
         }
     }
     else {
-    if(this->parentState->player->getStateName() == (bn::string<32>) "DeadState") {
-        // show scoreboard
-        // this->scoreboard = new ScoreBoard();
-        // let user control
-    }
+        if(this->parentState->player->getStateName() == (bn::string<32>) "DeadState") {
+            if(!this->scoreboard.has_value()) {
+                this->scoreboard = UI::ScoreBoard();
+                this->scoreboard->load();
+            }
+            if(this->scoreboard.has_value()) {
+                this->scoreboard->update();
+            }
+            // let user control
+        }
     }
 }
 
 void _Gameplay::GameOver::render() {
     this->parentState->player->render();
+    if(this->scoreboard.has_value()) {
+        this->scoreboard->render();
+    }
 }
 
-void _Gameplay::GameOver::leave() {}
+void _Gameplay::GameOver::leave() {
+    this->scoreboard.reset();
+}
