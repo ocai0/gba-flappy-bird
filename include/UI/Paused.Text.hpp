@@ -1,5 +1,5 @@
-#ifndef UI_ELEM_H_
-#define UI_ELEM_H_
+#ifndef UI_TEXT_PAUSED_H_
+#define UI_TEXT_PAUSED_H_
     #include "bn_core.h"
     #include "bn_optional.h"
     #include "bn_sprite_ptr.h"
