@@ -3,10 +3,12 @@
     #include "Commons/AbstractState.hpp"
     #include "Scenes/Gameplay.Scene.hpp"
     #include "Scenes/Gameplay/Gameplay.Scene.InGame.hpp"
+    #include "UI/Paused.Text.hpp"
 
     namespace Scene { class Gameplay; }
     namespace _Gameplay {
         class Paused: public AbstractState {
+            UI::Text::Paused* pausedText;
             public:
                 Scene::Gameplay* parentState;
                 Paused(Scene::Gameplay*);

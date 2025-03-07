@@ -4,7 +4,17 @@ _Gameplay::Paused::Paused(Scene::Gameplay* _parentState) {
     this->parentState = _parentState;
 }
 
-void _Gameplay::Paused::load() {}
+void _Gameplay::Paused::load() {
+    this->parentState->player->hide();
+    this->parentState->score->hide();
+    
+    for(PipeWall* pipeWall: this->parentState->pipes) {
+        pipeWall->topPipe->hide();
+        pipeWall->bottomPipe->hide();
+    }
+
+    this->pausedText = new UI::Text::Paused(-15, 2);
+}
 
 void _Gameplay::Paused::update() {
     if(bn::keypad::start_pressed()) {
@@ -14,5 +24,13 @@ void _Gameplay::Paused::update() {
 
 void _Gameplay::Paused::render() {}
 
-void _Gameplay::Paused::leave() {}
+void _Gameplay::Paused::leave() {
+    delete this->pausedText;
+    this->parentState->player->show();
+    this->parentState->score->show();
+    for(PipeWall* pipeWall: this->parentState->pipes) {
+        pipeWall->topPipe->show();
+        pipeWall->bottomPipe->show();
+    }
+}
 
