@@ -39,5 +39,7 @@
             void enableBlending();
             void disableBlending();
             Pipe* setRenderPriority(int);
+            Pipe* show();
+            Pipe* hide();
     };
 #endif

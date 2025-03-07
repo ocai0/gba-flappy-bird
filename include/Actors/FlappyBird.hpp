@@ -54,5 +54,7 @@
             void disableBlending();
             bn::string<32> getStateName();
             FlappyBird* setRenderPriority(int);
+            FlappyBird* show();
+            FlappyBird* hide();
     };
 #endif

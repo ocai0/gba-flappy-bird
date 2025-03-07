@@ -122,3 +122,12 @@ Pipe* Pipe::setRenderPriority(int _order) {
     this->sprite->set_z_order(_order);
     return this;
 }
+
+Pipe* Pipe::show() {
+    if(this->sprite.has_value()) this->sprite->set_visible(true);
+    return this;
+}
+Pipe* Pipe::hide() {
+    if(this->sprite.has_value()) this->sprite->set_visible(false);
+    return this;
+}

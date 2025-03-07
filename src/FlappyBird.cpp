@@ -94,6 +94,17 @@ bn::string<32> FlappyBird::getStateName() {
 }
 
 FlappyBird* FlappyBird::setRenderPriority(int _order) {
+    this->sprite->set_bg_priority(_order);
     this->sprite->set_z_order(_order);
+    return this;
+}
+
+FlappyBird* FlappyBird::hide() {
+    if(this->sprite.has_value()) this->sprite->set_visible(false);
+    return this;
+}
+
+FlappyBird* FlappyBird::show() {
+    if(this->sprite.has_value()) this->sprite->set_visible(true);
     return this;
 }
