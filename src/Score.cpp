@@ -1,5 +1,6 @@
 #include "Score.hpp"
 
+
 Score::Score(bn::fixed _x, bn::fixed _y) {
     this->setX(_x);
     this->setY(_y);
@@ -70,4 +71,8 @@ Score* Score::setPriority(int priority) {
 Score* Score::alignToTheRight() {
     if(this->textGenerator.has_value()) this->textGenerator->set_right_alignment();
     return this;
+}
+
+int Score::getSpriteCount() {
+    return this->text.size();
 }

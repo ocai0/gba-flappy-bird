@@ -31,6 +31,7 @@
             Score* hide();
             Score* alignToTheRight();
             Score* setPriority(int);
+            int getSpriteCount();
             void update();
     };
 #endif
