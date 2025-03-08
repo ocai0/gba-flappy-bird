@@ -3,7 +3,6 @@
 
 _Gameplay::GameOver::GameOver(Scene::Gameplay* _parentState) {
     this->parentState = _parentState;
-    this->sram = &SramData::getInstance();
 }
 
 void _Gameplay::GameOver::load() {
@@ -41,9 +40,7 @@ void _Gameplay::GameOver::initializeScoreBoard() {
     this->scoreboard = UI::ScoreBoard();
     this->scoreboard->load();
     int currentScore = this->parentState->score->getValue();
-    int highScore = this->sram->getHighScore();
     this->scoreboard->currentScore->setValue(currentScore);
-    this->scoreboard->highScore->setValue(highScore);
 }
 
 void _Gameplay::GameOver::render() {

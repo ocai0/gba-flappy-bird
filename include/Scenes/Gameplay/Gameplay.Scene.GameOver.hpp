@@ -2,7 +2,6 @@
 #define GAMEPLAY_GAME_OVER_H_
     #include "bn_optional.h"
     #include "bn_keypad.h"
-    #include "SramData.hpp"
     #include "Commons/AbstractState.hpp"
     #include "Scenes/Gameplay.Scene.hpp"
     #include "UI/ScoreBoard.hpp"
@@ -15,7 +14,6 @@
             bn::fixed fadeIntensity = .1;
             const bn::fixed step = .08;
             int fadeMultiplierSign = 1;
-            SramData* sram;
             bool newHighSocre = false;
             bn::optional<UI::ScoreBoard> scoreboard;
             UI::Text::GameOver* gameOverText;
