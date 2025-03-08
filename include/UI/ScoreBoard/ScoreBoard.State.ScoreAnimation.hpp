@@ -1,27 +1,26 @@
-#ifndef SCORE_BOARD_STATE_APPEAR_H_
-#define SCORE_BOARD_STATE_APPEAR_H_
+#ifndef SCORE_BOARD_STATE_SCORE_ANIMATION_H_
+#define SCORE_BOARD_STATE_SCORE_ANIMATION_H_
 
     #include "bn_optional.h"
     #include "UI/ScoreBoard.hpp"
     #include "Commons/AbstractState.hpp"
-    #include "UI/ScoreBoard/ScoreBoard.State.ScoreAnimation.hpp"
 
     namespace UI {
         class ScoreBoard;
     }
 
     namespace _ScoreBoard {
-        class Appear : public AbstractState {
-            int initalPosY = 370;
-            int finalPosY = 256;
-            bn::fixed y;
+        class ScoreAnimation : public AbstractState {
+            int tempCurrentScore = 0;
+            int tempHighScore = 0;
             public:
                 UI::ScoreBoard* scoreboard;
-                Appear(UI::ScoreBoard*);
+                ScoreAnimation(UI::ScoreBoard*);
                 void load();
                 void update();
                 void render();
                 void leave();
+                void showNewHighScoreFlag();
         };
     }
 #endif
