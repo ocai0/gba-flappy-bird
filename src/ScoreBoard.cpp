@@ -2,17 +2,18 @@
 #include "bn_log.h"
 
 UI::ScoreBoard::ScoreBoard() {
-    this->state = new StateMachine();
+    this->stateMachine = new StateMachine();
     this->sprite = bn::regular_bg_items::bg_score_board.create_bg_optional(this->x, this->y);
     this->sprite->set_priority(1);
     int scoreXPos = 44;
     this->currentScore = new Score(scoreXPos, -11);
     this->highScore = new Score(scoreXPos, 10);
+    this->currentScore->hide();
+    this->highScore->hide();
 }
 
 void UI::ScoreBoard::load() {
-    _ScoreBoard::Appear* _state = new _ScoreBoard::Appear(this);
-    this->state->set((AbstractState*) _state);
+    this->stateMachine->set(new _ScoreBoard::Appear(this));
     this->currentScore->useSmallFont()
         ->setPriority(1)
         ->alignToTheRight();
@@ -35,15 +36,11 @@ void UI::ScoreBoard::setY(bn::fixed _y) {
 }
 
 void UI::ScoreBoard::update() {
-    this->state->update();
+    this->stateMachine->update();
     if(this->currentScore != nullptr) this->currentScore->update();
     if(this->highScore != nullptr) this->highScore->update();
 }
 
 void UI::ScoreBoard::render() {
-    this->state->render();
-}
-
-void UI::ScoreBoard::showNewHighScoreFlag() {
-
+    this->stateMachine->render();
 }

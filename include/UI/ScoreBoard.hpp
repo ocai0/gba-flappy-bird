@@ -18,7 +18,7 @@
                 Score* highScore;
                 // Sprite* newHighScore;
                 // Medal* medal;
-                StateMachine* state;
+                StateMachine* stateMachine;
                 bn::fixed x = 0;
                 bn::fixed y = 370;
                 bn::fixed deltaX = 0;
