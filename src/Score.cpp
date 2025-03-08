@@ -26,16 +26,19 @@ int Score::getValue() {
 Score* Score::setValue(int _value) {
     this->value = _value;
     this->text = bn::to_string<4>(this->value);
+    this->render();
     return this;
 }
 
 Score* Score::setX(bn::fixed _x) {
     this->x = _x;
+    this->render();
     return this;
 }
 
 Score* Score::setY(bn::fixed _y) {
     this->y = _y;
+    this->render();
     return this;
 }
 
@@ -57,8 +60,9 @@ Score* Score::hide() {
     return this;
 }
 
-void Score::update() {
+void Score::render() {
     this->sprites.clear();
+    if(!this->textGenerator.has_value()) return;
     this->textGenerator->generate(this->x, this->y, this->text, this->sprites);
 }
 

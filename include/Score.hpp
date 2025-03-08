@@ -14,10 +14,10 @@
         bn::fixed x;
         bn::fixed y;
         bn::optional<bn::sprite_text_generator> textGenerator;
-        bn::vector<bn::sprite_ptr, 32> sprites;
         bn::string<4> text;
 
         public:
+            bn::vector<bn::sprite_ptr, 32> sprites;
             Score(bn::fixed, bn::fixed);
             int getValue();
             Score* setValue(int);
@@ -32,6 +32,6 @@
             Score* alignToTheRight();
             Score* setPriority(int);
             int getSpriteCount();
-            void update();
+            void render();
     };
 #endif
