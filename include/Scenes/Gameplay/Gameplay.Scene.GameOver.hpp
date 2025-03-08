@@ -7,18 +7,25 @@
     #include "UI/ScoreBoard.hpp"
     #include "UI/GameOver.Text.hpp"
     #include "UI/MainMenu.Button.hpp"
+    #include "UI/Restart.Button.hpp"
+    #include "Scenes/Gameplay/Gameplay.Scene.GetReady.hpp"
 
     namespace Scene { class Gameplay; }
     namespace _Gameplay {
+
+        enum UserOptions { RESTART_GAME, MAIN_MENU };
+
         class GameOver: public AbstractState {
             bool fadeComplete = false;
             bn::fixed fadeIntensity = .1;
             const bn::fixed step = .08;
             int fadeMultiplierSign = 1;
             bool newHighSocre = false;
-            bn::optional<UI::ScoreBoard> scoreboard;
+            UI::ScoreBoard* scoreboard;
             UI::Text::GameOver* gameOverText;
             UI::Button::MainMenu* mainMenuBtn;
+            UI::Button::Restart* restartBtn;
+            UserOptions option;
             public:
                 Scene::Gameplay* parentState;
                 GameOver(Scene::Gameplay*);

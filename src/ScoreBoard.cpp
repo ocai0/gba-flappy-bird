@@ -42,3 +42,8 @@ void UI::ScoreBoard::update() {
 void UI::ScoreBoard::render() {
     this->stateMachine->render();
 }
+
+UI::ScoreBoard::~ScoreBoard() {
+    delete this->currentScore;
+    delete this->highScore;
+}

@@ -25,33 +25,54 @@ void _Gameplay::GameOver::update() {
     }
     else {
         if(this->parentState->player->getStateName() == (bn::string<32>) "DeadState") {
-            if(!this->scoreboard.has_value()) this->initializeScoreBoard();
-            if(this->scoreboard.has_value()) this->scoreboard->update();
+            if(this->scoreboard == nullptr) this->initializeScoreBoard();
+            if(this->scoreboard != nullptr) this->scoreboard->update();
             if(this->gameOverText == nullptr && this->scoreboard->stateMachine->getStateName() == (bn::string<32>) "ScoreAnimation.Start") {
                 this->gameOverText = new UI::Text::GameOver(-34,-42);
             }
             if(this->scoreboard->stateMachine->getStateName() == (bn::string<32>) "ScoreAnimation.End") {
                 // let user control
-                // if(this->restartBtn == nullptr) this->restartBtn = new UI::RestartButton(0, 0);
+                int posX = -50;
+                int posY = 42;
+                if(this->restartBtn == nullptr) {
+                    this->restartBtn = new UI::Button::Restart(posX, posY);
+                    this->restartBtn->select();
+                    this->option = UserOptions::RESTART_GAME;
+                }
                 if(this->mainMenuBtn == nullptr) {
-                    this->mainMenuBtn = new UI::Button::MainMenu(10, 40);
+                    int paddingBtwBtns = 5;
+                    int sizeofRersizeBtn = 64;
+                    this->mainMenuBtn = new UI::Button::MainMenu(posX + paddingBtwBtns + sizeofRersizeBtn, posY);
                     this->mainMenuBtn->unselect();
                 }
 
                 if(bn::keypad::right_pressed()) {
+                    this->restartBtn->unselect();
                     this->mainMenuBtn->select();
+                    this->option = UserOptions::MAIN_MENU;
                 }
                 if(bn::keypad::left_pressed()) {
+                    this->restartBtn->select();
                     this->mainMenuBtn->unselect();
+                    this->option = UserOptions::RESTART_GAME;
+                }
+                if(bn::keypad::a_pressed()) {
+                    switch(this->option) {
+                        case UserOptions::RESTART_GAME:
+                        default:
+                            this->parentState->stateMachine->set(new _Gameplay::GetReady(this->parentState));
+                            break;
+                        case UserOptions::MAIN_MENU:
+                            break;
+                    }
                 }
             }
-
         }
     }
 }
 
 void _Gameplay::GameOver::initializeScoreBoard() {
-    this->scoreboard = UI::ScoreBoard();
+    this->scoreboard = new UI::ScoreBoard();
     this->scoreboard->load();
     int currentScore = this->parentState->score->getValue();
     this->scoreboard->currentScore->setValue(currentScore);
@@ -59,13 +80,14 @@ void _Gameplay::GameOver::initializeScoreBoard() {
 
 void _Gameplay::GameOver::render() {
     this->parentState->player->render();
-    if(this->scoreboard.has_value()) {
+    if(this->scoreboard != nullptr) {
         this->scoreboard->render();
     }
 }
 
 void _Gameplay::GameOver::leave() {
-    this->scoreboard.reset();
-    // this->gameOverText.~gameOverText();
-    this->gameOverText = nullptr;
+    delete this->scoreboard;
+    delete this->gameOverText;
+    delete this->mainMenuBtn;
+    delete this->restartBtn;
 }

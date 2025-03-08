@@ -16,14 +16,13 @@
                 bn::optional<bn::regular_bg_ptr> sprite;
                 Score* currentScore;
                 Score* highScore;
-                // Sprite* newHighScore;
-                // Medal* medal;
                 StateMachine* stateMachine;
                 bn::fixed x = 0;
                 bn::fixed y = 370;
                 bn::fixed deltaX = 0;
                 bn::fixed deltaY = 0;
                 ScoreBoard();
+                ~ScoreBoard();
                 void setX(bn::fixed);
                 void setY(bn::fixed);
                 void load();

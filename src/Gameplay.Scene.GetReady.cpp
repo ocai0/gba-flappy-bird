@@ -5,7 +5,8 @@ _Gameplay::GetReady::GetReady(Scene::Gameplay* _parentState) {
 }
 
 void _Gameplay::GetReady::load() {
-
+    this->parentState->player->setX(-80);
+    this->parentState->player->setY(0);
 }
 
 void _Gameplay::GetReady::update() {
