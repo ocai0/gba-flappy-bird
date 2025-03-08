@@ -1,10 +1,12 @@
 #ifndef GAMEPLAY_GAME_OVER_H_
 #define GAMEPLAY_GAME_OVER_H_
     #include "bn_optional.h"
+    #include "bn_keypad.h"
     #include "SramData.hpp"
     #include "Commons/AbstractState.hpp"
     #include "Scenes/Gameplay.Scene.hpp"
     #include "UI/ScoreBoard.hpp"
+    #include "UI/GameOver.Text.hpp"
 
     namespace Scene { class Gameplay; }
     namespace _Gameplay {
@@ -16,6 +18,7 @@
             SramData* sram;
             bool newHighSocre = false;
             bn::optional<UI::ScoreBoard> scoreboard;
+            UI::Text::GameOver* gameOverText;
             public:
                 Scene::Gameplay* parentState;
                 GameOver(Scene::Gameplay*);

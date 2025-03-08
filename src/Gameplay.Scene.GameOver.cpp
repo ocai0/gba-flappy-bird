@@ -11,13 +11,6 @@ void _Gameplay::GameOver::load() {
     this->parentState->score->hide();
     this->parentState->enableBlendingOnAllActors();
     bn::blending::set_fade_color(bn::blending::fade_color_type::WHITE);
-    int currentScore = this->parentState->score->getValue();
-    int highScore = this->sram->getHighScore();
-    if(currentScore > highScore) {
-        this->sram->setHighScore(currentScore);
-        this->sram->write();
-        this->newHighSocre = true;
-    }
 }
 
 void _Gameplay::GameOver::update() {
@@ -35,6 +28,10 @@ void _Gameplay::GameOver::update() {
         if(this->parentState->player->getStateName() == (bn::string<32>) "DeadState") {
             if(!this->scoreboard.has_value()) this->initializeScoreBoard();
             if(this->scoreboard.has_value()) this->scoreboard->update();
+            if(this->gameOverText == nullptr && this->scoreboard->stateMachine->getStateName() == (bn::string<32>) "ScoreAnimation.Start") {
+                this->gameOverText = new UI::Text::GameOver(-34,-42);
+            }
+
             // let user control
         }
     }
@@ -58,4 +55,6 @@ void _Gameplay::GameOver::render() {
 
 void _Gameplay::GameOver::leave() {
     this->scoreboard.reset();
+    // this->gameOverText.~gameOverText();
+    this->gameOverText = nullptr;
 }
