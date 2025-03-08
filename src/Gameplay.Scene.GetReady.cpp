@@ -24,6 +24,7 @@ void _Gameplay::GetReady::update() {
 
 void _Gameplay::GetReady::render() {
     this->parentState->player->render();
+    this->parentState->score->hide();
 }
 
 void _Gameplay::GetReady::leave() {}

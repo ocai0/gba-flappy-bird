@@ -26,8 +26,11 @@ void Scene::Gameplay::init(MainMenuVars& options) {
 
     this->player->watchObstacles(this->obstacles);
     this->score = new Score(-7, -60);
-    this->score->useBigFont();
-    this->score->setValue(0);
+    this->score
+        ->useBigFont()
+        ->hide()
+        ->setValue(0)
+        ;
     this->randomGenerator = &random;
 }
 
