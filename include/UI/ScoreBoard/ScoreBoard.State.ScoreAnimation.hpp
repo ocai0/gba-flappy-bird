@@ -5,6 +5,7 @@
     #include "UI/ScoreBoard.hpp"
     #include "SramData.hpp"
     #include "UI/NewFlag.hpp"
+    #include "UI/Medal.hpp"
     #include "Commons/AbstractState.hpp"
 
     namespace UI {
@@ -12,6 +13,9 @@
     }
 
     namespace _ScoreBoard {
+        constexpr int NEW_FLAG_SPRITE_SIZE_HALVED = 8;
+        constexpr int PADDING_VALUE = 4;
+
         class ScoreAnimation : public AbstractState {
             int tempCurrentScore = 0;
             int tempHighScore = 0;
@@ -20,6 +24,7 @@
             public:
                 UI::ScoreBoard* scoreboard;
                 UI::NewFlag* newFlag;
+                UI::Medal* medal;
                 ScoreAnimation(UI::ScoreBoard*);
                 void load();
                 void update();
