@@ -6,6 +6,7 @@
     #include "Scenes/Gameplay.Scene.hpp"
     #include "UI/ScoreBoard.hpp"
     #include "UI/GameOver.Text.hpp"
+    #include "UI/MainMenu.Button.hpp"
 
     namespace Scene { class Gameplay; }
     namespace _Gameplay {
@@ -17,6 +18,7 @@
             bool newHighSocre = false;
             bn::optional<UI::ScoreBoard> scoreboard;
             UI::Text::GameOver* gameOverText;
+            UI::Button::MainMenu* mainMenuBtn;
             public:
                 Scene::Gameplay* parentState;
                 GameOver(Scene::Gameplay*);

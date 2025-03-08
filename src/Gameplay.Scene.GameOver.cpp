@@ -30,8 +30,22 @@ void _Gameplay::GameOver::update() {
             if(this->gameOverText == nullptr && this->scoreboard->stateMachine->getStateName() == (bn::string<32>) "ScoreAnimation.Start") {
                 this->gameOverText = new UI::Text::GameOver(-34,-42);
             }
+            if(this->scoreboard->stateMachine->getStateName() == (bn::string<32>) "ScoreAnimation.End") {
+                // let user control
+                // if(this->restartBtn == nullptr) this->restartBtn = new UI::RestartButton(0, 0);
+                if(this->mainMenuBtn == nullptr) {
+                    this->mainMenuBtn = new UI::Button::MainMenu(10, 40);
+                    this->mainMenuBtn->unselect();
+                }
 
-            // let user control
+                if(bn::keypad::right_pressed()) {
+                    this->mainMenuBtn->select();
+                }
+                if(bn::keypad::left_pressed()) {
+                    this->mainMenuBtn->unselect();
+                }
+            }
+
         }
     }
 }
