@@ -37,8 +37,6 @@ void UI::ScoreBoard::setY(bn::fixed _y) {
 
 void UI::ScoreBoard::update() {
     this->stateMachine->update();
-    if(this->currentScore != nullptr) this->currentScore->update();
-    if(this->highScore != nullptr) this->highScore->update();
 }
 
 void UI::ScoreBoard::render() {

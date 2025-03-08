@@ -1,5 +1,4 @@
 #include "Scenes/Gameplay/Gameplay.Scene.InGame.hpp"
-#include "bn_log.h"
 
 bn::fixed getReadyTransparencyValue = 1;
 
@@ -8,7 +7,6 @@ _Gameplay::InGame::InGame(Scene::Gameplay* _parentState) {
 }
 
 void _Gameplay::InGame::load() {
-    this->parentState->score->update();
     this->parentState->score->show();
 }
 
@@ -73,7 +71,6 @@ void _Gameplay::InGame::render() {
         pipeWall->topPipe->setY(pipeWall->y);
         pipeWall->bottomPipe->setY(pipeWall->y + pipeWall->topPipe->getHeight() + this->parentState->GAP_SIZE);
     }
-    this->parentState->score->update();
 }
 
 void _Gameplay::InGame::leave() {
