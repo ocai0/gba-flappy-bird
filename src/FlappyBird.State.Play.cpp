@@ -38,6 +38,9 @@ void _FlappyBird::PlayState::update() {
             if(instanceName == ((bn::string<32>) "PIPE")) {
                 this->actor->stateMachine->set(new _FlappyBird::FallState(this->actor));
             }
+            if(instanceName == ((bn::string<32>) "FLOOR")) {
+                this->actor->stateMachine->set(new _FlappyBird::DeadState(this->actor));
+            }
         }
     }
     this->actor->calculateRotation();

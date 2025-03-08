@@ -57,6 +57,10 @@ void _Gameplay::InGame::update() {
     if(this->parentState->player->getStateName() == (bn::string<32>) "FallState") {
         this->parentState->stateMachine->set(new _Gameplay::GameOver(this->parentState));
     }
+    if(this->parentState->player->getStateName() == (bn::string<32>) "DeadState") {
+        bn::sound_items::sfx_hit.play();
+        this->parentState->stateMachine->set(new _Gameplay::GameOver(this->parentState));
+    }
 }
 
 void _Gameplay::InGame::render() {
