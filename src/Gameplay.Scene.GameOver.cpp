@@ -1,5 +1,5 @@
 #include "Scenes/Gameplay/Gameplay.Scene.GameOver.hpp"
-#include "bn_log.h"
+
 
 _Gameplay::GameOver::GameOver(Scene::Gameplay* _gameplayScene) {
     this->gameplayScene = _gameplayScene;
@@ -90,4 +90,19 @@ void _Gameplay::GameOver::leave() {
     delete this->gameOverText;
     delete this->mainMenuBtn;
     delete this->restartBtn;
+    // this->clearOutsideResources();
+}
+
+void _Gameplay::GameOver::clearOutsideResources() {
+    delete this->gameplayScene->mainMenuVars;
+    delete this->gameplayScene->player;
+    delete this->gameplayScene->floor;
+    delete this->gameplayScene->background;
+    this->gameplayScene->getReadyBg.reset();
+    this->gameplayScene->camera.reset();
+    this->gameplayScene->window.reset();
+    delete this->gameplayScene->score;
+    delete this->gameplayScene->stateMachine;
+    delete this->gameplayScene->randomGenerator;
+    bn::core::update();
 }
