@@ -32,15 +32,15 @@
                 int obstacleLastItemIndex = -1;
                 int pipeLastItemIndex = -1;
                 
-                Floor* floor;
-                Score* score;
-                FlappyBird* player;
-                Background* background;
-                MainMenuVars* mainMenuVars;
-                StateMachine* stateMachine;
-                StateMachine* sceneManager;
+                Floor* floor = nullptr;
+                Score* score = nullptr;
+                FlappyBird* player = nullptr;
+                Background* background = nullptr;
+                MainMenuVars* mainMenuVars = nullptr;
+                StateMachine* stateMachine = nullptr;
+                StateMachine* sceneManager = nullptr;
 
-                bn::random* randomGenerator;
+                bn::random* randomGenerator = nullptr;
                 bn::array<PipeWall*, 6> pipes;
                 bn::array<Obstacle*, 15> obstacles;
                 bn::optional<bn::regular_bg_ptr> getReadyBg;
