@@ -9,8 +9,8 @@ void StateMachine::set(AbstractState* newState, bool forceReset) {
 }
 void StateMachine::update() {
     if(this->nextState != nullptr || this->forceStateReset) {
-        if(this->currentState) this->currentState->leave();
-        (this->nextState)->load();
+        if(this->currentState != nullptr) this->currentState->leave();
+        this->nextState->load();
         this->currentState = this->nextState;
 
         this->nextState = nullptr;
