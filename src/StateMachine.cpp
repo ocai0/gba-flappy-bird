@@ -21,7 +21,7 @@ void StateMachine::update() {
 }
 
 void StateMachine::render() {
-    if(this->currentState) this->currentState->render();
+    if(this->currentState != nullptr) this->currentState->render();
 }
 
 bn::string<32> StateMachine::getStateName() {
