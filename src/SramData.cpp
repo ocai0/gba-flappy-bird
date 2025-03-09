@@ -1,5 +1,5 @@
 #include "SramData.hpp"
-#include "bn_log.h"
+
 
 SramData& SramData::getInstance() {
     static SramData instance;
@@ -20,7 +20,6 @@ void SramData::load() {
 void SramData::write() {
     _SramData::data savedData;
     savedData.highScore = this->highScore;
-    BN_LOG("savedData.highScore", savedData.highScore);
     bn::sram::write(savedData);
 }
 

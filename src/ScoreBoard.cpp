@@ -1,5 +1,5 @@
 #include "UI/ScoreBoard.hpp"
-#include "bn_log.h"
+
 
 UI::ScoreBoard::ScoreBoard() {
     this->stateMachine = new StateMachine();

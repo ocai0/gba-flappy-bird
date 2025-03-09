@@ -1,5 +1,5 @@
 #include "Actors/FlappyBird/FlappyBird.State.Idle.hpp"
-#include "bn_log.h"
+
 
 _FlappyBird::IdleState::IdleState(FlappyBird* _actor) {
     this->actor = _actor;

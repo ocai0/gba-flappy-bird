@@ -1,5 +1,5 @@
 #include "Actors/FlappyBird.hpp"
-#include "bn_log.h"
+
 
 FlappyBird::FlappyBird(bn::fixed _x, bn::fixed _y) {
     this->setSprite(bn::sprite_items::common_bird.create_sprite(0, 0));
