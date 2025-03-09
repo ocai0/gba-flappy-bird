@@ -2,14 +2,14 @@
 #include "bn_log.h"
 
 Scene::Gameplay::Gameplay(StateMachine* _sceneManager) {
+    this->setName("Scene::Gameplay");
     this->sceneManager = _sceneManager;
     this->stateMachine = new StateMachine();
 }
 
 void Scene::Gameplay::load() {
     this->camera = bn::camera_ptr::create(0, 0);
-    bn::random random;
-    this->randomGenerator = &random;
+    this->randomGenerator = new bn::random();
     this->stateMachine->set(new _Gameplay::GetReady(this));
 }
 
