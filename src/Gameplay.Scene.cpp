@@ -3,7 +3,8 @@
 
 bn::random random;
 
-Scene::Gameplay::Gameplay() {
+Scene::Gameplay::Gameplay(StateMachine* _sceneManager) {
+    this->sceneManager = _sceneManager;
     MainMenuVars userOptions;
     userOptions.birdType = Enum::BirdType::FLAPPY_BIRD;
     userOptions.pipeType = Enum::PipeType::CITY;
@@ -44,7 +45,22 @@ void Scene::Gameplay::render() {
     this->stateMachine->render();
 }
 
-void Scene::Gameplay::leave() {}
+void Scene::Gameplay::leave() {
+    BN_LOG("Scene::Gameplay::leave");
+    delete this->mainMenuVars;
+    delete this->player;
+    delete this->floor;
+    delete this->background;
+    // this->pipes;
+    // this->obstacles;
+    this->getReadyBg.reset();
+    this->camera.reset();
+    this->window.reset();
+    delete this->score;
+    delete this->stateMachine;
+    delete this->randomGenerator;
+    bn::core::update();
+}
 
 void Scene::Gameplay::enableBlendingOnAllActors() {
     this->player->enableBlending();

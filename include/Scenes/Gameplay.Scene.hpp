@@ -55,9 +55,10 @@
                 bn::optional<bn::window> window;
                 Score* score;
                 StateMachine* stateMachine;
+                StateMachine* sceneManager;
                 bn::random* randomGenerator;
                 void init(MainMenuVars&);
-                Gameplay();
+                Gameplay(StateMachine*);
                 Gameplay(MainMenuVars&);
                 void load();
                 void update();
