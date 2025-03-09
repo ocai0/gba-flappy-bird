@@ -9,6 +9,7 @@
         bn::optional<bn::regular_bg_ptr> sprite;
         bn::optional<bn::camera_ptr> camera;
         public:
+            ~Background();
             Background* setImage(bn::regular_bg_ptr);
             void update();
             Background* setCamera(bn::optional<bn::camera_ptr>);

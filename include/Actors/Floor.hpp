@@ -12,6 +12,7 @@
         bn::optional<bn::regular_bg_ptr> sprite;
         public:
             Floor();
+            ~Floor();
             void setImage(bn::regular_bg_ptr);
             void update();
             void setCamera(bn::optional<bn::camera_ptr>);

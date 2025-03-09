@@ -40,3 +40,7 @@ void Floor::showHitbox() {
 void Floor::hideHitbox() {
     this->hitbox.reset();
 }
+
+Floor::~Floor() {
+    this->sprite->~regular_bg_ptr();
+}

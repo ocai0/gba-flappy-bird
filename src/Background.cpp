@@ -1,5 +1,6 @@
 #include "Background.hpp"
 
+
 Background* Background::setImage(bn::regular_bg_ptr _sprite) {
     this->sprite = _sprite;
     return this;
@@ -28,4 +29,8 @@ Background* Background::disableBlending() {
 Background* Background::setRenderPriority(int _order) {
     this->sprite->set_priority(_order);
     return this;
+}
+
+Background::~Background() {
+    this->sprite->~regular_bg_ptr();
 }
