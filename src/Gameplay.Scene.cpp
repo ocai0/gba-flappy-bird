@@ -1,24 +1,16 @@
 #include "Scenes/Gameplay.Scene.hpp"
-
+#include "bn_log.h"
 
 Scene::Gameplay::Gameplay(StateMachine* _sceneManager) {
     this->sceneManager = _sceneManager;
+    this->stateMachine = new StateMachine();
 }
 
 void Scene::Gameplay::load() {
-    this->stateMachine = new StateMachine();
-    this->stateMachine->set(new _Gameplay::GetReady(this));
     this->camera = bn::camera_ptr::create(0, 0);
-
-    this->player->watchObstacles(this->obstacles);
-    this->score = new Score(-7, -60);
-    this->score
-        ->useBigFont()
-        ->hide()
-        ->setValue(0)
-        ;
     bn::random random;
     this->randomGenerator = &random;
+    this->stateMachine->set(new _Gameplay::GetReady(this));
 }
 
 void Scene::Gameplay::update() {

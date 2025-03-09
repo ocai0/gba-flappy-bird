@@ -6,19 +6,23 @@ _Gameplay::GetReady::GetReady(Scene::Gameplay* _gameplayScene) {
 }
 
 void _Gameplay::GetReady::load() {
-    this->gameplayScene->player->setX(-80);
-    this->gameplayScene->player->setY(0);
     MainMenuVars userOptions;
     userOptions.birdType = Enum::BirdType::FLAPPY_BIRD;
     userOptions.pipeType = Enum::PipeType::CITY;
+    this->gameplayScene->score = new Score(-7, -60);
+    this->gameplayScene->score
+        ->useBigFont()
+        ->hide()
+        ->setValue(0)
+        ;
     this->initializeFloor(userOptions.backgroundType);
     this->initializePlayer(userOptions.birdType);
     this->initializePipes(userOptions.backgroundType);
     this->initializeBackground(userOptions.backgroundType);
+    this->gameplayScene->player->watchObstacles(this->gameplayScene->obstacles);
 }
 
 void _Gameplay::GetReady::update() {
-    BN_LOG("here");
     this->gameplayScene->getReadyBg = bn::regular_bg_items::bg_get_ready.create_bg(0, -10);
     this->gameplayScene->getReadyBg->set_priority(1);
     this->gameplayScene->getReadyBg->set_blending_enabled(true);
