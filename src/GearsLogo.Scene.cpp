@@ -31,13 +31,7 @@ void Scene::GearsLogo::update() {
     }
     
     if(this->goToMainMenu) {
-        MainMenuVars userOptions;
-        userOptions.birdType = Enum::BirdType::ROBOT_BIRD;
-        userOptions.backgroundType = Enum::BackgroundType::CITY;
-        userOptions.pipeType = Enum::BackgroundType::CITY;
-
-        AbstractState* scene = new Scene::Gameplay(userOptions);
-        this->sceneManager->set(scene);
+        this->sceneManager->set(new Scene::Gameplay(this->sceneManager));
     }
 }
 
@@ -47,4 +41,5 @@ void Scene::GearsLogo::render() {
 void Scene::GearsLogo::leave() {
     this->bg.reset();
     bn::blending::set_fade_alpha(0);
+    bn::core::update();
 }
