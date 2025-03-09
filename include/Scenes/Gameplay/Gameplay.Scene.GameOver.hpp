@@ -27,7 +27,7 @@
             UI::Button::Restart* restartBtn;
             UserOptions option;
             public:
-                Scene::Gameplay* parentState;
+                Scene::Gameplay* gameplayScene;
                 GameOver(Scene::Gameplay*);
                 void load();
                 void update();

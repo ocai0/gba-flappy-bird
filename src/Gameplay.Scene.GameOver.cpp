@@ -1,19 +1,19 @@
 #include "Scenes/Gameplay/Gameplay.Scene.GameOver.hpp"
 #include "bn_log.h"
 
-_Gameplay::GameOver::GameOver(Scene::Gameplay* _parentState) {
-    this->parentState = _parentState;
+_Gameplay::GameOver::GameOver(Scene::Gameplay* _gameplayScene) {
+    this->gameplayScene = _gameplayScene;
 }
 
 void _Gameplay::GameOver::load() {
     bn::blending::set_fade_alpha(0.5);
-    this->parentState->score->hide();
-    this->parentState->enableBlendingOnAllActors();
+    this->gameplayScene->score->hide();
+    this->gameplayScene->enableBlendingOnAllActors();
     bn::blending::set_fade_color(bn::blending::fade_color_type::WHITE);
 }
 
 void _Gameplay::GameOver::update() {
-    this->parentState->player->update();
+    this->gameplayScene->player->update();
     // fade effect update
     if(!this->fadeComplete) {
         if(this->fadeIntensity == 0) this->fadeComplete = true;
@@ -24,7 +24,7 @@ void _Gameplay::GameOver::update() {
         }
     }
     else {
-        if(this->parentState->player->getStateName() == (bn::string<32>) "DeadState") {
+        if(this->gameplayScene->player->getStateName() == (bn::string<32>) "DeadState") {
             if(this->scoreboard == nullptr) this->initializeScoreBoard();
             if(this->scoreboard != nullptr) this->scoreboard->update();
             if(this->gameOverText == nullptr && this->scoreboard->stateMachine->getStateName() == (bn::string<32>) "ScoreAnimation.Start") {
@@ -60,7 +60,7 @@ void _Gameplay::GameOver::update() {
                     switch(this->option) {
                         case UserOptions::RESTART_GAME:
                         default:
-                            this->parentState->stateMachine->set(new _Gameplay::GetReady(this->parentState));
+                            this->gameplayScene->stateMachine->set(new _Gameplay::GetReady(this->gameplayScene));
                             break;
                         case UserOptions::MAIN_MENU:
                             break;
@@ -74,12 +74,12 @@ void _Gameplay::GameOver::update() {
 void _Gameplay::GameOver::initializeScoreBoard() {
     this->scoreboard = new UI::ScoreBoard();
     this->scoreboard->load();
-    int currentScore = this->parentState->score->getValue();
+    int currentScore = this->gameplayScene->score->getValue();
     this->scoreboard->currentScore->setValue(currentScore);
 }
 
 void _Gameplay::GameOver::render() {
-    this->parentState->player->render();
+    this->gameplayScene->player->render();
     if(this->scoreboard != nullptr) {
         this->scoreboard->render();
     }
