@@ -7,6 +7,7 @@ namespace _GearsLogo {
 
 Scene::GearsLogo::GearsLogo(StateMachine* _sceneManager) {
     this->sceneManager = _sceneManager;
+    this->setName("Scene::GearsLogo");
     bn::blending::set_fade_color(bn::blending::fade_color_type::BLACK);
     bn::blending::set_fade_alpha(0);
 }

@@ -2,13 +2,14 @@
 #include "bn_log.h"
 
 _Gameplay::GetReady::GetReady(Scene::Gameplay* _gameplayScene) {
+    this->setName("_Gameplay::GetReady");
     this->gameplayScene = _gameplayScene;
 }
 
 void _Gameplay::GetReady::load() {
     MainMenuVars userOptions;
     userOptions.birdType = Enum::BirdType::FLAPPY_BIRD;
-    userOptions.pipeType = Enum::PipeType::CITY;
+    userOptions.backgroundType = Enum::PipeType::CITY;
     this->gameplayScene->score = new Score(-7, -60);
     this->gameplayScene->score
         ->useBigFont()
