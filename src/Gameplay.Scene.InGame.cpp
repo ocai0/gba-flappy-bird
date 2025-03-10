@@ -4,6 +4,7 @@ bn::fixed getReadyTransparencyValue = 1;
 
 _Gameplay::InGame::InGame(Scene::Gameplay* _parentState) {
     this->parentState = _parentState;
+    this->setName("_Gameplay::InGame");
 }
 
 void _Gameplay::InGame::load() {
