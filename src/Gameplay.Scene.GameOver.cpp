@@ -2,6 +2,7 @@
 
 
 _Gameplay::GameOver::GameOver(Scene::Gameplay* _gameplayScene) {
+    this->setName("_Gameplay::GameOver");
     this->gameplayScene = _gameplayScene;
 }
 
@@ -59,11 +60,13 @@ void _Gameplay::GameOver::update() {
                 if(bn::keypad::a_pressed()) {
                     switch(this->option) {
                         case UserOptions::RESTART_GAME:
-                        default:
+                        default: {
                             this->gameplayScene->stateMachine->set(new _Gameplay::GetReady(this->gameplayScene));
                             break;
-                        case UserOptions::MAIN_MENU:
+                        }
+                        case UserOptions::MAIN_MENU: {
                             break;
+                        }
                     }
                 }
             }
@@ -90,19 +93,39 @@ void _Gameplay::GameOver::leave() {
     delete this->gameOverText;
     delete this->mainMenuBtn;
     delete this->restartBtn;
-    // this->clearOutsideResources();
+    this->clearOutsideResources();
 }
 
 void _Gameplay::GameOver::clearOutsideResources() {
+    while(this->gameplayScene->pipeLastItemIndex >= 0) {
+        PipeWall* pipe = this->gameplayScene->pipes[this->gameplayScene->pipeLastItemIndex--];
+        delete pipe->topPipe;
+        pipe->topPipe = nullptr;
+        delete pipe->bottomPipe;
+        pipe->bottomPipe = nullptr;
+        pipe = nullptr;
+    }
+    delete[] this->gameplayScene->pipes.data();
+    
+    while(this->gameplayScene->obstacleLastItemIndex >= 0) {
+        Obstacle* obstacle = this->gameplayScene->obstacles[this->gameplayScene->obstacleLastItemIndex--];
+        obstacle = nullptr;
+    }
+    delete[] this->gameplayScene->obstacles.data();
+    
     delete this->gameplayScene->mainMenuVars;
+    this->gameplayScene->mainMenuVars = nullptr;
     delete this->gameplayScene->player;
+    this->gameplayScene->player = nullptr;
+    
     delete this->gameplayScene->floor;
+    this->gameplayScene->floor = nullptr;
+    
     delete this->gameplayScene->background;
-    this->gameplayScene->getReadyBg.reset();
-    this->gameplayScene->camera.reset();
-    this->gameplayScene->window.reset();
+    this->gameplayScene->background = nullptr;
+    
     delete this->gameplayScene->score;
-    delete this->gameplayScene->stateMachine;
-    delete this->gameplayScene->randomGenerator;
+    this->gameplayScene->score = nullptr;
+    
     bn::core::update();
 }
