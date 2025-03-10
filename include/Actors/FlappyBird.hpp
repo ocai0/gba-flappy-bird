@@ -37,6 +37,7 @@
             bn::array<Obstacle*, 15> obstacleList;
             StateMachine* stateMachine;
             FlappyBird(bn::fixed, bn::fixed);
+            ~FlappyBird();
             FlappyBird* setSprite(bn::sprite_ptr);
             FlappyBird* setWeight(bn::fixed);
             void setX(bn::fixed);

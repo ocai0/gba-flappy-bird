@@ -131,3 +131,7 @@ Pipe* Pipe::hide() {
     if(this->sprite.has_value()) this->sprite->set_visible(false);
     return this;
 }
+
+Pipe::~Pipe() {
+    this->sprite->~sprite_ptr();
+}

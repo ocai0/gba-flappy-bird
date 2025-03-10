@@ -1,5 +1,5 @@
 #include "Actors/FlappyBird.hpp"
-
+#include "bn_log.h"
 
 FlappyBird::FlappyBird(bn::fixed _x, bn::fixed _y) {
     this->setSprite(bn::sprite_items::common_bird.create_sprite(0, 0));
@@ -107,4 +107,10 @@ FlappyBird* FlappyBird::hide() {
 FlappyBird* FlappyBird::show() {
     if(this->sprite.has_value()) this->sprite->set_visible(true);
     return this;
+}
+
+FlappyBird::~FlappyBird() {
+    // this->obstacleList = {};
+    this->sprite->~sprite_ptr();
+    if(this->hitbox.has_value()) this->hitbox.reset();
 }
