@@ -8,6 +8,7 @@
         AbstractState* nextState = nullptr;
         bool forceStateReset = false;
         public:
+            ~StateMachine();
             void set(AbstractState* newState);
             void set(AbstractState* newState, bool forceReset);
             void update();

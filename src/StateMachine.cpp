@@ -31,3 +31,10 @@ bn::string<32> StateMachine::getStateName() {
 AbstractState* StateMachine::get() {
     return this->currentState;
 }
+
+StateMachine::~StateMachine() {
+    delete this->currentState;
+    this->currentState = nullptr;
+    delete this->nextState;
+    this->nextState = nullptr;
+}
