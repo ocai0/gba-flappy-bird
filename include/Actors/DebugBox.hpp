@@ -18,6 +18,7 @@
         int height;
         public:
             DebugBox(bn::fixed, bn::fixed, int, int);
+            ~DebugBox();
             void setX(bn::fixed);
             void setY(bn::fixed);
             void update();

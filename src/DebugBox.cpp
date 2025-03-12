@@ -55,3 +55,10 @@ void DebugBox::setCamera(bn::optional<bn::camera_ptr> _camera) {
     this->bottom_left->set_camera(_camera.value());
     this->bottom_right->set_camera(_camera.value());
 }
+
+DebugBox::~DebugBox() {
+    this->top_left.reset();
+    this->top_right.reset();
+    this->bottom_left.reset();
+    this->bottom_right.reset();
+}
