@@ -111,6 +111,8 @@ FlappyBird* FlappyBird::show() {
 
 FlappyBird::~FlappyBird() {
     // this->obstacleList = {};
+    delete this->stateMachine;
+    this->stateMachine = nullptr;
     this->sprite->~sprite_ptr();
     if(this->hitbox.has_value()) this->hitbox.reset();
 }
