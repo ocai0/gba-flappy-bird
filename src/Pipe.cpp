@@ -1,4 +1,5 @@
 #include "Actors/Pipe.hpp"
+#include "bn_log.h"
 
 const int SPRITE_WIDTH = 32;
 const int SPRITE_HEIGHT = 64;
@@ -83,7 +84,8 @@ Pipe* Pipe::flipVertically() {
     return this;
 }
 
-Pipe* Pipe::setCamera(bn::optional<bn::camera_ptr> _camera) {
+Pipe* Pipe::setCamera(const bn::optional<bn::camera_ptr> _camera) {
+    if(!_camera.has_value()) BN_LOG("camera is null");
     this->camera = _camera;
     if(this->sprite.has_value()) this->sprite->set_camera(this->camera.value());
     if(this->hitbox.has_value()) this->hitbox->setCamera(this->camera);

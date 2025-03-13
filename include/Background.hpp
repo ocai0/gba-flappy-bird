@@ -12,7 +12,7 @@
             ~Background();
             Background* setImage(bn::regular_bg_ptr);
             void update();
-            Background* setCamera(bn::optional<bn::camera_ptr>);
+            Background* setCamera(const bn::optional<bn::camera_ptr>);
             Background* enableBlending();
             Background* disableBlending();
             Background* setRenderPriority(int);

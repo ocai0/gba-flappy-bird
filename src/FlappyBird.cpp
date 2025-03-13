@@ -75,7 +75,7 @@ void FlappyBird::watchObstacles(bn::array<Obstacle*, 15> _obstacleList) {
     this->obstacleList = _obstacleList;
 }
 
-FlappyBird* FlappyBird::setCamera(bn::optional<bn::camera_ptr> _camera) {
+FlappyBird* FlappyBird::setCamera(const bn::optional<bn::camera_ptr> _camera) {
     if(this->sprite.has_value()) this->sprite->set_camera(_camera.value());
     if(this->hitbox.has_value()) this->hitbox->setCamera(_camera);
     return this;

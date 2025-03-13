@@ -33,7 +33,7 @@
             Pipe* hideHitbox();
             Pipe* setPalette(bn::sprite_palette_ptr);
             Pipe* flipVertically();
-            Pipe* setCamera(bn::optional<bn::camera_ptr>);
+            Pipe* setCamera(const bn::optional<bn::camera_ptr>);
             Pipe* addBody();
             Pipe* removeBody();
 

@@ -17,7 +17,7 @@ void Floor::update() {
     if(this->sprite.has_value()) this->sprite->set_x(this->sprite->x() - this->xSpeed);
 }
 
-void Floor::setCamera(bn::optional<bn::camera_ptr> _camera) {
+void Floor::setCamera(const bn::optional<bn::camera_ptr> _camera) {
     if(this->sprite.has_value()) this->sprite->set_camera(_camera.value());
     if(this->hitbox.has_value()) this->hitbox->setCamera(_camera.value());
 }

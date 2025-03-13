@@ -112,6 +112,7 @@ void _Gameplay::GetReady::initializePipes(Enum::PipeType _selectedType) {
                 break;
         }
 
+        BN_LOG("pipe "+ bn::to_string<32>(index) +" topPipe creation");
         pipeWall->topPipe
             ->setX(pipeX)
             ->setY(pipeY)
@@ -120,6 +121,7 @@ void _Gameplay::GetReady::initializePipes(Enum::PipeType _selectedType) {
             ->setCamera(this->gameplayScene->camera)
             ->setRenderPriority(2)
             ;
+        BN_LOG("pipe "+ bn::to_string<32>(index) +" bottomPipe creation");
         pipeWall->bottomPipe
             ->setX(pipeX)
             ->setY(pipeY + pipeWall->topPipe->getHeight() + this->gameplayScene->GAP_SIZE)
