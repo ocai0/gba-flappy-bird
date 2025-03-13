@@ -46,10 +46,10 @@ void _Gameplay::InGame::update() {
         this->parentState->stateMachine->set(new _Gameplay::Paused(this->parentState));
     }
     if(bn::keypad::l_held()) {
-        this->parentState->camera->set_y(this->parentState->camera->y() - 1);
+        this->parentState->camera.set_y(this->parentState->camera.y() - 1);
     }
     if(bn::keypad::r_held()) {
-        this->parentState->camera->set_y(this->parentState->camera->y() + 1);
+        this->parentState->camera.set_y(this->parentState->camera.y() + 1);
     }
     this->parentState->floor->update();
     this->parentState->background->update();

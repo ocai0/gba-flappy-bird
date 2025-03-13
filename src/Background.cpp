@@ -10,9 +10,9 @@ void Background::update() {
     if(this->sprite.has_value()) this->sprite->set_x(this->sprite->x() - this->xSpeed);
 }
 
-Background* Background::setCamera(const bn::optional<bn::camera_ptr> _camera) {
+Background* Background::setCamera(bn::camera_ptr* _camera) {
     this->camera = _camera;
-    if(this->sprite.has_value()) this->sprite->set_camera(this->camera.value());
+    if(this->sprite.has_value()) this->sprite->set_camera(*this->camera);
     return this;
 }
 
@@ -33,5 +33,5 @@ Background* Background::setRenderPriority(int _order) {
 
 Background::~Background() {
     this->sprite->~regular_bg_ptr();
-    if(this->camera.has_value()) this->camera.reset();
+    this->camera = nullptr;
 }

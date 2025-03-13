@@ -50,7 +50,7 @@
             bool collidesWith(bn::fixed, bn::fixed, int, int, Obstacle*);
             FlappyBird* showHitbox();
             FlappyBird* hideHitbox();
-            FlappyBird* setCamera(const bn::optional<bn::camera_ptr>);
+            FlappyBird* setCamera(bn::camera_ptr*);
             void enableBlending();
             void disableBlending();
             bn::string<32> getStateName();

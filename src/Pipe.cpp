@@ -84,10 +84,10 @@ Pipe* Pipe::flipVertically() {
     return this;
 }
 
-Pipe* Pipe::setCamera(const bn::optional<bn::camera_ptr> _camera) {
-    if(!_camera.has_value()) BN_LOG("camera is null");
+Pipe* Pipe::setCamera(bn::camera_ptr* _camera) {
+    if(_camera == nullptr) BN_LOG("camera is null");
     this->camera = _camera;
-    if(this->sprite.has_value()) this->sprite->set_camera(this->camera.value());
+    if(this->sprite.has_value()) this->sprite->set_camera(*this->camera);
     if(this->hitbox.has_value()) this->hitbox->setCamera(this->camera);
     return this;
 }

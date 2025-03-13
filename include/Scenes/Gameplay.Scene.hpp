@@ -44,8 +44,7 @@
                 bn::array<PipeWall*, 6> pipes;
                 bn::array<Obstacle*, 15> obstacles;
                 bn::optional<bn::regular_bg_ptr> getReadyBg;
-                bn::optional<bn::camera_ptr> camera;
-                bn::optional<bn::window> window;
+                bn::camera_ptr camera;
                 Gameplay(StateMachine*);
                 void load();
                 void update();

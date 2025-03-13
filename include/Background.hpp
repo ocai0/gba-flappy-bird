@@ -7,12 +7,12 @@
     class Background {
         bn::fixed xSpeed = .2;
         bn::optional<bn::regular_bg_ptr> sprite;
-        bn::optional<bn::camera_ptr> camera;
+        bn::camera_ptr* camera = nullptr;
         public:
             ~Background();
             Background* setImage(bn::regular_bg_ptr);
             void update();
-            Background* setCamera(const bn::optional<bn::camera_ptr>);
+            Background* setCamera(bn::camera_ptr*);
             Background* enableBlending();
             Background* disableBlending();
             Background* setRenderPriority(int);
