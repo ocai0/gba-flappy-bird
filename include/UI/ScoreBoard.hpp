@@ -14,9 +14,9 @@
         class ScoreBoard {
             public:
                 bn::optional<bn::regular_bg_ptr> sprite;
-                Score* currentScore;
-                Score* highScore;
-                StateMachine* stateMachine;
+                Score* currentScore = nullptr;
+                Score* highScore = nullptr;
+                StateMachine* stateMachine = nullptr;
                 bn::fixed x = 0;
                 bn::fixed y = 370;
                 bn::fixed deltaX = 0;
