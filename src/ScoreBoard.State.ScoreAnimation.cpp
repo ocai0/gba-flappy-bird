@@ -1,5 +1,4 @@
 #include "UI/ScoreBoard/ScoreBoard.State.ScoreAnimation.hpp"
-#include "bn_log.h"
 #include "bn_keypad.h"
 
 
@@ -19,7 +18,6 @@ void _ScoreBoard::ScoreAnimation::load() {
 }
 
 void _ScoreBoard::ScoreAnimation::update() {
-    BN_LOG("- ScoreAnimation::update start");
     if(this->scoreboard->currentScore->getValue() != this->tempCurrentScore) {
         this->scoreboard->currentScore->setValue(this->scoreboard->currentScore->getValue() + 1);
     }
@@ -31,7 +29,6 @@ void _ScoreBoard::ScoreAnimation::update() {
             this->setName("ScoreAnimation.End");
         }
     }
-    BN_LOG("- ScoreAnimation::update end\n");
 }
 
 void _ScoreBoard::ScoreAnimation::render() {
@@ -42,7 +39,6 @@ void _ScoreBoard::ScoreAnimation::render() {
 void _ScoreBoard::ScoreAnimation::leave() {}
 
 void _ScoreBoard::ScoreAnimation::verifyAndSaveHighScore() {
-    BN_LOG("- - ScoreAnimation verifyAndSaveHighScore start");
     this->highScoreWasChecked = true;
     int _currentScore = this->scoreboard->currentScore->getValue();
     int _highScore = this->scoreboard->highScore->getValue();
@@ -59,7 +55,6 @@ void _ScoreBoard::ScoreAnimation::verifyAndSaveHighScore() {
         this->sram->write();
     }
     this->renderMedal();
-    BN_LOG("- - ScoreAnimation verifyAndSaveHighScore end");
 }
 
 void _ScoreBoard::ScoreAnimation::renderMedal() {
