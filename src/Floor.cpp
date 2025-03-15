@@ -1,5 +1,6 @@
 #include "Actors/Floor.hpp"
 
+
 Floor::Floor() {
     this->instanceName = "FLOOR";
     this->x = -120;
@@ -42,5 +43,5 @@ void Floor::hideHitbox() {
 }
 
 Floor::~Floor() {
-    this->sprite->~regular_bg_ptr();
+    this->sprite.reset();
 }

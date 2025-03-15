@@ -36,8 +36,8 @@ UI::Text::GameOver* UI::Text::GameOver::hide() {
 }
 
 UI::Text::GameOver::~GameOver() {
-    this->spr1->~sprite_ptr();
-    this->spr2->~sprite_ptr();
-    this->spr3->~sprite_ptr();
+    this->spr1.reset();
+    this->spr2.reset();
+    this->spr3.reset();
     bn::core::update();
 }

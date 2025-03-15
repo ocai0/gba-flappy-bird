@@ -32,6 +32,6 @@ Background* Background::setRenderPriority(int _order) {
 }
 
 Background::~Background() {
-    this->sprite->~regular_bg_ptr();
+    this->sprite.reset();
     this->camera = nullptr;
 }

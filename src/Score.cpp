@@ -80,3 +80,9 @@ Score* Score::alignToTheRight() {
 int Score::getSpriteCount() {
     return this->text.size();
 }
+
+Score::~Score() {
+    this->textGenerator.reset();
+    this->sprites.clear();
+    this->text.clear();
+}

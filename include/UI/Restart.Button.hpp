@@ -16,6 +16,7 @@
                     bn::fixed x;
                     bn::fixed y;
                     Restart(bn::fixed, bn::fixed);
+                    ~Restart();
                     Restart* select();
                     Restart* unselect();
                     Restart* setX(bn::fixed);

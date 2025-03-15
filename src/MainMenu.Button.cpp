@@ -1,5 +1,6 @@
 #include "UI/MainMenu.Button.hpp"
 
+
 UI::Button::MainMenu::MainMenu(bn::fixed _x, bn::fixed _y) {
     this->spr1 = bn::sprite_items::ui_main_menu.create_sprite(_x, _y);
     this->spr2 = bn::sprite_items::ui_main_menu.create_sprite(_x + 32, _y);
@@ -34,4 +35,9 @@ UI::Button::MainMenu* UI::Button::MainMenu::setY(bn::fixed _y) {
 
 void UI::Button::MainMenu::render() {
 
+}
+
+UI::Button::MainMenu::~MainMenu() {
+    this->spr1.reset();
+    this->spr2.reset();
 }

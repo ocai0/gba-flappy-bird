@@ -1,4 +1,5 @@
 #include "Scenes/Gameplay/Gameplay.Scene.GameOver.hpp"
+#include "bn_log.h"
 
 
 _Gameplay::GameOver::GameOver(Scene::Gameplay* _gameplayScene) {
@@ -46,7 +47,6 @@ void _Gameplay::GameOver::update() {
                     this->mainMenuBtn = new UI::Button::MainMenu(posX + paddingBtwBtns + sizeofRersizeBtn, posY);
                     this->mainMenuBtn->unselect();
                 }
-
                 if(bn::keypad::right_pressed()) {
                     this->restartBtn->unselect();
                     this->mainMenuBtn->select();
@@ -65,6 +65,7 @@ void _Gameplay::GameOver::update() {
                             break;
                         }
                         case UserOptions::MAIN_MENU: {
+                            this->clearResources();
                             break;
                         }
                     }
@@ -89,14 +90,41 @@ void _Gameplay::GameOver::render() {
 }
 
 void _Gameplay::GameOver::leave() {
+    this->clearResources();
+}
+
+void _Gameplay::GameOver::clearResources() {
     delete this->scoreboard;
+    this->scoreboard = nullptr;
+
     delete this->gameOverText;
+    this->gameOverText = nullptr;
+
     delete this->mainMenuBtn;
+    this->mainMenuBtn = nullptr;
+
     delete this->restartBtn;
+    this->restartBtn = nullptr;
+
     this->clearOutsideResources();
 }
 
 void _Gameplay::GameOver::clearOutsideResources() {
+    delete this->gameplayScene->floor;
+    this->gameplayScene->floor = nullptr;
+
+    delete this->gameplayScene->score;
+    this->gameplayScene->score = nullptr;
+    
+    delete this->gameplayScene->player;
+    this->gameplayScene->player = nullptr;
+    
+    delete this->gameplayScene->background;
+    this->gameplayScene->background = nullptr;
+    
+    delete this->gameplayScene->mainMenuVars;
+    this->gameplayScene->mainMenuVars = nullptr;
+    
     while(this->gameplayScene->pipeLastItemIndex >= 0) {
         PipeWall* pipe = this->gameplayScene->pipes[this->gameplayScene->pipeLastItemIndex--];
         delete pipe->topPipe;
@@ -105,27 +133,14 @@ void _Gameplay::GameOver::clearOutsideResources() {
         pipe->bottomPipe = nullptr;
         pipe = nullptr;
     }
-    delete[] this->gameplayScene->pipes.data();
     
     while(this->gameplayScene->obstacleLastItemIndex >= 0) {
         Obstacle* obstacle = this->gameplayScene->obstacles[this->gameplayScene->obstacleLastItemIndex--];
         obstacle = nullptr;
     }
-    delete[] this->gameplayScene->obstacles.data();
-    
-    delete this->gameplayScene->mainMenuVars;
-    this->gameplayScene->mainMenuVars = nullptr;
-    delete this->gameplayScene->player;
-    this->gameplayScene->player = nullptr;
-    
-    delete this->gameplayScene->floor;
-    this->gameplayScene->floor = nullptr;
-    
-    delete this->gameplayScene->background;
-    this->gameplayScene->background = nullptr;
-    
-    delete this->gameplayScene->score;
-    this->gameplayScene->score = nullptr;
+
+    this->gameplayScene->getReadyBg.reset();
     
     bn::core::update();
+    this->gameplayScene->log = true;
 }

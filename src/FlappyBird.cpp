@@ -1,6 +1,7 @@
 #include "Actors/FlappyBird.hpp"
 #include "bn_log.h"
 
+
 FlappyBird::FlappyBird(bn::fixed _x, bn::fixed _y) {
     this->setSprite(bn::sprite_items::common_bird.create_sprite(0, 0));
     this->animation = bn::create_sprite_animate_action_forever(*this->sprite, 6, bn::sprite_items::common_bird.tiles_item(), 0, 1, 2, 1);
@@ -110,9 +111,9 @@ FlappyBird* FlappyBird::show() {
 }
 
 FlappyBird::~FlappyBird() {
-    // this->obstacleList = {};
     delete this->stateMachine;
     this->stateMachine = nullptr;
-    this->sprite->~sprite_ptr();
+    
+    this->sprite.reset();
     if(this->hitbox.has_value()) this->hitbox.reset();
 }

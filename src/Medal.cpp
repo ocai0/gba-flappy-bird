@@ -1,5 +1,6 @@
 #include "UI/Medal.hpp"
 
+
 UI::Medal::Medal(bn::fixed _x, bn::fixed _y) {
     this->sprite = bn::sprite_items::ui_medal.create_sprite(_x, _y);
     this->setX(_x);
@@ -108,4 +109,14 @@ void UI::Medal::render() {
     if(this->bottomLeftParticleAnimation.has_value()) this->bottomLeftParticleAnimation->update();
     if(this->centerParticleAnimation.has_value()) this->centerParticleAnimation->update();
     if(this->topRightParticleAnimation.has_value()) this->topRightParticleAnimation->update();
+}
+
+UI::Medal::~Medal() {
+    this->sprite.reset();
+    this->bottomLeftParticle.reset();
+    this->bottomLeftParticleAnimation.reset();
+    this->centerParticle.reset();
+    this->centerParticleAnimation.reset();
+    this->topRightParticle.reset();
+    this->topRightParticleAnimation.reset();
 }

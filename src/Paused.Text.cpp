@@ -1,5 +1,6 @@
 #include "UI/Paused.Text.hpp"
 
+
 UI::Text::Paused::Paused(bn::fixed _x, bn::fixed _y) {
     this->spr1 = bn::sprite_items::ui_paused.create_sprite(0, 0);
     this->spr2 = bn::sprite_items::ui_paused.create_sprite(0 + 32, 0);
@@ -31,7 +32,7 @@ UI::Text::Paused* UI::Text::Paused::hide() {
 }
 
 UI::Text::Paused::~Paused() {
-    this->spr1->~sprite_ptr();
-    this->spr2->~sprite_ptr();
+    this->spr1.reset();
+    this->spr2.reset();
     bn::core::update();
 }

@@ -22,6 +22,7 @@
                 bn::optional<bn::sprite_ptr> topRightParticle;
                 bn::optional<bn::sprite_animate_action<8>> topRightParticleAnimation;
                 Medal(bn::fixed, bn::fixed);
+                ~Medal();
                 Medal* setX(bn::fixed);
                 Medal* setY(bn::fixed);
                 Medal* useBronzeSprite();
