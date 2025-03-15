@@ -1,5 +1,6 @@
 #include "Actors/FlappyBird/FlappyBird.State.Dead.hpp"
 
+
 _FlappyBird::DeadState::DeadState(FlappyBird* _actor) {
     this->actor = _actor;
     this->setName("DeadState");

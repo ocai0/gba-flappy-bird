@@ -1,5 +1,6 @@
 #include "Scenes/Gameplay/Gameplay.Scene.Paused.hpp"
 
+
 _Gameplay::Paused::Paused(Scene::Gameplay* _parentState) {
     this->parentState = _parentState;
 }

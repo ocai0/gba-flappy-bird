@@ -1,4 +1,5 @@
 #include "Actors/DebugBox.hpp"
+
 constexpr int SPRITE_SIZE_HALF = 4; // because the sprite are rendered at the middle of the image
 
 DebugBox::DebugBox(bn::fixed _x, bn::fixed _y, int _width, int _height): x(_x), y(_y), width(_width), height(_height) {
@@ -19,14 +20,17 @@ DebugBox::DebugBox(bn::fixed _x, bn::fixed _y, int _width, int _height): x(_x), 
 
     this->update();
 }
+
 void DebugBox::setX(bn::fixed _x) {
     this->x = _x;
     this->update();
 }
+
 void DebugBox::setY(bn::fixed _y) {
     this->y = _y;
     this->update();
 }
+
 void DebugBox::update() {
     this->top_left->set_x(this->x + SPRITE_SIZE_HALF);
     this->top_left->set_y(this->y + SPRITE_SIZE_HALF);

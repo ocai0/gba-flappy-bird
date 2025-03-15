@@ -1,5 +1,6 @@
 #include "Commons/AbstractState.hpp"
 
+
 void AbstractState::tick() {
     this->update();
     this->time++;

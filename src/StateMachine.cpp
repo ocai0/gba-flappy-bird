@@ -1,13 +1,16 @@
 #include "Commons/StateMachine.hpp"
 #include "bn_log.h"
 
+
 void StateMachine::set(AbstractState* newState) {
     this->set(newState, false);
 }
+
 void StateMachine::set(AbstractState* newState, bool forceReset) {
     this->nextState = newState;
     this->forceStateReset = forceReset;
 }
+
 void StateMachine::update() {
     if(this->log) BN_LOG("update: ", this->tick++);
     if(this->nextState != nullptr || this->forceStateReset) {
@@ -37,6 +40,7 @@ AbstractState* StateMachine::get() {
 StateMachine::~StateMachine() {
     delete this->currentState;
     this->currentState = nullptr;
+    
     delete this->nextState;
     this->nextState = nullptr;
 }

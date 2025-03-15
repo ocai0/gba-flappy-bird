@@ -1,5 +1,6 @@
 #include "Scenes/GearsLogo.Scene.hpp"
 
+
 namespace _GearsLogo {
     const bn::bg_palette_item& black_bg_palette = bn::regular_bg_items::bg_gears_logo.palette_item();
     const bn::bg_palette_item& blue_bg_palette = bn::bg_palette_items::bg_gears_logo_alt;

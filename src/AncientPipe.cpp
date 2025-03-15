@@ -1,5 +1,6 @@
 #include "Actors/AncientPipe.hpp"
 
+
 AncientPipe::AncientPipe(bn::fixed _x, bn::fixed _y): Pipe(_x, _y) {
     this->width = 18;
     this->height = 57;
