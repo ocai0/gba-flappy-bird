@@ -9,17 +9,17 @@ UI::ScoreBoard::ScoreBoard() {
     int scoreXPos = 44;
     this->currentScore = new Score(scoreXPos, -11);
     this->highScore = new Score(scoreXPos, 10);
-    this->currentScore->hide();
-    this->highScore->hide();
 }
 
 void UI::ScoreBoard::load() {
     this->stateMachine->set(new _ScoreBoard::Appear(this));
     this->currentScore->useSmallFont()
         ->setPriority(1)
+        ->hide()
         ->alignToTheRight();
     this->highScore->useSmallFont()
         ->setPriority(1)
+        ->hide()
         ->alignToTheRight();
 }
 
@@ -30,9 +30,7 @@ void UI::ScoreBoard::setX(bn::fixed _x) {
 
 void UI::ScoreBoard::setY(bn::fixed _y) {
     this->y = _y;
-    if(this->sprite.has_value()) {
-        this->sprite->set_y(this->y);
-    }
+    if(this->sprite.has_value()) this->sprite->set_y(this->y);
 }
 
 void UI::ScoreBoard::update() {
