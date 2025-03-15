@@ -34,6 +34,7 @@
                 void render();
                 void leave();
                 void initializeScoreBoard();
+                void clearResources();
                 void clearOutsideResources();
         };
     }
