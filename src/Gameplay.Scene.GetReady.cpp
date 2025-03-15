@@ -1,6 +1,7 @@
 #include "Scenes/Gameplay/Gameplay.Scene.GetReady.hpp"
 #include "bn_log.h"
 
+
 _Gameplay::GetReady::GetReady(Scene::Gameplay* _gameplayScene) {
     this->setName("_Gameplay::GetReady");
     this->gameplayScene = _gameplayScene;
