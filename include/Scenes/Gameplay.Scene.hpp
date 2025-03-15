@@ -27,6 +27,7 @@
     namespace Scene {
         class Gameplay : public AbstractState {
             public:
+                bool log = false;
                 const int GAP_SIZE_BTW_PIPES = 80;
                 const int GAP_SIZE = 80;
                 int obstacleLastItemIndex = -1;
