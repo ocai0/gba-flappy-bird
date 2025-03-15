@@ -8,7 +8,6 @@
         AbstractState* nextState = nullptr;
         bool forceStateReset = false;
         public:
-            bool log = false;
             unsigned int tick = 0;
             ~StateMachine();
             void set(AbstractState* newState);

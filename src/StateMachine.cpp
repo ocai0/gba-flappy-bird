@@ -12,9 +12,11 @@ void StateMachine::set(AbstractState* newState, bool forceReset) {
 }
 
 void StateMachine::update() {
-    if(this->log) BN_LOG("update: ", this->tick++);
     if(this->nextState != nullptr || this->forceStateReset) {
-        if(this->currentState != nullptr) this->currentState->leave();
+        if(this->currentState != nullptr) {
+            this->currentState->leave();
+            delete this->currentState;
+        }
         this->nextState->load();
         this->currentState = this->nextState;
 
