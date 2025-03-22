@@ -77,6 +77,6 @@ void _Gameplay::InGame::render() {
 }
 
 void _Gameplay::InGame::leave() {
-
+    this->gameplayScene = nullptr;
 }
 

@@ -114,6 +114,7 @@ FlappyBird::~FlappyBird() {
     delete this->stateMachine;
     this->stateMachine = nullptr;
     
+    this->obstacleList.fill(nullptr);
     this->sprite.reset();
     if(this->hitbox.has_value()) this->hitbox.reset();
 }
