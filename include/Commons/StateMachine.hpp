@@ -9,6 +9,7 @@
         bool forceStateReset = false;
         public:
             unsigned int tick = 0;
+            bool log = false;
             ~StateMachine();
             void set(AbstractState* newState);
             void set(AbstractState* newState, bool forceReset);

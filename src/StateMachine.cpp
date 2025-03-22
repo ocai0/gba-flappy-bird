@@ -7,8 +7,10 @@ void StateMachine::set(AbstractState* newState) {
 }
 
 void StateMachine::set(AbstractState* newState, bool forceReset) {
+    if(this->log) BN_LOG("StateMachine::Set start");
     this->nextState = newState;
     this->forceStateReset = forceReset;
+    if(this->log) BN_LOG("StateMachine::Set end");
 }
 
 void StateMachine::update() {
