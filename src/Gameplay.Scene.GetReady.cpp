@@ -67,7 +67,7 @@ void _Gameplay::GetReady::initializeBackground(Enum::BackgroundType _selectedTyp
 }
 
 int _Gameplay::GetReady::addToObstacleList(Obstacle* _obstacle) {
-    if(this->gameplayScene->obstacleLastItemIndex > this->gameplayScene->obstacles.max_size()) {
+    if(this->gameplayScene->obstacleLastItemIndex + 1 > this->gameplayScene->obstacles.max_size()) {
         BN_LOG("obstacle list is full");
         return -1;
     }
@@ -76,7 +76,7 @@ int _Gameplay::GetReady::addToObstacleList(Obstacle* _obstacle) {
 }
 
 int _Gameplay::GetReady::addToPipeList(PipeWall* _pipe) {
-    if(this->gameplayScene->pipeLastItemIndex > this->gameplayScene->pipes.max_size()) {
+    if(this->gameplayScene->pipeLastItemIndex + 1 > this->gameplayScene->pipes.max_size()) {
         BN_LOG("pipe list is full");
         return -1;
     }
