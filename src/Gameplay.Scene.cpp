@@ -21,7 +21,43 @@ void Scene::Gameplay::render() {
     this->stateMachine->render();
 }
 
-void Scene::Gameplay::leave() {}
+void Scene::Gameplay::leave() {
+    delete this->floor;
+    this->floor = nullptr;
+
+    delete this->score;
+    this->score = nullptr;
+
+    delete this->player;
+    this->player = nullptr;
+
+    delete this->background;
+    this->background = nullptr;
+
+    delete this->mainMenuVars;
+    this->mainMenuVars = nullptr;
+
+    delete this->stateMachine;
+    this->stateMachine = nullptr;
+
+    delete this->sceneManager;
+    this->sceneManager = nullptr;
+
+    delete this->randomGenerator;
+    this->randomGenerator = nullptr;
+
+    for(PipeWall* pipe : this->pipes) {
+        delete pipe->topPipe;
+        pipe->topPipe = nullptr;
+        delete pipe->bottomPipe;
+        pipe->bottomPipe = nullptr;
+    }
+    
+    this->pipes.fill(nullptr);
+    this->obstacles.fill(nullptr);
+    this->getReadyBg.reset();
+    this->camera.~camera_ptr();
+}
 
 void Scene::Gameplay::enableBlendingOnAllActors() {
     this->player->enableBlending();
