@@ -8,13 +8,16 @@ _Gameplay::GameOver::GameOver(Scene::Gameplay* _gameplayScene) {
 }
 
 void _Gameplay::GameOver::load() {
+    BN_LOG("GameOver load start");
     bn::blending::set_fade_alpha(0.5);
     this->gameplayScene->score->hide();
     this->gameplayScene->enableBlendingOnAllActors();
     bn::blending::set_fade_color(bn::blending::fade_color_type::WHITE);
+    BN_LOG("GameOver load end");
 }
 
 void _Gameplay::GameOver::update() {
+    BN_LOG("GameOver update start");
     this->gameplayScene->player->update();
     // fade effect update
     if(!this->fadeComplete) {
@@ -65,7 +68,7 @@ void _Gameplay::GameOver::update() {
                             break;
                         }
                         case UserOptions::MAIN_MENU: {
-                            this->clearResources();
+                            this->gameplayScene->stateMachine->set(new _Gameplay::GetReady(this->gameplayScene));
                             break;
                         }
                     }
@@ -131,16 +134,18 @@ void _Gameplay::GameOver::clearOutsideResources() {
         pipe->topPipe = nullptr;
         delete pipe->bottomPipe;
         pipe->bottomPipe = nullptr;
-        pipe = nullptr;
+        // this->gameplayScene->pipes[this->gameplayScene->pipeLastItemIndex] = nullptr;
     }
     
-    while(this->gameplayScene->obstacleLastItemIndex >= 0) {
-        Obstacle* obstacle = this->gameplayScene->obstacles[this->gameplayScene->obstacleLastItemIndex--];
-        obstacle = nullptr;
-    }
+    this->gameplayScene->obstacleLastItemIndex = -1;
+    // while(this->gameplayScene->obstacleLastItemIndex >= 0) {
+        // this->gameplayScene->obstacles[this->gameplayScene->obstacleLastItemIndex--] = nullptr;
+    // }
 
+    this->gameplayScene->pipes.fill(nullptr);
+    this->gameplayScene->obstacles.fill(nullptr);
     this->gameplayScene->getReadyBg.reset();
     
     bn::core::update();
-    this->gameplayScene->log = true;
+    this->gameplayScene->stateMachine->log = true;
 }
