@@ -43,7 +43,9 @@ void _Gameplay::GetReady::render() {
     this->gameplayScene->score->hide();
 }
 
-void _Gameplay::GetReady::leave() {}
+void _Gameplay::GetReady::leave() {
+    this->gameplayScene = nullptr;
+}
 
 
 void _Gameplay::GetReady::initializeBackground(Enum::BackgroundType _selectedType) {
@@ -67,21 +69,15 @@ void _Gameplay::GetReady::initializeBackground(Enum::BackgroundType _selectedTyp
 }
 
 int _Gameplay::GetReady::addToObstacleList(Obstacle* _obstacle) {
-    if(this->gameplayScene->obstacleLastItemIndex + 1 > this->gameplayScene->obstacles.max_size()) {
-        BN_LOG("obstacle list is full");
-        return -1;
-    }
-    this->gameplayScene->obstacles[++this->gameplayScene->obstacleLastItemIndex] = _obstacle;
-    return this->gameplayScene->obstacleLastItemIndex;
+    if(this->gameplayScene->obstacles.size() + 1 > this->gameplayScene->obstacles.max_size()) return -1;
+    this->gameplayScene->obstacles.push_back(_obstacle);
+    return this->gameplayScene->obstacles.size();
 }
 
 int _Gameplay::GetReady::addToPipeList(PipeWall* _pipe) {
-    if(this->gameplayScene->pipeLastItemIndex + 1 > this->gameplayScene->pipes.max_size()) {
-        BN_LOG("pipe list is full");
-        return -1;
-    }
-    this->gameplayScene->pipes[++this->gameplayScene->pipeLastItemIndex] = _pipe;
-    return this->gameplayScene->pipeLastItemIndex;
+    if(this->gameplayScene->pipes.size() + 1 >= this->gameplayScene->pipes.max_size()) return -1;
+    this->gameplayScene->pipes.push_back(_pipe);
+    return this->gameplayScene->pipes.size();
 }
 
 void _Gameplay::GetReady::initializePipes(Enum::PipeType _selectedType) {

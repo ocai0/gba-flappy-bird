@@ -51,10 +51,11 @@ void Scene::Gameplay::leave() {
         pipe->topPipe = nullptr;
         delete pipe->bottomPipe;
         pipe->bottomPipe = nullptr;
+        delete pipe;
     }
     
-    this->pipes.fill(nullptr);
-    this->obstacles.fill(nullptr);
+    this->pipes.clear();
+    this->obstacles.clear();
     this->getReadyBg.reset();
     this->camera.~camera_ptr();
 }

@@ -3,7 +3,7 @@
 
     #include "bn_core.h"
     #include "bn_optional.h"
-    #include "bn_array.h"
+    #include "bn_vector.h"
     #include "bn_random.h"
     #include "bn_display.h"
     #include "bn_window.h"
@@ -30,8 +30,6 @@
                 bool log = false;
                 const int GAP_SIZE_BTW_PIPES = 80;
                 const int GAP_SIZE = 80;
-                int obstacleLastItemIndex = -1;
-                int pipeLastItemIndex = -1;
                 
                 Floor* floor = nullptr;
                 Score* score = nullptr;
@@ -42,8 +40,8 @@
                 StateMachine* sceneManager = nullptr;
 
                 bn::random* randomGenerator = nullptr;
-                bn::array<PipeWall*, 6> pipes;
-                bn::array<Obstacle*, 15> obstacles;
+                bn::vector<PipeWall*, 6> pipes;
+                bn::vector<Obstacle*, 15> obstacles;
                 bn::optional<bn::regular_bg_ptr> getReadyBg;
                 bn::camera_ptr camera;
                 Gameplay(StateMachine*);

@@ -3,7 +3,7 @@
     #include "bn_core.h"
     #include "bn_optional.h"
     #include "bn_keypad.h"
-    #include "bn_array.h"
+    #include "bn_vector.h"
     #include "bn_sprite_ptr.h"
     #include "bn_camera_ptr.h"
     #include "bn_sprite_animate_actions.h"
@@ -34,7 +34,7 @@
             bn::optional<DebugBox> hitbox;
             bn::optional<bn::sprite_ptr> sprite;
             bn::optional<bn::sprite_animate_action<4>> animation;
-            bn::array<Obstacle*, 15> obstacleList;
+            bn::vector<Obstacle*, 15> obstacleList;
             StateMachine* stateMachine;
             FlappyBird(bn::fixed, bn::fixed);
             ~FlappyBird();
@@ -45,7 +45,7 @@
             void update();
             void render();
             void calculateRotation();
-            void watchObstacles(bn::array<Obstacle*, 15>);
+            void watchObstacles(bn::vector<Obstacle*, 15>);
             bool collidesWith(Obstacle*);
             bool collidesWith(bn::fixed, bn::fixed, int, int, Obstacle*);
             FlappyBird* showHitbox();

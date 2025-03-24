@@ -72,7 +72,7 @@ bool FlappyBird::collidesWith(bn::fixed _x, bn::fixed _y, int _width, int _heigh
         && _y + _height > _other->y;
 }
 
-void FlappyBird::watchObstacles(bn::array<Obstacle*, 15> _obstacleList) {
+void FlappyBird::watchObstacles(bn::vector<Obstacle*, 15> _obstacleList) {
     this->obstacleList = _obstacleList;
 }
 
@@ -114,7 +114,7 @@ FlappyBird::~FlappyBird() {
     delete this->stateMachine;
     this->stateMachine = nullptr;
     
-    this->obstacleList.fill(nullptr);
+    this->obstacleList.clear();
     this->sprite.reset();
     if(this->hitbox.has_value()) this->hitbox.reset();
 }

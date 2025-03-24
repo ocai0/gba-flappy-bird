@@ -24,7 +24,7 @@ void _Gameplay::InGame::update() {
         }
     }
     this->gameplayScene->player->update();
-    for(int index=this->gameplayScene->pipeLastItemIndex; index >= 0 ; index--) {
+    for(int index=this->gameplayScene->pipes.size() - 1; index >= 0 ; index--) {
         PipeWall* pipeWall = this->gameplayScene->pipes.at(index);
         pipeWall->x -= bn::fixed(.5);
         if(!pipeWall->scored && this->gameplayScene->player->x > pipeWall->x) {
@@ -35,7 +35,7 @@ void _Gameplay::InGame::update() {
         }
         if(pipeWall->x <= -bn::display::width() / 2 - pipeWall->topPipe->getWidth()) {
             int _neighborPipeIndex = index - 1;
-            if(_neighborPipeIndex < 0) _neighborPipeIndex = this->gameplayScene->pipeLastItemIndex;
+            if(_neighborPipeIndex < 0) _neighborPipeIndex = this->gameplayScene->pipes.size() - 1;
             PipeWall* _neighborPipe = this->gameplayScene->pipes.at(_neighborPipeIndex);
             this->gameplayScene->randomGenerator->update();
             pipeWall->y = this->gameplayScene->randomGenerator->get_int(-124, -48);
