@@ -10,7 +10,7 @@
         class Paused: public AbstractState {
             UI::Text::Paused* pausedText;
             public:
-                Scene::Gameplay* parentState;
+                Scene::Gameplay* gameplayScene;
                 Paused(Scene::Gameplay*);
                 void load();
                 void update();
