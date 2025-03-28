@@ -136,4 +136,6 @@ Pipe* Pipe::hide() {
 
 Pipe::~Pipe() {
     this->sprite.reset();
+    this->hitbox.reset();
+    this->camera = nullptr;
 }

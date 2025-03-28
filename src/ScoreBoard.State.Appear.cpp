@@ -25,4 +25,6 @@ void _ScoreBoard::Appear::render() {
     this->scoreboard->setY(this->y);
 }
 
-void _ScoreBoard::Appear::leave() {}
+void _ScoreBoard::Appear::leave() {
+    this->scoreboard = nullptr;
+}

@@ -36,7 +36,16 @@ void _ScoreBoard::ScoreAnimation::render() {
     if(this->medal != nullptr) this->medal->render();
 }
 
-void _ScoreBoard::ScoreAnimation::leave() {}
+void _ScoreBoard::ScoreAnimation::leave() {
+    delete this->scoreboard;
+    this->scoreboard = nullptr;
+    delete this->newFlag;
+    this->newFlag = nullptr;
+    delete this->medal;
+    this->medal = nullptr;
+    
+    this->sram = nullptr;
+}
 
 void _ScoreBoard::ScoreAnimation::verifyAndSaveHighScore() {
     this->highScoreWasChecked = true;
