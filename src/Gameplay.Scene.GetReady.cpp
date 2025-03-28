@@ -22,19 +22,18 @@ void _Gameplay::GetReady::load() {
     this->initializePipes(userOptions.backgroundType);
     this->initializeBackground(userOptions.backgroundType);
     this->gameplayScene->player->watchObstacles(this->gameplayScene->obstacles);
-}
 
-void _Gameplay::GetReady::update() {
     this->gameplayScene->getReadyBg = bn::regular_bg_items::bg_get_ready.create_bg(0, -10);
     this->gameplayScene->getReadyBg->set_priority(1);
     this->gameplayScene->getReadyBg->set_blending_enabled(true);
-    if(!bn::keypad::a_pressed()) {
+}
+
+void _Gameplay::GetReady::update() {
+    if(bn::keypad::a_pressed()) this->gameplayScene->stateMachine->set(new _Gameplay::InGame(this->gameplayScene));
+    else {
         this->gameplayScene->player->update();
         this->gameplayScene->floor->update();
         this->gameplayScene->background->update();
-    }
-    else {
-        this->gameplayScene->stateMachine->set(new _Gameplay::InGame(this->gameplayScene));
     }
 }
 

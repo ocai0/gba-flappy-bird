@@ -2,6 +2,7 @@
 #define GAMEPLAY_GAME_OVER_H_
     #include "bn_optional.h"
     #include "bn_keypad.h"
+    #include "bn_memory.h"
     #include "Commons/AbstractState.hpp"
     #include "Scenes/Gameplay.Scene.hpp"
     #include "UI/ScoreBoard.hpp"
@@ -14,6 +15,9 @@
     namespace _Gameplay {
 
         enum UserOptions { RESTART_GAME, MAIN_MENU };
+        const bn::string<32> STR_DEAD_STATE("DeadState");
+        const bn::string<32> STR_SCORE_ANIMATION_START("ScoreAnimation.Start");
+        const bn::string<32> STR_SCORE_ANIMATION_END("ScoreAnimation.End");
 
         class GameOver: public AbstractState {
             bool fadeComplete = false;

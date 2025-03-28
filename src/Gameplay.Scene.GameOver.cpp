@@ -1,6 +1,7 @@
 #include "Scenes/Gameplay/Gameplay.Scene.GameOver.hpp"
 #include "bn_log.h"
 
+int state = 0;
 
 _Gameplay::GameOver::GameOver(Scene::Gameplay* _gameplayScene) {
     this->setName("_Gameplay::GameOver");
@@ -26,13 +27,16 @@ void _Gameplay::GameOver::update() {
         }
     }
     else {
-        if(this->gameplayScene->player->getStateName() == (bn::string<32>) "DeadState") {
-            if(this->scoreboard == nullptr) this->initializeScoreBoard();
+        if(this->gameplayScene->player->getStateName() == _Gameplay::STR_DEAD_STATE) {
+            if(state == 0) {
+                state = 1;
+                this->initializeScoreBoard();
+            }
             if(this->scoreboard != nullptr) this->scoreboard->update();
-            if(this->gameOverText == nullptr && this->scoreboard->stateMachine->getStateName() == (bn::string<32>) "ScoreAnimation.Start") {
+            if(this->gameOverText == nullptr && this->scoreboard->stateMachine->getStateName() == _Gameplay::STR_SCORE_ANIMATION_START) {
                 this->gameOverText = new UI::Text::GameOver(-34,-42);
             }
-            if(this->scoreboard->stateMachine->getStateName() == (bn::string<32>) "ScoreAnimation.End") {
+            if(this->scoreboard->stateMachine->getStateName() == _Gameplay::STR_SCORE_ANIMATION_END) {
                 // let user control
                 int posX = -50;
                 int posY = 42;
@@ -136,6 +140,10 @@ void _Gameplay::GameOver::clearOutsideResources() {
 
     this->gameplayScene->pipes.clear();
     this->gameplayScene->obstacles.clear();
+    // bn::memory::clear(this->gameplayScene->pipes.size(), this->gameplayScene->pipes.at(0));
+    // this->gameplayScene->pipes.clear();
+    // bn::memory::clear(this->gameplayScene->obstacles.size(), this->gameplayScene->obstacles.at(0));
+    // BN_LOG(this->gameplayScene->pipes.size());
     this->gameplayScene->getReadyBg.reset();
     this->gameplayScene = nullptr;
     bn::core::update();
