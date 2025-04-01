@@ -1,82 +1,19 @@
 #include "Scenes/Gameplay/Gameplay.Scene.GameOver.hpp"
 #include "bn_log.h"
 
-int state = 0;
 
 _Gameplay::GameOver::GameOver(Scene::Gameplay* _gameplayScene) {
     this->setName("_Gameplay::GameOver");
     this->gameplayScene = _gameplayScene;
+    this->stateMachine = new StateMachine;
 }
 
 void _Gameplay::GameOver::load() {
-    bn::blending::set_fade_alpha(0.5);
-    this->gameplayScene->score->hide();
-    this->gameplayScene->enableBlendingOnAllActors();
-    bn::blending::set_fade_color(bn::blending::fade_color_type::WHITE);
+    this->stateMachine->set(new _GameOver::WaitForPlayerDeath(this));
 }
 
 void _Gameplay::GameOver::update() {
-    this->gameplayScene->player->update();
-    // fade effect update
-    if(!this->fadeComplete) {
-        if(this->fadeIntensity == 0) this->fadeComplete = true;
-        else {
-            if(this->fadeIntensity == 1) this->fadeMultiplierSign = -1;
-            this->fadeIntensity = bn::clamp(this->fadeIntensity + (this->step * this->fadeMultiplierSign), bn::fixed(0), bn::fixed(1));
-            bn::blending::set_fade_alpha(this->fadeIntensity);
-        }
-    }
-    else {
-        if(this->gameplayScene->player->getStateName() == _Gameplay::STR_DEAD_STATE) {
-            if(state == 0) {
-                state = 1;
-                this->initializeScoreBoard();
-            }
-            if(this->scoreboard != nullptr) this->scoreboard->update();
-            if(this->gameOverText == nullptr && this->scoreboard->stateMachine->getStateName() == _Gameplay::STR_SCORE_ANIMATION_START) {
-                this->gameOverText = new UI::Text::GameOver(-34,-42);
-            }
-            if(this->scoreboard->stateMachine->getStateName() == _Gameplay::STR_SCORE_ANIMATION_END) {
-                // let user control
-                int posX = -50;
-                int posY = 42;
-                if(this->restartBtn == nullptr) {
-                    this->restartBtn = new UI::Button::Restart(posX, posY);
-                    this->restartBtn->select();
-                    this->option = UserOptions::RESTART_GAME;
-                }
-                if(this->mainMenuBtn == nullptr) {
-                    int paddingBtwBtns = 5;
-                    int sizeofRersizeBtn = 64;
-                    this->mainMenuBtn = new UI::Button::MainMenu(posX + paddingBtwBtns + sizeofRersizeBtn, posY);
-                    this->mainMenuBtn->unselect();
-                }
-                if(bn::keypad::right_pressed()) {
-                    this->restartBtn->unselect();
-                    this->mainMenuBtn->select();
-                    this->option = UserOptions::MAIN_MENU;
-                }
-                if(bn::keypad::left_pressed()) {
-                    this->restartBtn->select();
-                    this->mainMenuBtn->unselect();
-                    this->option = UserOptions::RESTART_GAME;
-                }
-                if(bn::keypad::a_pressed()) {
-                    switch(this->option) {
-                        case UserOptions::RESTART_GAME:
-                        default: {
-                            this->gameplayScene->stateMachine->set(new _Gameplay::GetReady(this->gameplayScene));
-                            break;
-                        }
-                        case UserOptions::MAIN_MENU: {
-                            this->gameplayScene->stateMachine->set(new _Gameplay::GetReady(this->gameplayScene));
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-    }
+    this->stateMachine->update();
 }
 
 void _Gameplay::GameOver::initializeScoreBoard() {
@@ -109,6 +46,9 @@ void _Gameplay::GameOver::clearResources() {
 
     delete this->restartBtn;
     this->restartBtn = nullptr;
+
+    delete this->stateMachine;
+    this->stateMachine = nullptr;
 
     this->clearOutsideResources();
 }

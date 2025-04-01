@@ -10,27 +10,19 @@
     #include "UI/MainMenu.Button.hpp"
     #include "UI/Restart.Button.hpp"
     #include "Scenes/Gameplay/Gameplay.Scene.GetReady.hpp"
+    #include "Scenes/Gameplay/GameOver/GameOver.Scene.WaitForPlayerDeath.hpp"
 
     namespace Scene { class Gameplay; }
     namespace _Gameplay {
-
-        enum UserOptions { RESTART_GAME, MAIN_MENU };
-        const bn::string<32> STR_DEAD_STATE("DeadState");
-        const bn::string<32> STR_SCORE_ANIMATION_START("ScoreAnimation.Start");
-        const bn::string<32> STR_SCORE_ANIMATION_END("ScoreAnimation.End");
-
+        
         class GameOver: public AbstractState {
-            bool fadeComplete = false;
-            bn::fixed fadeIntensity = .1;
-            const bn::fixed step = .08;
-            int fadeMultiplierSign = 1;
-            bool newHighSocre = false;
-            UI::ScoreBoard* scoreboard;
-            UI::Text::GameOver* gameOverText;
-            UI::Button::MainMenu* mainMenuBtn;
-            UI::Button::Restart* restartBtn;
-            UserOptions option;
             public:
+                bool newHighSocre = false;
+                UI::ScoreBoard* scoreboard;
+                StateMachine* stateMachine;
+                UI::Text::GameOver* gameOverText;
+                UI::Button::MainMenu* mainMenuBtn;
+                UI::Button::Restart* restartBtn;
                 Scene::Gameplay* gameplayScene;
                 GameOver(Scene::Gameplay*);
                 void load();
