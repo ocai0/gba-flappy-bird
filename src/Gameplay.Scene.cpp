@@ -31,8 +31,7 @@ void Scene::Gameplay::leave() {
     delete this->player;
     this->player = nullptr;
 
-    delete this->background;
-    this->background = nullptr;
+    this->background.reset();
 
     delete this->mainMenuVars;
     this->mainMenuVars = nullptr;

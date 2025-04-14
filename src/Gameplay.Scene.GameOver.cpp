@@ -63,8 +63,7 @@ void _Gameplay::GameOver::clearOutsideResources() {
     delete this->gameplayScene->player;
     this->gameplayScene->player = nullptr;
     
-    delete this->gameplayScene->background;
-    this->gameplayScene->background = nullptr;
+    this->gameplayScene->background.reset();
     
     delete this->gameplayScene->mainMenuVars;
     this->gameplayScene->mainMenuVars = nullptr;

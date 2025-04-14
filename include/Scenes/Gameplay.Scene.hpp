@@ -34,7 +34,7 @@
                 Floor* floor = nullptr;
                 Score* score = nullptr;
                 FlappyBird* player = nullptr;
-                Background* background = nullptr;
+                bn::optional<Background> background;
                 MainMenuVars* mainMenuVars = nullptr;
                 StateMachine* stateMachine = nullptr;
                 StateMachine* sceneManager = nullptr;

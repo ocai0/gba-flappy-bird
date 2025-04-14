@@ -48,10 +48,10 @@ void _Gameplay::GetReady::leave() {
 
 
 void _Gameplay::GetReady::initializeBackground(Enum::BackgroundType _selectedType) {
-    this->gameplayScene->background = new Background();
+    this->gameplayScene->background = Background();
     this->gameplayScene->background
         ->setImage(bn::regular_bg_items::bg_day.create_bg(0, -10))
-        ->setCamera(&this->gameplayScene->camera)
+        ->setCamera(this->gameplayScene->camera)
         ->setRenderPriority(3)
         ;
     switch(_selectedType) {
