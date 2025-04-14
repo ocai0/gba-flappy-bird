@@ -112,13 +112,13 @@ void _Gameplay::GetReady::initializePipes(Enum::PipeType _selectedType) {
             ->setY(pipeY)
             ->flipVertically()
             ->addBody()
-            ->setCamera(&this->gameplayScene->camera)
+            ->setCamera(this->gameplayScene->camera)
             ->setRenderPriority(2)
             ;
         pipeWall->bottomPipe
             ->setX(pipeX)
             ->setY(pipeY + pipeWall->topPipe->getHeight() + this->gameplayScene->GAP_SIZE)
-            ->setCamera(&this->gameplayScene->camera)
+            ->setCamera(this->gameplayScene->camera)
             ->setRenderPriority(2)
             ;
         if(index % 2 == 0) {
@@ -138,7 +138,7 @@ void _Gameplay::GetReady::initializePipes(Enum::PipeType _selectedType) {
 void _Gameplay::GetReady::initializeFloor(Enum::FloorType _selectedType) {
     this->gameplayScene->floor = new Floor();
     this->gameplayScene->floor->setImage(bn::regular_bg_items::bg_floor.create_bg(0, 36));
-    this->gameplayScene->floor->setCamera(&this->gameplayScene->camera);
+    this->gameplayScene->floor->setCamera(this->gameplayScene->camera);
     this->gameplayScene->floor->setRenderPriority(1); 
     this->addToObstacleList((Obstacle*) this->gameplayScene->floor);
 }
@@ -156,7 +156,7 @@ void _Gameplay::GetReady::initializePlayer(Enum::BirdType _selectedType) {
     
     this->gameplayScene->player
         // ->showHitbox()
-        ->setCamera(&this->gameplayScene->camera)
+        ->setCamera(this->gameplayScene->camera)
         ->setWeight(.5)
         ->setRenderPriority(2)
         ;

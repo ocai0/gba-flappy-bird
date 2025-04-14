@@ -56,7 +56,7 @@ void Scene::Gameplay::leave() {
     this->pipes.clear();
     this->obstacles.clear();
     this->getReadyBg.reset();
-    this->camera.~camera_ptr();
+    this->camera.reset();
 }
 
 void Scene::Gameplay::enableBlendingOnAllActors() {

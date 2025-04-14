@@ -15,7 +15,7 @@
         bn::fixed xSpeed;
         bn::optional<bn::sprite_ptr> sprite;
         bn::optional<DebugBox> hitbox;
-        bn::camera_ptr* camera = nullptr;
+        bn::optional<bn::camera_ptr> camera;
         bn::fixed offsetX;
         bn::fixed offsetY;
         public:
@@ -33,7 +33,7 @@
             Pipe* hideHitbox();
             Pipe* setPalette(bn::sprite_palette_ptr);
             Pipe* flipVertically();
-            Pipe* setCamera(bn::camera_ptr*);
+            Pipe* setCamera(bn::optional<bn::camera_ptr>);
             Pipe* addBody();
             Pipe* removeBody();
 

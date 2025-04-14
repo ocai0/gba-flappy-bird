@@ -23,7 +23,7 @@
             void setY(bn::fixed);
             void update();
             void setVisible(bool);
-            void setCamera(bn::camera_ptr*);
+            void setCamera(bn::optional<bn::camera_ptr>);
     };
 
 #endif

@@ -48,10 +48,10 @@ void _Gameplay::InGame::update() {
         this->gameplayScene->stateMachine->set(new _Gameplay::Paused(this->gameplayScene));
     }
     if(bn::keypad::l_held()) {
-        this->gameplayScene->camera.set_y(this->gameplayScene->camera.y() - 1);
+        this->gameplayScene->camera->set_y(this->gameplayScene->camera->y() - 1);
     }
     if(bn::keypad::r_held()) {
-        this->gameplayScene->camera.set_y(this->gameplayScene->camera.y() + 1);
+        this->gameplayScene->camera->set_y(this->gameplayScene->camera->y() + 1);
     }
     this->gameplayScene->floor->update();
     this->gameplayScene->background->update();

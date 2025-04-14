@@ -43,7 +43,7 @@
                 bn::vector<PipeWall*, 6> pipes;
                 bn::vector<Obstacle*, 15> obstacles;
                 bn::optional<bn::regular_bg_ptr> getReadyBg;
-                bn::camera_ptr camera;
+                bn::optional<bn::camera_ptr> camera;
                 Gameplay(StateMachine*);
                 void load();
                 void update();
