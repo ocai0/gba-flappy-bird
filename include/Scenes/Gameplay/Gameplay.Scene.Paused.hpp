@@ -8,7 +8,7 @@
     namespace Scene { class Gameplay; }
     namespace _Gameplay {
         class Paused: public AbstractState {
-            UI::Text::Paused* pausedText;
+            bn::optional<UI::Text::Paused> pausedText;
             public:
                 Scene::Gameplay* gameplayScene;
                 Paused(Scene::Gameplay*);

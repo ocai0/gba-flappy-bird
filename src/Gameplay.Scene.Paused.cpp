@@ -14,7 +14,7 @@ void _Gameplay::Paused::load() {
         pipeWall->bottomPipe->hide();
     }
 
-    this->pausedText = new UI::Text::Paused(-15, 2);
+    this->pausedText = UI::Text::Paused(-15, 2);
 }
 
 void _Gameplay::Paused::update() {
@@ -26,8 +26,7 @@ void _Gameplay::Paused::update() {
 void _Gameplay::Paused::render() {}
 
 void _Gameplay::Paused::leave() {
-    delete this->pausedText;
-    this->pausedText = nullptr;
+    this->pausedText.reset();
     this->gameplayScene->player->show();
     this->gameplayScene->score->show();
     for(PipeWall* pipeWall : this->gameplayScene->pipes) {
