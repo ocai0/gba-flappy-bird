@@ -1,4 +1,5 @@
 #include "Scenes/GearsLogo.Scene.hpp"
+#include "bn_log.h"
 
 
 namespace _GearsLogo {
@@ -6,7 +7,7 @@ namespace _GearsLogo {
     const bn::bg_palette_item& blue_bg_palette = bn::bg_palette_items::bg_gears_logo_alt;
 }
 
-Scene::GearsLogo::GearsLogo(StateMachine* _sceneManager) {
+Scene::GearsLogo::GearsLogo(bn::optional<StateMachine> _sceneManager) {
     this->sceneManager = _sceneManager;
     this->setName("Scene::GearsLogo");
     bn::blending::set_fade_color(bn::blending::fade_color_type::BLACK);
@@ -41,7 +42,8 @@ void Scene::GearsLogo::render() {
 }
 
 void Scene::GearsLogo::leave() {
-    this->sceneManager = nullptr;
+    // this->sceneManager.reset();
+    BN_LOG("GEARS LGOO LEAVE");
     this->bg.reset();
     this->bg_palette.reset();
     bn::blending::set_fade_alpha(0);

@@ -2,11 +2,11 @@
 #include "bn_log.h"
 
 
-void StateMachine::set(AbstractState* newState) {
+void StateMachine::set(bn::optional<AbstractState> newState) {
     this->set(newState, false);
 }
 
-void StateMachine::set(AbstractState* newState, bool forceReset) {
+void StateMachine::set(bn::optional<AbstractState> newState, bool forceReset) {
     if(this->log) BN_LOG("StateMachine::Set start");
     this->nextState = newState;
     this->forceStateReset = forceReset;
@@ -14,15 +14,14 @@ void StateMachine::set(AbstractState* newState, bool forceReset) {
 }
 
 void StateMachine::update() {
-    if(this->nextState != nullptr || this->forceStateReset) {
-        if(this->currentState != nullptr) {
+    if(this->nextState.has_value() || this->forceStateReset) {
+        if(this->currentState.has_value()) {
             this->currentState->leave();
-            delete this->currentState;
+            this->currentState.reset();
         }
         this->nextState->load();
         this->currentState = this->nextState;
 
-        this->nextState = nullptr;
         this->forceStateReset = false;
     } else {
         if(this->currentState) this->currentState->tick();
@@ -30,14 +29,14 @@ void StateMachine::update() {
 }
 
 void StateMachine::render() {
-    if(this->currentState != nullptr) this->currentState->render();
+    if(this->currentState.has_value()) this->currentState->render();
 }
 
 bn::string<32> StateMachine::getStateName() {
     return this->currentState->getName();
 }
 
-AbstractState* StateMachine::get() {
+bn::optional<AbstractState> StateMachine::get() {
     return this->currentState;
 }
 

@@ -19,7 +19,7 @@
             public:
                 bool newHighSocre = false;
                 UI::ScoreBoard* scoreboard;
-                StateMachine* stateMachine;
+                bn::optional<StateMachine> stateMachine;
                 UI::Text::GameOver* gameOverText;
                 UI::Button::MainMenu* mainMenuBtn;
                 UI::Button::Restart* restartBtn;

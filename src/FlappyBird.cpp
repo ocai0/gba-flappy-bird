@@ -9,7 +9,7 @@ FlappyBird::FlappyBird(bn::fixed _x, bn::fixed _y) {
     this->setY(_y);
     this->rotationAngle = 90;
     this->sprite->set_rotation_angle(this->rotationAngle);
-    this->stateMachine = new StateMachine();
+    this->stateMachine = StateMachine();
     this->stateMachine->set(new _FlappyBird::IdleState(this));
 }
 
@@ -111,8 +111,7 @@ FlappyBird* FlappyBird::show() {
 }
 
 FlappyBird::~FlappyBird() {
-    delete this->stateMachine;
-    this->stateMachine = nullptr;
+    this->stateMachine.reset();
     
     this->obstacleList.clear();
     this->sprite.reset();
