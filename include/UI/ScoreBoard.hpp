@@ -16,7 +16,7 @@
                 bn::optional<bn::regular_bg_ptr> sprite;
                 Score* currentScore = nullptr;
                 Score* highScore = nullptr;
-                bn::optional<StateMachine> stateMachine;
+                StateMachine* stateMachine;
                 bn::fixed x = 0;
                 bn::fixed y = 370;
                 bn::fixed deltaX = 0;

@@ -36,15 +36,15 @@
                 FlappyBird* player = nullptr;
                 bn::optional<Background> background;
                 MainMenuVars* mainMenuVars = nullptr;
-                bn::optional<StateMachine> stateMachine;
-                bn::optional<StateMachine> sceneManager;
+                StateMachine* stateMachine;
+                StateMachine* sceneManager;
 
                 bn::random* randomGenerator = nullptr;
                 bn::vector<PipeWall*, 6> pipes;
                 bn::vector<Obstacle*, 15> obstacles;
                 bn::optional<bn::regular_bg_ptr> getReadyBg;
                 bn::optional<bn::camera_ptr> camera;
-                Gameplay(bn::optional<StateMachine>);
+                Gameplay(StateMachine*);
                 void load();
                 void update();
                 void render();

@@ -2,13 +2,11 @@
 #include "bn_log.h"
 
 
-Scene::Gameplay::Gameplay(bn::optional<StateMachine> _sceneManager) {
+Scene::Gameplay::Gameplay(StateMachine* _sceneManager) {
     this->camera = bn::camera_ptr::create(0, 0);
     this->setName("Scene::Gameplay");
     this->sceneManager = _sceneManager;
-    this->stateMachine = StateMachine();
-    BN_LOG("234");
-    BN_ASSERT(this->sceneManager.has_value(), "SceneManager do Gameplay.Scene deixou de existir");
+    this->stateMachine = new StateMachine();
 }
 
 void Scene::Gameplay::load() {
@@ -17,12 +15,10 @@ void Scene::Gameplay::load() {
 }
 
 void Scene::Gameplay::update() {
-    BN_ASSERT(this->stateMachine.has_value(), "StateMachine do Gameplay.Scene deixou de existir");
     this->stateMachine->update();
 }
 
 void Scene::Gameplay::render() {
-    BN_ASSERT(this->stateMachine.has_value(), "StateMachine do Gameplay.Scene deixou de existir");
     this->stateMachine->render();
 }
 
@@ -41,7 +37,7 @@ void Scene::Gameplay::leave() {
     delete this->mainMenuVars;
     this->mainMenuVars = nullptr;
 
-    this->stateMachine.reset();
+    
 
     // this->sceneManager.reset();
 

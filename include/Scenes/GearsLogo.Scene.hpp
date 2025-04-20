@@ -14,12 +14,12 @@
         class GearsLogo : public AbstractState {
             bn::optional<bn::regular_bg_ptr> bg;
             bn::optional<bn::bg_palette_ptr> bg_palette;
-            bn::optional<StateMachine> sceneManager;
+            StateMachine* sceneManager;
             bn::fixed fadeValue = -4;
             bool fadeOutComplete = false;
             bool goToMainMenu = false;
             public:
-                GearsLogo(bn::optional<StateMachine>);
+                GearsLogo(StateMachine*);
                 void load();
                 void update();
                 void render();

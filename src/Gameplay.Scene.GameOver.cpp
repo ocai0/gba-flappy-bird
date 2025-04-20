@@ -5,7 +5,7 @@
 _Gameplay::GameOver::GameOver(Scene::Gameplay* _gameplayScene) {
     this->setName("_Gameplay::GameOver");
     this->gameplayScene = _gameplayScene;
-    this->stateMachine = StateMachine();
+    this->stateMachine = new StateMachine();
 }
 
 void _Gameplay::GameOver::load() {
@@ -47,7 +47,7 @@ void _Gameplay::GameOver::clearResources() {
     delete this->restartBtn;
     this->restartBtn = nullptr;
 
-    this->stateMachine.reset();
+    
 
     this->clearOutsideResources();
 }
