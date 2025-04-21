@@ -8,6 +8,14 @@ _Gameplay::GetReady::GetReady(Scene::Gameplay* _gameplayScene) {
 }
 
 void _Gameplay::GetReady::load() {
+
+    for(int index = this->gameplayScene->pipes.size() - 1; index >= 0; index--) {
+        PipeWall* pipe = this->gameplayScene->pipes.at(index);
+        pipe->topPipe->~Pipe();
+        pipe->bottomPipe->~Pipe();
+        this->gameplayScene->pipes.pop_back();
+    }
+
     MainMenuVars userOptions;
     userOptions.birdType = Enum::BirdType::FLAPPY_BIRD;
     userOptions.backgroundType = Enum::PipeType::CITY;
@@ -91,20 +99,20 @@ void _Gameplay::GetReady::initializePipes(Enum::PipeType _selectedType) {
         switch(_selectedType) {
             case Enum::PipeType::CITY:
             default:        
-                pipeWall->topPipe = new Pipe(0, 0);
-                pipeWall->bottomPipe = new Pipe(0, 0);
+                pipeWall->topPipe.reset(new Pipe(0, 0));
+                pipeWall->bottomPipe.reset(new Pipe(0, 0));
                 break;
             case Enum::PipeType::ANCIENT:
-                pipeWall->topPipe = new AncientPipe(0, 0);
-                pipeWall->bottomPipe = new AncientPipe(0, 0);
+                pipeWall->topPipe.reset(new AncientPipe(0, 0));
+                pipeWall->bottomPipe.reset(new AncientPipe(0, 0));
                 break;
             case Enum::PipeType::ARENA:
-                pipeWall->topPipe = new PunchPipe(0, 0);
-                pipeWall->bottomPipe = new PunchPipe(0, 0);
+                pipeWall->topPipe.reset(new PunchPipe(0, 0));
+                pipeWall->bottomPipe.reset(new PunchPipe(0, 0));
                 break;
             case Enum::PipeType::DESERT:
-                pipeWall->topPipe = new CactusPipe(0, 0);
-                pipeWall->bottomPipe = new CactusPipe(0, 0);
+                pipeWall->topPipe.reset(new CactusPipe(0, 0));
+                pipeWall->bottomPipe.reset(new CactusPipe(0, 0));
                 break;
         }
         pipeWall->topPipe
@@ -128,8 +136,8 @@ void _Gameplay::GetReady::initializePipes(Enum::PipeType _selectedType) {
         pipeWall->x = pipeX;
         pipeWall->y = pipeY;
 
-        this->addToObstacleList(pipeWall->topPipe);
-        this->addToObstacleList(pipeWall->bottomPipe);
+        this->addToObstacleList(pipeWall->topPipe.get());
+        this->addToObstacleList(pipeWall->bottomPipe.get());
 
         pipeX += pipeWall->topPipe->getWidth() + this->gameplayScene->GAP_SIZE_BTW_PIPES;
     }

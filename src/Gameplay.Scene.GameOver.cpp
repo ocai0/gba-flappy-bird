@@ -47,8 +47,6 @@ void _Gameplay::GameOver::clearResources() {
     delete this->restartBtn;
     this->restartBtn = nullptr;
 
-    
-
     this->clearOutsideResources();
 }
 
@@ -67,21 +65,7 @@ void _Gameplay::GameOver::clearOutsideResources() {
     delete this->gameplayScene->mainMenuVars;
     this->gameplayScene->mainMenuVars = nullptr;
 
-    for(int index = this->gameplayScene->pipes.size() - 1; index > 0; index--) {
-        PipeWall* pipe = this->gameplayScene->pipes.at(index);
-        delete pipe->topPipe;
-        pipe->topPipe = nullptr;
-        delete pipe->bottomPipe;
-        pipe->bottomPipe = nullptr;
-        this->gameplayScene->pipes.pop_back();
-    }
-
-    this->gameplayScene->pipes.clear();
     this->gameplayScene->obstacles.clear();
-    // bn::memory::clear(this->gameplayScene->pipes.size(), this->gameplayScene->pipes.at(0));
-    // this->gameplayScene->pipes.clear();
-    // bn::memory::clear(this->gameplayScene->obstacles.size(), this->gameplayScene->obstacles.at(0));
-    // BN_LOG(this->gameplayScene->pipes.size());
     this->gameplayScene->getReadyBg.reset();
     this->gameplayScene = nullptr;
     bn::core::update();

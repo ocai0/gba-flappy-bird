@@ -44,13 +44,13 @@ void Scene::Gameplay::leave() {
     delete this->randomGenerator;
     this->randomGenerator = nullptr;
 
-    for(PipeWall* pipe : this->pipes) {
-        delete pipe->topPipe;
-        pipe->topPipe = nullptr;
-        delete pipe->bottomPipe;
-        pipe->bottomPipe = nullptr;
-        delete pipe;
-    }
+    // for(PipeWall* pipe : this->pipes) {
+    //     delete pipe->topPipe;
+    //     pipe->topPipe = nullptr;
+    //     delete pipe->bottomPipe;
+    //     pipe->bottomPipe = nullptr;
+    //     delete pipe;
+    // }
     
     this->pipes.clear();
     this->obstacles.clear();
