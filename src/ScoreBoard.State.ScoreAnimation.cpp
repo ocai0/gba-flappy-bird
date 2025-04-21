@@ -1,5 +1,6 @@
 #include "UI/ScoreBoard/ScoreBoard.State.ScoreAnimation.hpp"
 #include "bn_keypad.h"
+#include "bn_log.h"
 
 
 _ScoreBoard::ScoreAnimation::ScoreAnimation(UI::ScoreBoard* _scoreboard) {
@@ -32,17 +33,15 @@ void _ScoreBoard::ScoreAnimation::update() {
 }
 
 void _ScoreBoard::ScoreAnimation::render() {
-    if(this->scoreboard == nullptr) return;
-    if(this->medal != nullptr) this->medal->render();
+    if(!this->scoreboard) return;
+    if(this->medal) this->medal->render();
 }
 
 void _ScoreBoard::ScoreAnimation::leave() {
-    delete this->scoreboard;
+    BN_LOG("void _ScoreBoard::ScoreAnimation::leave()");
     this->scoreboard = nullptr;
-    delete this->newFlag;
-    this->newFlag = nullptr;
-    delete this->medal;
-    this->medal = nullptr;
+    this->newFlag.reset();
+    this->medal.reset();
     
     this->sram = nullptr;
 }
@@ -57,7 +56,7 @@ void _ScoreBoard::ScoreAnimation::verifyAndSaveHighScore() {
         // show new flag
         bn::sprite_ptr* firstCharacter = &this->scoreboard->highScore->sprites[0];
         int newFlagXPos = firstCharacter->x().integer() - firstCharacter->dimensions().width() / 2 - NEW_FLAG_SPRITE_SIZE_HALVED - PADDING_VALUE;
-        this->newFlag = new UI::NewFlag(newFlagXPos, 15);
+        this->newFlag.reset(new UI::NewFlag(newFlagXPos, 15));
         this->newFlag->setPriority(1);
         // save in sram
         this->sram->setHighScore(_currentScore);
@@ -68,7 +67,7 @@ void _ScoreBoard::ScoreAnimation::verifyAndSaveHighScore() {
 
 void _ScoreBoard::ScoreAnimation::renderMedal() {
     if(this->tempCurrentScore < 10) return;
-    this->medal = new UI::Medal(-28, 8);
+    this->medal.reset(new UI::Medal(-28, 8));
     if(this->tempCurrentScore >= 10) this->medal->useBronzeSprite();
     if(this->tempCurrentScore >= 20) this->medal->useSilverSprite();
     if(this->tempCurrentScore >= 30) this->medal->useGoldSprite();

@@ -2,6 +2,7 @@
 #define SCORE_BOARD_STATE_SCORE_ANIMATION_H_
 
     #include "bn_optional.h"
+    #include "bn_unique_ptr.h"
     #include "UI/ScoreBoard.hpp"
     #include "SramData.hpp"
     #include "UI/NewFlag.hpp"
@@ -23,8 +24,8 @@
             SramData* sram;
             public:
                 UI::ScoreBoard* scoreboard;
-                UI::NewFlag* newFlag;
-                UI::Medal* medal;
+                bn::unique_ptr<UI::NewFlag> newFlag;
+                bn::unique_ptr<UI::Medal> medal;
                 ScoreAnimation(UI::ScoreBoard*);
                 void load();
                 void update();

@@ -3,12 +3,12 @@
 
 
 UI::ScoreBoard::ScoreBoard() {
-    this->stateMachine = new StateMachine();
+    this->stateMachine.reset(new StateMachine());
     this->sprite = bn::regular_bg_items::bg_score_board.create_bg(this->x, this->y);
     this->sprite->set_priority(1);
     int scoreXPos = 44;
-    this->currentScore = new Score(scoreXPos, -11);
-    this->highScore = new Score(scoreXPos, 10);
+    this->currentScore.reset(new Score(scoreXPos, -11));
+    this->highScore.reset(new Score(scoreXPos, 10));
 }
 
 void UI::ScoreBoard::load() {
@@ -42,13 +42,9 @@ void UI::ScoreBoard::render() {
 }
 
 UI::ScoreBoard::~ScoreBoard() {
-    delete this->currentScore;
-    this->currentScore = nullptr;
-
-    delete this->highScore;
-    this->highScore = nullptr;
-
-    
+    this->currentScore.reset();
+    this->stateMachine.reset();
+    this->highScore.reset();
 
     this->sprite.reset();
 }

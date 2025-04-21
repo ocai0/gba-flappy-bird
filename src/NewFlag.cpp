@@ -1,4 +1,5 @@
 #include "UI/NewFlag.hpp"
+#include "bn_log.h"
 
 
 UI::NewFlag::NewFlag(bn::fixed _x, bn::fixed _y) {
@@ -20,12 +21,13 @@ void UI::NewFlag::setY(bn::fixed _y) {
 }
 
 void UI::NewFlag::setPriority(int priority) {
-    if(this->sprite.has_value() == false)  return;
+    if(this->sprite.has_value() == false) return;
     this->sprite->set_bg_priority(priority);
     this->sprite->set_z_order(priority);
 }
 
 UI::NewFlag::~NewFlag() {
+    BN_LOG("UI::NewFlag::~NewFlag()");
     this->sprite.reset();
     bn::core::update();
 }

@@ -2,6 +2,7 @@
 #define SCORE_BOARD_H_
 
     #include "bn_optional.h"
+    #include "bn_unique_ptr.h"
     #include "bn_regular_bg_ptr.h"
 
     #include "Commons/StateMachine.hpp"
@@ -14,9 +15,9 @@
         class ScoreBoard {
             public:
                 bn::optional<bn::regular_bg_ptr> sprite;
-                Score* currentScore = nullptr;
-                Score* highScore = nullptr;
-                StateMachine* stateMachine;
+                bn::unique_ptr<Score> currentScore = nullptr;
+                bn::unique_ptr<Score> highScore = nullptr;
+                bn::unique_ptr<StateMachine> stateMachine;
                 bn::fixed x = 0;
                 bn::fixed y = 370;
                 bn::fixed deltaX = 0;
@@ -28,7 +29,6 @@
                 void load();
                 void update();
                 void render();
-                void showNewHighScoreFlag();
         };
     }
 #endif
