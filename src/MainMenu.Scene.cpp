@@ -4,7 +4,7 @@ Scene::MainMenu::MainMenu(StateMachine* _sceneManager) {
     this->sceneManager = _sceneManager;
     this->floor.reset(new Floor());
     this->floor
-        ->setImage(bn::regular_bg_items::bg_floor.create_bg(0, 36))
+        ->setImage(bn::regular_bg_items::bg_floor.create_bg(0, 34))
         ->setRenderPriority(1);
     this->player.reset(new FlappyBird(-5, 0));
     this->background = Background();
@@ -13,6 +13,8 @@ Scene::MainMenu::MainMenu(StateMachine* _sceneManager) {
         ->setRenderPriority(3);
 
     this->gameLogo = UI::Text::GameLogo(-30, -48);
+    this->footer = UI::Text::Footer(68, 74);
+    this->footer->setRenderPriority(0);
 }
 
 void Scene::MainMenu::load() {}

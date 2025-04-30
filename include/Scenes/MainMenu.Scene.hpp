@@ -4,6 +4,7 @@
     
     #include "Actors/Floor.hpp"
     #include "UI/GameLogo.Text.hpp"
+    #include "UI/Footer.Text.hpp"
     #include "Commons/AbstractState.hpp"
     #include "Actors/FlappyBird.hpp"
     #include "Scenes/Gameplay.Scene.hpp"
@@ -19,6 +20,7 @@
                 bn::unique_ptr<FlappyBird> player;
                 bn::optional<Background> background;
                 bn::optional<UI::Text::GameLogo> gameLogo;
+                bn::optional<UI::Text::Footer> footer;
                 StateMachine* sceneManager;
 
                 MainMenu(StateMachine*);
