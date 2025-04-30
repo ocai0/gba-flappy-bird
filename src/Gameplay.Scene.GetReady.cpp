@@ -1,32 +1,171 @@
 #include "Scenes/Gameplay/Gameplay.Scene.GetReady.hpp"
+#include "bn_log.h"
 
-_Gameplay::GetReady::GetReady(Scene::Gameplay* _parentState) {
-    this->parentState = _parentState;
+
+_Gameplay::GetReady::GetReady(Scene::Gameplay* _gameplayScene) {
+    this->setName("_Gameplay::GetReady");
+    this->gameplayScene = _gameplayScene;
 }
 
 void _Gameplay::GetReady::load() {
-    this->parentState->player->setX(-80);
-    this->parentState->player->setY(0);
+
+    for(int index = this->gameplayScene->pipes.size() - 1; index >= 0; index--) {
+        PipeWall* pipe = this->gameplayScene->pipes.at(index);
+        pipe->topPipe->~Pipe();
+        pipe->bottomPipe->~Pipe();
+        this->gameplayScene->pipes.pop_back();
+    }
+
+    MainMenuVars userOptions;
+    userOptions.birdType = Enum::BirdType::FLAPPY_BIRD;
+    userOptions.backgroundType = Enum::PipeType::CITY;
+    this->gameplayScene->score.reset(new Score(-7, -60));
+    this->gameplayScene->score
+        ->useBigFont()
+        ->hide()
+        ->setValue(0)
+        ;
+    this->initializeFloor(userOptions.backgroundType);
+    this->initializePlayer(userOptions.birdType);
+    this->initializePipes(userOptions.backgroundType);
+    this->initializeBackground(userOptions.backgroundType);
+    this->gameplayScene->player->watchObstacles(this->gameplayScene->obstacles);
+
+    this->gameplayScene->getReadyBg = bn::regular_bg_items::bg_get_ready.create_bg(0, -10);
+    this->gameplayScene->getReadyBg->set_priority(1);
+    this->gameplayScene->getReadyBg->set_blending_enabled(true);
 }
 
 void _Gameplay::GetReady::update() {
-    this->parentState->getReadyBg = bn::regular_bg_items::bg_get_ready.create_bg(0, -10);
-    this->parentState->getReadyBg->set_priority(1);
-    this->parentState->getReadyBg->set_blending_enabled(true);
-    if(!bn::keypad::a_pressed()) {
-        this->parentState->player->update();
-        this->parentState->floor->update();
-        this->parentState->background->update();
-    }
+    if(bn::keypad::a_pressed()) this->gameplayScene->stateMachine->set(new _Gameplay::InGame(this->gameplayScene));
     else {
-        this->parentState->stateMachine->set(new _Gameplay::InGame(this->parentState));
+        this->gameplayScene->player->update();
+        this->gameplayScene->floor->update();
+        this->gameplayScene->background->update();
     }
 }
 
 void _Gameplay::GetReady::render() {
-    this->parentState->player->render();
-    this->parentState->score->hide();
+    this->gameplayScene->player->render();
+    this->gameplayScene->score->hide();
 }
 
-void _Gameplay::GetReady::leave() {}
+void _Gameplay::GetReady::leave() {
+    this->gameplayScene = nullptr;
+}
 
+
+void _Gameplay::GetReady::initializeBackground(Enum::BackgroundType _selectedType) {
+    this->gameplayScene->background = Background();
+    this->gameplayScene->background
+        ->setImage(bn::regular_bg_items::bg_day.create_bg(0, -10))
+        ->setCamera(this->gameplayScene->camera)
+        ->setRenderPriority(3)
+        ;
+    switch(_selectedType) {
+        case Enum::BackgroundType::CITY:
+        default:
+            break;
+        case Enum::BackgroundType::ANCIENT:
+            break;
+        case Enum::BackgroundType::ARENA:
+            break;
+        case Enum::BackgroundType::DESERT:
+            break;
+    }
+}
+
+int _Gameplay::GetReady::addToObstacleList(Obstacle* _obstacle) {
+    if(this->gameplayScene->obstacles.size() + 1 > this->gameplayScene->obstacles.max_size()) return -1;
+    this->gameplayScene->obstacles.push_back(_obstacle);
+    return this->gameplayScene->obstacles.size();
+}
+
+int _Gameplay::GetReady::addToPipeList(PipeWall* _pipe) {
+    if(this->gameplayScene->pipes.size() + 1 >= this->gameplayScene->pipes.max_size()) return -1;
+    this->gameplayScene->pipes.emplace_back(_pipe);
+    return this->gameplayScene->pipes.size();
+}
+
+void _Gameplay::GetReady::initializePipes(Enum::PipeType _selectedType) {
+    constexpr int PIPE_WALLS_ON_SCRREN = 4;
+
+    bn::fixed pipeX = 160;
+    bn::fixed pipeY;
+    for(int index=0; index < PIPE_WALLS_ON_SCRREN; index++) {
+        pipeY = this->gameplayScene->randomGenerator->get_int(-124, -48);
+        PipeWall* pipeWall = new PipeWall();
+        this->addToPipeList(pipeWall);
+        switch(_selectedType) {
+            case Enum::PipeType::CITY:
+            default:        
+                pipeWall->topPipe.reset(new Pipe(0, 0));
+                pipeWall->bottomPipe.reset(new Pipe(0, 0));
+                break;
+            case Enum::PipeType::ANCIENT:
+                pipeWall->topPipe.reset(new AncientPipe(0, 0));
+                pipeWall->bottomPipe.reset(new AncientPipe(0, 0));
+                break;
+            case Enum::PipeType::ARENA:
+                pipeWall->topPipe.reset(new PunchPipe(0, 0));
+                pipeWall->bottomPipe.reset(new PunchPipe(0, 0));
+                break;
+            case Enum::PipeType::DESERT:
+                pipeWall->topPipe.reset(new CactusPipe(0, 0));
+                pipeWall->bottomPipe.reset(new CactusPipe(0, 0));
+                break;
+        }
+        pipeWall->topPipe
+            ->setX(pipeX)
+            ->setY(pipeY)
+            ->flipVertically()
+            ->addBody()
+            ->setCamera(this->gameplayScene->camera)
+            ->setRenderPriority(2)
+            ;
+        pipeWall->bottomPipe
+            ->setX(pipeX)
+            ->setY(pipeY + pipeWall->topPipe->getHeight() + this->gameplayScene->GAP_SIZE)
+            ->setCamera(this->gameplayScene->camera)
+            ->setRenderPriority(2)
+            ;
+        if(index % 2 == 0) {
+            pipeWall->topPipe->setPalette(bn::sprite_palette_items::blue_pipe.create_palette());
+            pipeWall->bottomPipe->setPalette(bn::sprite_palette_items::blue_pipe.create_palette());
+        }
+        pipeWall->x = pipeX;
+        pipeWall->y = pipeY;
+
+        this->addToObstacleList(pipeWall->topPipe.get());
+        this->addToObstacleList(pipeWall->bottomPipe.get());
+
+        pipeX += pipeWall->topPipe->getWidth() + this->gameplayScene->GAP_SIZE_BTW_PIPES;
+    }
+}
+
+void _Gameplay::GetReady::initializeFloor(Enum::FloorType _selectedType) {
+    this->gameplayScene->floor.reset(new Floor());
+    this->gameplayScene->floor->setImage(bn::regular_bg_items::bg_floor.create_bg(0, 36));
+    this->gameplayScene->floor->setCamera(this->gameplayScene->camera);
+    this->gameplayScene->floor->setRenderPriority(1); 
+    this->addToObstacleList(this->gameplayScene->floor.get());
+}
+
+void _Gameplay::GetReady::initializePlayer(Enum::BirdType _selectedType) {
+    switch(_selectedType) {
+        case Enum::BirdType::FLAPPY_BIRD:
+        default:
+            this->gameplayScene->player.reset(new FlappyBird(-80, 0));
+            break;
+        case Enum::BirdType::ROBOT_BIRD:
+            this->gameplayScene->player.reset(new FlappyBird(-80, 0));
+            break;
+    }
+    
+    this->gameplayScene->player
+        // ->showHitbox()
+        ->setCamera(this->gameplayScene->camera)
+        ->setWeight(.5)
+        ->setRenderPriority(2)
+        ;
+}

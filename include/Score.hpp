@@ -19,6 +19,7 @@
         public:
             bn::vector<bn::sprite_ptr, 32> sprites;
             Score(bn::fixed, bn::fixed);
+            ~Score();
             int getValue();
             Score* setValue(int);
             Score* setX(bn::fixed);

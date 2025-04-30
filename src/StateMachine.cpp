@@ -1,18 +1,22 @@
 #include "Commons/StateMachine.hpp"
+#include "bn_log.h"
+
 
 void StateMachine::set(AbstractState* newState) {
     this->set(newState, false);
 }
+
 void StateMachine::set(AbstractState* newState, bool forceReset) {
     this->nextState = newState;
     this->forceStateReset = forceReset;
 }
+
 void StateMachine::update() {
     if(this->nextState != nullptr || this->forceStateReset) {
         if(this->currentState) this->currentState->leave();
-        (this->nextState)->load();
-        this->currentState = this->nextState;
-
+        this->nextState->load();
+        this->currentState.release();
+        this->currentState.reset(this->nextState);
         this->nextState = nullptr;
         this->forceStateReset = false;
     } else {
@@ -29,5 +33,11 @@ bn::string<32> StateMachine::getStateName() {
 }
 
 AbstractState* StateMachine::get() {
-    return this->currentState;
+    return this->currentState.get();
+}
+
+StateMachine::~StateMachine() {
+    this->currentState.reset();
+    delete this->nextState;
+    this->nextState = nullptr;
 }

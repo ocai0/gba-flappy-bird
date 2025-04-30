@@ -1,11 +1,12 @@
 #ifndef GEARS_LOGO_SCENE_H_
 #define GEARS_LOGO_SCENE_H_
     #include "bn_core.h"
+    #include "bn_blending.h"
     #include "bn_bg_palette_ptr.h"
 
     #include "Commons/AbstractState.hpp"
     #include "Commons/StateMachine.hpp"
-    #include "Scenes/Gameplay.Scene.hpp"
+    #include "Scenes/MainMenu.Scene.hpp"
 
     #include "bn_regular_bg_items_bg_gears_logo.h"
     #include "bn_bg_palette_items_bg_gears_logo_alt.h"

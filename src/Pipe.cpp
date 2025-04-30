@@ -1,4 +1,6 @@
 #include "Actors/Pipe.hpp"
+#include "bn_log.h"
+
 
 const int SPRITE_WIDTH = 32;
 const int SPRITE_HEIGHT = 64;
@@ -85,7 +87,7 @@ Pipe* Pipe::flipVertically() {
 
 Pipe* Pipe::setCamera(bn::optional<bn::camera_ptr> _camera) {
     this->camera = _camera;
-    if(this->sprite.has_value()) this->sprite->set_camera(this->camera.value());
+    if(this->sprite.has_value()) this->sprite->set_camera(this->camera);
     if(this->hitbox.has_value()) this->hitbox->setCamera(this->camera);
     return this;
 }
@@ -130,4 +132,10 @@ Pipe* Pipe::show() {
 Pipe* Pipe::hide() {
     if(this->sprite.has_value()) this->sprite->set_visible(false);
     return this;
+}
+
+Pipe::~Pipe() {
+    this->sprite.reset();
+    this->hitbox.reset();
+    this->camera.reset();
 }

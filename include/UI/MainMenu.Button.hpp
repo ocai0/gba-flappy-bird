@@ -16,6 +16,7 @@
                     bn::fixed x;
                     bn::fixed y;
                     MainMenu(bn::fixed, bn::fixed);
+                    ~MainMenu();
                     MainMenu* select();
                     MainMenu* unselect();
                     MainMenu* setX(bn::fixed);

@@ -1,4 +1,6 @@
 #include "Scenes/GearsLogo.Scene.hpp"
+#include "bn_log.h"
+
 
 namespace _GearsLogo {
     const bn::bg_palette_item& black_bg_palette = bn::regular_bg_items::bg_gears_logo.palette_item();
@@ -7,6 +9,7 @@ namespace _GearsLogo {
 
 Scene::GearsLogo::GearsLogo(StateMachine* _sceneManager) {
     this->sceneManager = _sceneManager;
+    this->setName("Scene::GearsLogo");
     bn::blending::set_fade_color(bn::blending::fade_color_type::BLACK);
     bn::blending::set_fade_alpha(0);
 }
@@ -31,13 +34,7 @@ void Scene::GearsLogo::update() {
     }
     
     if(this->goToMainMenu) {
-        MainMenuVars userOptions;
-        userOptions.birdType = Enum::BirdType::ROBOT_BIRD;
-        userOptions.backgroundType = Enum::BackgroundType::CITY;
-        userOptions.pipeType = Enum::BackgroundType::CITY;
-
-        AbstractState* scene = new Scene::Gameplay(userOptions);
-        this->sceneManager->set(scene);
+        this->sceneManager->set(new Scene::MainMenu(this->sceneManager));
     }
 }
 
@@ -46,5 +43,7 @@ void Scene::GearsLogo::render() {
 
 void Scene::GearsLogo::leave() {
     this->bg.reset();
+    this->bg_palette.reset();
     bn::blending::set_fade_alpha(0);
+    bn::core::update();
 }

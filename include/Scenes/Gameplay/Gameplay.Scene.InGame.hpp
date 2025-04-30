@@ -11,7 +11,7 @@
     namespace _Gameplay {
         class InGame: public AbstractState {
             public:
-                Scene::Gameplay* parentState;
+                Scene::Gameplay* gameplayScene;
                 InGame(Scene::Gameplay*);
                 void load();
                 void update();

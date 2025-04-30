@@ -2,6 +2,7 @@
 #define GAMEPLAY_GAME_OVER_H_
     #include "bn_optional.h"
     #include "bn_keypad.h"
+    #include "bn_memory.h"
     #include "Commons/AbstractState.hpp"
     #include "Scenes/Gameplay.Scene.hpp"
     #include "UI/ScoreBoard.hpp"
@@ -9,24 +10,19 @@
     #include "UI/MainMenu.Button.hpp"
     #include "UI/Restart.Button.hpp"
     #include "Scenes/Gameplay/Gameplay.Scene.GetReady.hpp"
+    #include "Scenes/Gameplay/GameOver/GameOver.Scene.WaitForPlayerDeath.hpp"
 
     namespace Scene { class Gameplay; }
     namespace _Gameplay {
-
-        enum UserOptions { RESTART_GAME, MAIN_MENU };
-
+        
         class GameOver: public AbstractState {
-            bool fadeComplete = false;
-            bn::fixed fadeIntensity = .1;
-            const bn::fixed step = .08;
-            int fadeMultiplierSign = 1;
-            bool newHighSocre = false;
-            UI::ScoreBoard* scoreboard;
-            UI::Text::GameOver* gameOverText;
-            UI::Button::MainMenu* mainMenuBtn;
-            UI::Button::Restart* restartBtn;
-            UserOptions option;
             public:
+                bool newHighSocre = false;
+                UI::ScoreBoard* scoreboard;
+                StateMachine* stateMachine;
+                UI::Text::GameOver* gameOverText;
+                UI::Button::MainMenu* mainMenuBtn;
+                UI::Button::Restart* restartBtn;
                 Scene::Gameplay* gameplayScene;
                 GameOver(Scene::Gameplay*);
                 void load();
@@ -34,6 +30,7 @@
                 void render();
                 void leave();
                 void initializeScoreBoard();
+                void clearResources();
                 void clearOutsideResources();
         };
     }

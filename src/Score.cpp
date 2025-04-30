@@ -51,12 +51,14 @@ Score* Score::fadeOut() {
 }
 
 Score* Score::show() {
-    for(bn::sprite_ptr& letter : this->sprites) letter.set_visible(true);
+    if(this->textGenerator.has_value()) this->textGenerator->set_visible(true);
+    this->render();
     return this;
 }
 
 Score* Score::hide() {
-    for(bn::sprite_ptr& letter : this->sprites) letter.set_visible(false);
+    if(this->textGenerator.has_value()) this->textGenerator->set_visible(false);
+    this->render();
     return this;
 }
 
@@ -79,4 +81,10 @@ Score* Score::alignToTheRight() {
 
 int Score::getSpriteCount() {
     return this->text.size();
+}
+
+Score::~Score() {
+    this->textGenerator.reset();
+    this->sprites.clear();
+    this->text.clear();
 }

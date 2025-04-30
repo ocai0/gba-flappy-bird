@@ -1,34 +1,35 @@
 #include "Scenes/Gameplay/Gameplay.Scene.Paused.hpp"
 
-_Gameplay::Paused::Paused(Scene::Gameplay* _parentState) {
-    this->parentState = _parentState;
+
+_Gameplay::Paused::Paused(Scene::Gameplay* _gameplayScene) {
+    this->gameplayScene = _gameplayScene;
 }
 
 void _Gameplay::Paused::load() {
-    this->parentState->player->hide();
-    this->parentState->score->hide();
+    this->gameplayScene->player->hide();
+    this->gameplayScene->score->hide();
     
-    for(PipeWall* pipeWall: this->parentState->pipes) {
+    for(PipeWall* pipeWall : this->gameplayScene->pipes) {
         pipeWall->topPipe->hide();
         pipeWall->bottomPipe->hide();
     }
 
-    this->pausedText = new UI::Text::Paused(-15, 2);
+    this->pausedText = UI::Text::Paused(-15, 2);
 }
 
 void _Gameplay::Paused::update() {
     if(bn::keypad::start_pressed()) {
-        this->parentState->stateMachine->set(new _Gameplay::InGame(this->parentState));
+        this->gameplayScene->stateMachine->set(new _Gameplay::InGame(this->gameplayScene));
     }
 }
 
 void _Gameplay::Paused::render() {}
 
 void _Gameplay::Paused::leave() {
-    delete this->pausedText;
-    this->parentState->player->show();
-    this->parentState->score->show();
-    for(PipeWall* pipeWall: this->parentState->pipes) {
+    this->pausedText.reset();
+    this->gameplayScene->player->show();
+    this->gameplayScene->score->show();
+    for(PipeWall* pipeWall : this->gameplayScene->pipes) {
         pipeWall->topPipe->show();
         pipeWall->bottomPipe->show();
     }

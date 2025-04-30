@@ -20,6 +20,7 @@
         bn::fixed offsetY;
         public:
             Pipe(bn::fixed, bn::fixed);
+            ~Pipe();
             Pipe* setX(bn::fixed);
             Pipe* setOffsetX(bn::fixed);
             Pipe* setOffsetY(bn::fixed);

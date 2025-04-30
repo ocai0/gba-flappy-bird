@@ -1,24 +1,25 @@
 #include "UI/ScoreBoard.hpp"
+#include "bn_log.h"
 
 
 UI::ScoreBoard::ScoreBoard() {
-    this->stateMachine = new StateMachine();
-    this->sprite = bn::regular_bg_items::bg_score_board.create_bg_optional(this->x, this->y);
+    this->stateMachine.reset(new StateMachine());
+    this->sprite = bn::regular_bg_items::bg_score_board.create_bg(this->x, this->y);
     this->sprite->set_priority(1);
     int scoreXPos = 44;
-    this->currentScore = new Score(scoreXPos, -11);
-    this->highScore = new Score(scoreXPos, 10);
-    this->currentScore->hide();
-    this->highScore->hide();
+    this->currentScore.reset(new Score(scoreXPos, -11));
+    this->highScore.reset(new Score(scoreXPos, 10));
 }
 
 void UI::ScoreBoard::load() {
     this->stateMachine->set(new _ScoreBoard::Appear(this));
     this->currentScore->useSmallFont()
         ->setPriority(1)
+        ->hide()
         ->alignToTheRight();
     this->highScore->useSmallFont()
         ->setPriority(1)
+        ->hide()
         ->alignToTheRight();
 }
 
@@ -29,10 +30,7 @@ void UI::ScoreBoard::setX(bn::fixed _x) {
 
 void UI::ScoreBoard::setY(bn::fixed _y) {
     this->y = _y;
-    if(this->sprite.has_value()) {
-        this->sprite->set_y(this->y);
-
-    }
+    if(this->sprite.has_value()) this->sprite->set_y(this->y);
 }
 
 void UI::ScoreBoard::update() {
@@ -44,6 +42,9 @@ void UI::ScoreBoard::render() {
 }
 
 UI::ScoreBoard::~ScoreBoard() {
-    delete this->currentScore;
-    delete this->highScore;
+    this->currentScore.reset();
+    this->stateMachine.reset();
+    this->highScore.reset();
+
+    this->sprite.reset();
 }

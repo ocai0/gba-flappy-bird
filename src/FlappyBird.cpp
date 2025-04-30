@@ -1,4 +1,5 @@
 #include "Actors/FlappyBird.hpp"
+#include "bn_log.h"
 
 
 FlappyBird::FlappyBird(bn::fixed _x, bn::fixed _y) {
@@ -8,7 +9,7 @@ FlappyBird::FlappyBird(bn::fixed _x, bn::fixed _y) {
     this->setY(_y);
     this->rotationAngle = 90;
     this->sprite->set_rotation_angle(this->rotationAngle);
-    this->stateMachine = new StateMachine();
+    this->stateMachine.reset(new StateMachine());
     this->stateMachine->set(new _FlappyBird::IdleState(this));
 }
 
@@ -71,12 +72,12 @@ bool FlappyBird::collidesWith(bn::fixed _x, bn::fixed _y, int _width, int _heigh
         && _y + _height > _other->y;
 }
 
-void FlappyBird::watchObstacles(bn::array<Obstacle*, 15> _obstacleList) {
+void FlappyBird::watchObstacles(bn::vector<Obstacle*, 15> _obstacleList) {
     this->obstacleList = _obstacleList;
 }
 
 FlappyBird* FlappyBird::setCamera(bn::optional<bn::camera_ptr> _camera) {
-    if(this->sprite.has_value()) this->sprite->set_camera(_camera.value());
+    if(this->sprite.has_value()) this->sprite->set_camera(_camera);
     if(this->hitbox.has_value()) this->hitbox->setCamera(_camera);
     return this;
 }
@@ -107,4 +108,12 @@ FlappyBird* FlappyBird::hide() {
 FlappyBird* FlappyBird::show() {
     if(this->sprite.has_value()) this->sprite->set_visible(true);
     return this;
+}
+
+FlappyBird::~FlappyBird() {
+    
+    
+    this->obstacleList.clear();
+    this->sprite.reset();
+    if(this->hitbox.has_value()) this->hitbox.reset();
 }

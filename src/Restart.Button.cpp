@@ -1,5 +1,6 @@
 #include "UI/Restart.Button.hpp"
 
+
 UI::Button::Restart::Restart(bn::fixed _x, bn::fixed _y) {
     this->spr1 = bn::sprite_items::ui_restart.create_sprite(_x, _y);
     this->spr2 = bn::sprite_items::ui_restart.create_sprite(_x + 32, _y);
@@ -34,4 +35,9 @@ UI::Button::Restart* UI::Button::Restart::setY(bn::fixed _y) {
 
 void UI::Button::Restart::render() {
 
+}
+
+UI::Button::Restart::~Restart() {
+    this->spr1.reset();
+    this->spr2.reset();
 }
