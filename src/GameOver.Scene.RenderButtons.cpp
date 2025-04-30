@@ -32,7 +32,7 @@ void _GameOver::RenderButtons::update() {
                 break;
             }
             case UserOptions::MAIN_MENU: {
-                this->gameoverScene->gameplayScene->stateMachine->set(new _Gameplay::GetReady(this->gameoverScene->gameplayScene));
+                this->gameoverScene->gameplayScene->sceneManager->set(new Scene::MainMenu(this->gameoverScene->gameplayScene->sceneManager));
                 break;
             }
         }

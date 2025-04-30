@@ -10,17 +10,19 @@ Floor::Floor() {
     this->xSpeed = .5;
 }
 
-void Floor::setImage(bn::regular_bg_ptr _sprite) {
+Floor* Floor::setImage(bn::regular_bg_ptr _sprite) {
     this->sprite = _sprite;
+    return this;
 }
 
 void Floor::update() {
     if(this->sprite.has_value()) this->sprite->set_x(this->sprite->x() - this->xSpeed);
 }
 
-void Floor::setCamera(bn::optional<bn::camera_ptr> _camera) {
+Floor* Floor::setCamera(bn::optional<bn::camera_ptr> _camera) {
     if(this->sprite.has_value()) this->sprite->set_camera(_camera);
     if(this->hitbox.has_value()) this->hitbox->setCamera(_camera);
+    return this;
 }
 
 void Floor::enableBlending() {
@@ -31,15 +33,18 @@ void Floor::disableBlending() {
     if(this->sprite.has_value()) this->sprite->set_blending_enabled(false);
 }
 
-void Floor::setRenderPriority(int _order) {
+Floor* Floor::setRenderPriority(int _order) {
     this->sprite->set_priority(_order);
+    return this;
 }
 
-void Floor::showHitbox() {
+Floor* Floor::showHitbox() {
     this->hitbox = DebugBox(this->x, this->y, this->width.integer(), this->height.integer());
+    return this;
 }
-void Floor::hideHitbox() {
+Floor* Floor::hideHitbox() {
     this->hitbox.reset();
+    return this;
 }
 
 Floor::~Floor() {

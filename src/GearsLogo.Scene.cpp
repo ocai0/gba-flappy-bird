@@ -34,7 +34,7 @@ void Scene::GearsLogo::update() {
     }
     
     if(this->goToMainMenu) {
-        this->sceneManager->set(new Scene::Gameplay(this->sceneManager));
+        this->sceneManager->set(new Scene::MainMenu(this->sceneManager));
     }
 }
 

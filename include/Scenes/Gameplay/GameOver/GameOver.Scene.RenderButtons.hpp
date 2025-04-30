@@ -3,6 +3,7 @@
 
     #include "Commons/AbstractState.hpp"
     #include "Scenes/Gameplay/Gameplay.Scene.GameOver.hpp"
+    #include "Scenes/MainMenu.Scene.hpp"
 
     namespace _Gameplay { class GameOver; }
     namespace _GameOver {
