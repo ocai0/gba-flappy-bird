@@ -35,7 +35,7 @@
             bn::optional<bn::sprite_ptr> sprite;
             bn::optional<bn::sprite_animate_action<4>> animation;
             bn::vector<Obstacle*, 15> obstacleList;
-            StateMachine* stateMachine;
+            bn::unique_ptr<StateMachine> stateMachine;
             FlappyBird(bn::fixed, bn::fixed);
             ~FlappyBird();
             FlappyBird* setSprite(bn::sprite_ptr);

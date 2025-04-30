@@ -31,15 +31,15 @@
                 const int GAP_SIZE_BTW_PIPES = 80;
                 const int GAP_SIZE = 80;
                 
-                Floor* floor = nullptr;
-                Score* score = nullptr;
-                FlappyBird* player = nullptr;
+                bn::unique_ptr<Floor> floor;
+                bn::unique_ptr<Score> score;
+                bn::unique_ptr<FlappyBird> player;
                 bn::optional<Background> background;
-                MainMenuVars* mainMenuVars = nullptr;
-                StateMachine* stateMachine;
+                bn::unique_ptr<MainMenuVars> mainMenuVars;
+                bn::unique_ptr<StateMachine> stateMachine;
                 StateMachine* sceneManager;
 
-                bn::random* randomGenerator = nullptr;
+                bn::unique_ptr<bn::random> randomGenerator;
                 bn::vector<PipeWall*, 6> pipes;
                 bn::vector<Obstacle*, 15> obstacles;
                 bn::optional<bn::regular_bg_ptr> getReadyBg;

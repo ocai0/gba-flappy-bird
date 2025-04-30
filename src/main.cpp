@@ -6,11 +6,11 @@
 
 int main() {
     bn::core::init();
-    StateMachine* sceneManager = new StateMachine();
-    sceneManager->set(new Scene::GearsLogo(sceneManager));
+    StateMachine sceneManager = StateMachine();
+    sceneManager.set(new Scene::GearsLogo(&sceneManager));
     while(true) {
-        sceneManager->update();
-        sceneManager->render();
+        sceneManager.update();
+        sceneManager.render();
         bn::core::update();
     }
 }

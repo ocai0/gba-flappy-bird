@@ -67,7 +67,7 @@ void _Gameplay::InGame::update() {
 void _Gameplay::InGame::render() {
     this->gameplayScene->player->render();
     for(PipeWall* pipeWall : this->gameplayScene->pipes) {
-        if(pipeWall == nullptr) continue;
+        if(!pipeWall) continue;
         pipeWall->topPipe->setX(pipeWall->x);
         pipeWall->bottomPipe->setX(pipeWall->x);
 

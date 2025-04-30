@@ -42,8 +42,6 @@ void Scene::GearsLogo::render() {
 }
 
 void Scene::GearsLogo::leave() {
-    // this->sceneManager.reset();
-    BN_LOG("GEARS LGOO LEAVE");
     this->bg.reset();
     this->bg_palette.reset();
     bn::blending::set_fade_alpha(0);

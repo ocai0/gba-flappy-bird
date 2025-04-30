@@ -51,20 +51,11 @@ void _Gameplay::GameOver::clearResources() {
 }
 
 void _Gameplay::GameOver::clearOutsideResources() {
-    delete this->gameplayScene->floor;
-    this->gameplayScene->floor = nullptr;
-
-    delete this->gameplayScene->score;
-    this->gameplayScene->score = nullptr;
-    
-    delete this->gameplayScene->player;
-    this->gameplayScene->player = nullptr;
-    
+    this->gameplayScene->floor.reset();
+    this->gameplayScene->score.reset();
+    this->gameplayScene->player.reset();
     this->gameplayScene->background.reset();
-    
-    delete this->gameplayScene->mainMenuVars;
-    this->gameplayScene->mainMenuVars = nullptr;
-
+    this->gameplayScene->mainMenuVars.reset();
     this->gameplayScene->obstacles.clear();
     this->gameplayScene->getReadyBg.reset();
     this->gameplayScene = nullptr;

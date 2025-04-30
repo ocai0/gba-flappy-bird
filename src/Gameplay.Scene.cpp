@@ -6,11 +6,11 @@ Scene::Gameplay::Gameplay(StateMachine* _sceneManager) {
     this->camera = bn::camera_ptr::create(0, 0);
     this->setName("Scene::Gameplay");
     this->sceneManager = _sceneManager;
-    this->stateMachine = new StateMachine();
+    this->stateMachine.reset(new StateMachine());
 }
 
 void Scene::Gameplay::load() {
-    this->randomGenerator = new bn::random();
+    this->randomGenerator.reset(new bn::random());
     this->stateMachine->set(new _Gameplay::GetReady(this));
 }
 
@@ -23,35 +23,13 @@ void Scene::Gameplay::render() {
 }
 
 void Scene::Gameplay::leave() {
-    delete this->floor;
-    this->floor = nullptr;
-
-    delete this->score;
-    this->score = nullptr;
-
-    delete this->player;
-    this->player = nullptr;
-
+    this->floor.reset();
+    this->score.reset();
+    this->player.reset();
+    this->player.reset();
     this->background.reset();
-
-    delete this->mainMenuVars;
-    this->mainMenuVars = nullptr;
-
-    
-
-    // this->sceneManager.reset();
-
-    delete this->randomGenerator;
-    this->randomGenerator = nullptr;
-
-    // for(PipeWall* pipe : this->pipes) {
-    //     delete pipe->topPipe;
-    //     pipe->topPipe = nullptr;
-    //     delete pipe->bottomPipe;
-    //     pipe->bottomPipe = nullptr;
-    //     delete pipe;
-    // }
-    
+    this->mainMenuVars.reset();
+    this->randomGenerator.reset();
     this->pipes.clear();
     this->obstacles.clear();
     this->getReadyBg.reset();

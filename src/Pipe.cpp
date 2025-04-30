@@ -135,7 +135,6 @@ Pipe* Pipe::hide() {
 }
 
 Pipe::~Pipe() {
-    BN_LOG("Pipe::~Pipe()");
     this->sprite.reset();
     this->hitbox.reset();
     this->camera.reset();

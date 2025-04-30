@@ -19,7 +19,7 @@ void _Gameplay::GetReady::load() {
     MainMenuVars userOptions;
     userOptions.birdType = Enum::BirdType::FLAPPY_BIRD;
     userOptions.backgroundType = Enum::PipeType::CITY;
-    this->gameplayScene->score = new Score(-7, -60);
+    this->gameplayScene->score.reset(new Score(-7, -60));
     this->gameplayScene->score
         ->useBigFont()
         ->hide()
@@ -83,7 +83,7 @@ int _Gameplay::GetReady::addToObstacleList(Obstacle* _obstacle) {
 
 int _Gameplay::GetReady::addToPipeList(PipeWall* _pipe) {
     if(this->gameplayScene->pipes.size() + 1 >= this->gameplayScene->pipes.max_size()) return -1;
-    this->gameplayScene->pipes.push_back(_pipe);
+    this->gameplayScene->pipes.emplace_back(_pipe);
     return this->gameplayScene->pipes.size();
 }
 
@@ -94,7 +94,7 @@ void _Gameplay::GetReady::initializePipes(Enum::PipeType _selectedType) {
     bn::fixed pipeY;
     for(int index=0; index < PIPE_WALLS_ON_SCRREN; index++) {
         pipeY = this->gameplayScene->randomGenerator->get_int(-124, -48);
-        PipeWall* pipeWall = new PipeWall;
+        PipeWall* pipeWall = new PipeWall();
         this->addToPipeList(pipeWall);
         switch(_selectedType) {
             case Enum::PipeType::CITY:
@@ -144,21 +144,21 @@ void _Gameplay::GetReady::initializePipes(Enum::PipeType _selectedType) {
 }
 
 void _Gameplay::GetReady::initializeFloor(Enum::FloorType _selectedType) {
-    this->gameplayScene->floor = new Floor();
+    this->gameplayScene->floor.reset(new Floor());
     this->gameplayScene->floor->setImage(bn::regular_bg_items::bg_floor.create_bg(0, 36));
     this->gameplayScene->floor->setCamera(this->gameplayScene->camera);
     this->gameplayScene->floor->setRenderPriority(1); 
-    this->addToObstacleList((Obstacle*) this->gameplayScene->floor);
+    this->addToObstacleList(this->gameplayScene->floor.get());
 }
 
 void _Gameplay::GetReady::initializePlayer(Enum::BirdType _selectedType) {
     switch(_selectedType) {
         case Enum::BirdType::FLAPPY_BIRD:
         default:
-            this->gameplayScene->player = new FlappyBird(-80, 0);
+            this->gameplayScene->player.reset(new FlappyBird(-80, 0));
             break;
         case Enum::BirdType::ROBOT_BIRD:
-            this->gameplayScene->player = new FlappyBird(-80, 0);
+            this->gameplayScene->player.reset(new FlappyBird(-80, 0));
             break;
     }
     
